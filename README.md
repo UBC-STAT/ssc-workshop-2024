@@ -18,6 +18,6 @@ In this workshop learners will be introduced to what an R package is and when th
 
 ● Copyright & Licenses (who owns the code?)
 
-Date and Time: Sunday, June 2, 2024 - 00:00
-Room: 
-Presenters/Speakers: Tiffany Timbers, Daniel Chen, G. Alexi Rodríguez-Arelis, Katie Burak (University of British Columbia)
+- Date and Time: Sunday, June 2, 2024 - 00:00
+
+- Presenters/Speakers: Tiffany Timbers, Daniel Chen, G. Alexi Rodríguez-Arelis, Katie Burak (University of British Columbia)
