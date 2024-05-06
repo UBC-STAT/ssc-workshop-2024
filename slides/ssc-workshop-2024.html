@@ -365,11 +365,74 @@
 
 </section>
 
-<section id="sharing-and-publishing-packages-on-github-and-cran" class="title-slide slide level1 center">
-<h1>Sharing and publishing packages on GitHub and CRAN</h1>
+<section>
+<section id="publishing-your-r-package" class="title-slide slide level1 center">
+<h1>Publishing your R package</h1>
 
 </section>
-
+<section id="section" class="slide level2">
+<h2></h2>
+<p><img data-src="img/package_distribution.png"> <em>Source: <a href="https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf">https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf</a></em>}</p>
+</section>
+<section id="level-1-publishing-on-github" class="slide level2">
+<h2>Level 1: Publishing on GitHub</h2>
+<ul>
+<li><p>GitHub is where almost all R packages start out publishing, and continue publishing development versions between releases.</p></li>
+<li><p>For this to work, you need to push your package code to GitHub and provide users instructions like this to download, build and install your package:</p></li>
+</ul>
+<pre><code># install.packages("devtools")
+devtools::install_github("username/package")</code></pre>
+</section>
+<section id="level-2-publishing-on-cran" class="slide level2">
+<h2>Level 2: Publishing on CRAN</h2>
+<ul>
+<li>CRAN (founded in 1997) stands for the “Comprehensive R Archive Network”.</li>
+<li>CRAN is a collection of sites which host identical copies of:
+<ul>
+<li>R distribution(s)</li>
+<li>the contributed extensions (i.e., packages)</li>
+<li>documentation for R</li>
+<li>binaries (i.e., packages)</li>
+</ul></li>
+</ul>
+<p><em>Source: Hornik, K (2012). The Comprehensive R Archive Network. Wiley interdisciplinary reviews. Computational statistics. 4(4): 394-398. doi:10.1002/wics.1212</em></p>
+</section>
+<section id="what-does-it-mean-to-be-a-cran-package" class="slide level2">
+<h2>What does it mean to be a CRAN package?</h2>
+<div>
+<ul>
+<li class="fragment"><p>A stamp of authenticity: passed quality control of the check utility</p></li>
+<li class="fragment"><p>Ease of installation: can be installed by users via <code>install.packages()</code> and binaries are available for Windows &amp; Mac OS’s.</p></li>
+<li class="fragment"><p>Discoverability: listed as a package on CRAN</p></li>
+<li class="fragment"><p>However, CRAN makes no assertions about the package’s usability, or the efficiency and correctness of the computations it performs</p></li>
+</ul>
+</div>
+</section>
+<section id="how-to-submit-a-package-to-cran" class="slide level2">
+<h2>How to submit a package to CRAN</h2>
+<div>
+<ol type="1">
+<li class="fragment"><p>Pick a version number.</p></li>
+<li class="fragment"><p>Run and document R CMD check.</p></li>
+<li class="fragment"><p>Check that you’re aligned with CRAN policies.</p></li>
+<li class="fragment"><p>Update README.md and NEWS.md.</p></li>
+<li class="fragment"><p>Submit the package to CRAN.</p></li>
+<li class="fragment"><p>Prepare for the next version by updating version numbers.</p></li>
+<li class="fragment"><p>Publicise the new version.</p></li>
+</ol>
+</div>
+<p><em>Source: <a href="https://r-pkgs.org/release.html">Chapter 22: Releasing to Cran</a> - R packages book by Hadley Wickham &amp; Jenny Bryan</em></p>
+</section>
+<section id="notes-on-submitting-to-cran" class="slide level2">
+<h2>Notes on submitting to CRAN</h2>
+<ul>
+<li><p>Your package must pass <code>R CMD check</code> with the current development version of R.</p></li>
+<li><p>It must work on at least two platforms (CRAN uses the following 4 platforms: Windows, Mac OS X, Linux and Solaris) - use GitHub Actions to ensure this before submitting to CRAN!</p></li>
+</ul>
+<blockquote>
+<p>If you decide to submit a package to CRAN, follow the detailed instructions in <a href="https://r-pkgs.org/release.html">Chapter 22: Releasing to Cran</a> from the R packages book by Hadley Wickham &amp; Jenny Bryan.</p>
+</blockquote>
+</section></section>
 <section>
 <section id="copyright-licenses-who-owns-the-code" class="title-slide slide level1 center">
 <h1>Copyright &amp; Licenses (who owns the code?)</h1>
@@ -444,7 +507,7 @@
 <li><p>In such a case, you (the person who typed the code) automatically become the copyright owner.</p></li>
 </ul>
 </section>
-<section id="section" class="slide level2">
+<section id="section-1" class="slide level2">
 <h2></h2>
 <ul>
 <li><p>In both Canada and the USA, you do not need to need to affix the copyright symbol © to your work (some other countries do require this however).</p></li>
@@ -460,7 +523,7 @@
 <li>In Canada, if you write code for work as an employee the copyright ownership is typically assigned to <strong>the employer</strong>.</li>
 </ul>
 </section>
-<section id="section-1" class="slide level2">
+<section id="section-2" class="slide level2">
 <h2></h2>
 <ul>
 <li>In the Canada, software code is defined as “work made in the course of employment” if:</li>
@@ -483,7 +546,7 @@
 <li><p>A: You would need to negotiate a licence to use the code you wrote, the same way any other third-party would… 😓</p></li>
 </ul>
 </section>
-<section id="section-2" class="slide level2">
+<section id="section-3" class="slide level2">
 <h2></h2>
 <p>To avoid this issue, you could:</p>
 <ul>
@@ -543,6 +606,20 @@
 <h2>Creative Commons (cont’d)</h2>
 
 <img data-src="img/CC2.jpg" class="r-stretch"><p><em>Source: “How to License Poster” by Creative Commons is licensed under CC BY 4.0</em></p>
+</section>
+<section id="review" class="slide level2">
+<h2>Review</h2>
+<div>
+<ul>
+<li class="fragment">In Canada, who typically owns the copyright of code written during employment?</li>
+<li class="fragment">A: The employee</li>
+<li class="fragment">B: The employer</li>
+<li class="fragment">C: The consultant</li>
+<li class="fragment">D: All parties involved</li>
+<li class="fragment"><span style="color:blue">Answer - B: The employer</span><br>
+</li>
+</ul>
+</div>
 </section>
 <section id="references" class="slide level2">
 <h2>References</h2>

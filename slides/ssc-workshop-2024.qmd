@@ -20,7 +20,74 @@ Introduce ourselves...
 
 # Introduction to continuous integration using GitHub Actions
 
-# Sharing and publishing packages on GitHub and CRAN
+# Publishing your R package
+
+##
+
+![](img/package_distribution.png)
+*Source: [https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf](https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf)*}
+
+## Level 1: Publishing on GitHub
+
+- GitHub is where almost all R packages start out publishing, and continue publishing development versions between releases.
+
+- For this to work, you need to push your package code to GitHub and provide users instructions like this to download, build and install your package:
+
+```
+# install.packages("devtools")
+devtools::install_github("username/package")
+```
+
+## Level 2: Publishing on CRAN 
+
+- CRAN (founded in 1997) stands for the “Comprehensive R Archive Network”.
+- CRAN is a collection of sites which host identical copies of:
+  - R distribution(s)
+  - the contributed extensions (i.e., packages)
+  - documentation for R
+  - binaries (i.e., packages)
+  
+*Source: Hornik, K (2012). The Comprehensive R Archive Network. Wiley interdisciplinary reviews. Computational statistics. 4(4): 394-398. doi:10.1002/wics.1212*
+  
+## What does it mean to be a CRAN package?
+
+::: {.incremental}
+- A stamp of authenticity: passed quality control of the check utility
+
+- Ease of installation: can be installed by users via `install.packages()` and binaries are available for Windows & Mac OS’s.
+
+- Discoverability: listed as a package on CRAN
+
+- However, CRAN makes no assertions about the package’s usability, or the efficiency and correctness of the computations it performs
+:::
+
+## How to submit a package to CRAN
+
+::: {.incremental}
+1. Pick a version number.
+
+2. Run and document R CMD check.
+
+3. Check that you’re aligned with CRAN policies.
+
+4. Update README.md and NEWS.md.
+
+5. Submit the package to CRAN.
+
+6. Prepare for the next version by updating version numbers.
+
+7. Publicise the new version.
+:::
+
+*Source: [Chapter 22: Releasing to Cran](https://r-pkgs.org/release.html) - R packages book by Hadley Wickham & Jenny Bryan*
+
+## Notes on submitting to CRAN
+
+- Your package must pass `R CMD check` with the current development version of R.
+
+- It must work on at least two platforms (CRAN uses the following 4 platforms: Windows, Mac OS X, Linux and Solaris) - use GitHub Actions to ensure this before submitting to CRAN!
+
+> If you decide to submit a package to CRAN, follow the detailed instructions in [Chapter 22: Releasing to Cran](https://r-pkgs.org/release.html) from the R packages book by Hadley Wickham & Jenny Bryan. 
 
 # Copyright & Licenses (who owns the code?)
 
@@ -166,6 +233,18 @@ Important considerations when choosing a license include:
 ![](img/CC2.jpg)
 
 *Source: “How to License Poster” by Creative Commons is licensed under CC BY 4.0*
+
+## Review
+
+::: {.incremental}
+- In Canada, who typically owns the copyright of code written during employment? 
+- A: The employee
+- B: The employer
+- C: The consultant
+- D: All parties involved 
+- <span style="color:blue">Answer - B: The employer</span>  
+:::
+
 
 ## References 
 
