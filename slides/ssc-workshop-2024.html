@@ -8,7 +8,7 @@
 <link href="ssc-workshop-2024_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="ssc-workshop-2024_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="ssc-workshop-2024_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+  <meta name="generator" content="quarto-1.3.361">
 
   <title>How to create and distribute R packages</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -28,6 +28,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="ssc-workshop-2024_files/libs/revealjs/dist/theme/quarto.css">
   <link href="ssc-workshop-2024_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -324,7 +389,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">How to create and distribute R packages</h1>
+  <h1 class="title">How to create and distribute <code>R</code> packages</h1>
 
 <div class="quarto-title-authors">
 </div>
@@ -332,19 +397,263 @@
 </section>
 <section id="welcome" class="title-slide slide level1 center">
 <h1>Welcome!</h1>
-<p>Introduce ourselves…</p>
+<p>Let’s introduce ourselves…</p>
+<div class="fragment fade-left">
+<div id="fig-team" class="quarto-layout-panel">
+<figure>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/photo_katie.jpg" width="200"></p>
+<figcaption>Katie Burak</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/photo_daniel.jpg" width="200"></p>
+<figcaption>Daniel Chen</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/photo_alexi.jpg" width="200"></p>
+<figcaption><a href="https://alexrod.netlify.app">G. Alexi Rodríguez-Arelis</a></figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/photo_tiffany.jpg" width="200"></p>
+<figcaption>Tiffany Timbers</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption>Figure&nbsp;1: Teaching team</figcaption><p></p>
+</figure>
+</div>
+</div>
 </section>
 
+<section>
 <section id="what-is-an-r-package-and-when-should-i-make-one" class="title-slide slide level1 center">
-<h1>What is an R package and when should I make one?</h1>
+<h1>What is an <code>R</code> package and when should I make one?</h1>
+
+<img data-src="img/panda.png" style="width:10.0%" class="r-stretch quarto-figure-center"></section>
+<section id="this-question-is-key" class="title-slide slide level2 center">
+<h2>This question is key!</h2>
+<div>
+<ul>
+<li class="fragment">An <code>R</code> package is central to generating <span style="color: purple;">reproducible code</span></li>
+<li class="fragment">It allows us to call functions whenever we need them in our data wrangling and/or analysis</li>
+<li class="fragment">Its functions are expected to be reproducible code and <span style="color: purple;">adequately documented</span> (even with some <span style="color: purple;">sample data</span>!)</li>
+</ul>
+</div>
+</section>
+
+<section id="lets-start-with-our-toy-example" class="title-slide slide level2 center">
+<h2>Let’s start with our toy example</h2>
+<div>
+<ul>
+<li class="fragment">Suppose that, <span style="color: purple;">in your everyday analysis</span>, you are usually coding the distribution of observations over the classes (i.e., categories) of a given variable in your dataset</li>
+<li class="fragment">Moreover, you would like to <span style="color: purple;">automate</span> this process and <span style="color: purple;">share</span> your work!</li>
+</ul>
+</div>
+</section>
+
+<section id="this-is-an-specific-example-of-your-everyday-process" class="title-slide slide level2 center">
+<h2>This is an specific example of your everyday process</h2>
+<ul>
+<li>The code below is counting how many cars in <code>mtcars</code> (composed of 32 observations) have <code>4</code>, <code>6</code>, and <code>8</code> cylinders</li>
+</ul>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" data-code-line-numbers="|3|4|5|6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>mtcars <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="fu">group_by</span>(cyl) <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="fu">rename</span>(<span class="st">"class"</span> <span class="ot">=</span> cyl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  class count
+  &lt;dbl&gt; &lt;int&gt;
+1     4    11
+2     6     7
+3     8    14</code></pre>
+</div>
+</div>
+</div>
+</section>
+
+<section id="is-an-r-package-the-answer-to-our-previous-automate-and-sharing-inquiries" class="title-slide slide level2 center">
+<h2>Is an <code>R</code> package the answer to our previous <span style="color: purple;">automate</span> and <span style="color: purple;">sharing</span> inquiries?</h2>
 
 </section>
 
+<section id="yes-it-is" class="title-slide slide level2 center">
+<h2>Yes, it is!</h2>
+<div>
+<ul>
+<li class="fragment">A published package is crucial in everyday shareable code</li>
+<li class="fragment">It encompasses code, data, documentation, and <span style="color: purple;">test functions</span></li>
+</ul>
+</div>
+
+<img data-src="img/software.png" style="width:5.0%" class="r-stretch quarto-figure-center"></section>
+
+<section id="how-are-r-packages-shared-and-downloaded" class="title-slide slide level2 center">
+<h2>How are <code>R</code> packages shared and downloaded?</h2>
+<ul>
+<li>We have the <a href="https://cran.r-project.org"><strong>Comprehensive R Archive Network (CRAN)</strong></a></li>
+</ul>
+<div class="fragment">
+<blockquote>
+<p><em>CRAN is a network of ftp and web servers around the world that store identical, up-to-date, versions of code and documentation for <code>R</code>.</em></p>
+</blockquote>
+</div>
+<div class="fragment">
+<ul>
+<li>As of today, there are over <span style="color: purple;">20,000 packages available</span> on the CRAN</li>
+</ul>
+</div>
+</section>
+
+<section id="what-will-be-our-learning-goals" class="title-slide slide level2 center">
+<h2>What will be our learning goals?</h2>
+<div>
+<ul>
+<li class="fragment">Develop <code>R</code> packages from scratch via a <span style="color: purple;">toy example</span></li>
+<li class="fragment">Introduce the concept of <span style="color: purple;">testing</span> to ensure our package coding works as expected</li>
+<li class="fragment">Include the corresponding <span style="color: purple;">documentation</span></li>
+<li class="fragment">Introduce <span style="color: purple;">continuous integration</span> using <span style="color: purple;">GitHub Actions</span></li>
+<li class="fragment">Share and publish packages on <span style="color: purple;">GitHub</span> and <span style="color: purple;">CRAN</span></li>
+<li class="fragment">Define <span style="color: purple;">copyright rules</span> when building, sharing, and using packages</li>
+<li class="fragment">Choose the most appropriate <span style="color: purple;">license</span></li>
+</ul>
+</div>
+</section>
+</section>
+<section>
 <section id="practice-building-an-r-package" class="title-slide slide level1 center">
-<h1>Practice building an R package</h1>
+<h1>Practice building an <code>R</code> package</h1>
 
 </section>
+<section id="attribution" class="title-slide slide level2 center">
+<h2>Attribution</h2>
+<p><br></p>
+<blockquote>
+<p>This content has been developed on the basis provided by <a href="https://r-pkgs.org/release.html"><strong>Chapter 1: The Whole Game</strong></a> (<code>R</code> packages book by Hadley Wickham &amp; Jenny Bryan, 2e) and the UBC course notes <a href="https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/materials/lectures/10-packaging-and-documenting.html#when-to-start-writing-an-r-or-python-package"><strong>Reproducible and Trustworthy Workflows for Data Science</strong></a> by Tiffany Timbers, Joel Östblom, Florencia D’Andrea, and Rodolfo Lourenzutti</p>
+</blockquote>
+</section>
 
+<section id="toy-package-eda" class="title-slide slide level2 center">
+<h2>Toy package: <code>eda</code></h2>
+<div>
+<ul>
+<li class="fragment">Our toy package’s name will be <code>eda</code></li>
+<li class="fragment">As discussed earlier, suppose the package’s purpose is to provide data wrangling and summary functions to conduct a proper <span style="color: purple;">exploratory data analysis</span> (hence the name <span style="color: purple;">EDA</span>)</li>
+<li class="fragment">We will be switching back and forth between these slides and hands-on practice in <span style="color: purple;"><strong>RStudio</strong></span> via an <code>.R</code> script</li>
+</ul>
+</div>
+
+<img data-src="img/r-rstudio.png" style="width:10.0%" class="r-stretch quarto-figure-center"></section>
+
+<section id="installing-auxiliary-r-packages" class="title-slide slide level2 center">
+<h2>Installing auxiliary <code>R</code> packages</h2>
+<div>
+<ul>
+<li class="fragment">Before starting with the actual process, we need to <span style="color: purple;">install</span> and <span style="color: purple;">load</span> the packages <span style="color: darkblue;">{devtools}</span> and <span style="color: darkblue;">{usethis}</span></li>
+<li class="fragment"><span style="color: darkblue;">{devtools}</span> is a meta-package that encompasses more focused development-related <code>R</code> packages</li>
+<li class="fragment"><span style="color: darkblue;">{usethis}</span> automates tasks related to <span style="color: purple;">project setup</span> and <span style="color: purple;">development</span> to build <code>R</code> packages</li>
+</ul>
+</div>
+
+<img data-src="img/usethis-devtools.png" style="width:10.0%" class="r-stretch quarto-figure-center"></section>
+<section id="installation-and-loading-code" class="title-slide slide level3 center">
+<h3>Installation and loading code</h3>
+<ul>
+<li>Installing <span style="color: darkblue;">{devtools}</span> automatically installs <span style="color: darkblue;">{usethis}</span></li>
+<li>Same situation applies when it come to loading the packages</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" data-code-line-numbers="|1|3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="fu">library</span>(devtools)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+
+<section id="function-create_package" class="title-slide slide level2 center">
+<h2>Function <code>create_package()</code></h2>
+<div>
+<ul>
+<li class="fragment">Function <code>create_package()</code> will <span style="color: purple;">initialize</span> our new package in a directory of our choice</li>
+<li class="fragment">I will initialize the <code>eda</code> package in my <code>Desktop</code> folder for easier reference</li>
+</ul>
+</div>
+<div class="fragment">
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Don’ts when choosing your home directory</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>Your package shouldn’t be hosted in another RStudio Project, <code>R</code> package, or GitHub repo</li>
+<li>Your package shouldn’t be hosted in an <code>R</code> package library (i.e., where we usually instal other packages from CRAN)</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="code" class="title-slide slide level3 center">
+<h3>Code</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">create_package</span>(<span class="st">"~/Desktop/eda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+
+<img data-src="img/create_package.png" style="width:8.0%" class="r-stretch quarto-figure-center"></section>
+
+<section id="project-layout-description-ignore-type-files" class="title-slide slide level3 center">
+<h3>Project layout description (<code>ignore</code>-type files)</h3>
+<div>
+<ul>
+<li class="fragment"><code>.gitignore</code> is used by GitHub and lists all <span style="color: purple;">“hidden”</span> files created by <code>R</code> and RStudio that aren’t necessary for the repo</li>
+<li class="fragment"><code>.Rbuildignore</code> contains all files created via <code>R</code> and RStudio <span style="color: purple;">that won’t be necessary</span> when building our package (e.g., <code>eda.Rproj</code>)</li>
+</ul>
+</div>
+</section>
+
+<section id="project-layout-description-other-components" class="title-slide slide level3 center">
+<h3>Project layout description (other components)</h3>
+<div>
+<ul>
+<li class="fragment"><code>DESCRIPTION</code> contains the metadata and dependency installation instructions for our package</li>
+<li class="fragment"><code>eda.Rproj</code> is the <span style="color: purple;">RStudio project file</span></li>
+<li class="fragment"><code>NAMESPACE</code> contains the package’s functions to export along with imports from other packages</li>
+<li class="fragment">An <code>R/</code> directory which will contain <span style="color: purple;">all package’s functions</span> as <code>.R</code> scripts</li>
+</ul>
+</div>
+</section>
+
+
+<section id="function-use_git" class="title-slide slide level2 center">
+<h2>Function <code>use_git()</code></h2>
+
+</section>
+</section>
 <section id="ensuring-your-code-works-as-expected" class="title-slide slide level1 center">
 <h1>Ensuring your code works as expected</h1>
 
@@ -370,11 +679,12 @@
 <h1>Publishing your R package</h1>
 
 </section>
-<section id="section" class="slide level2">
+<section id="section" class="title-slide slide level2 center">
 <h2></h2>
-<p><img data-src="img/package_distribution.png"> <em>Source: <a href="https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf">https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf</a></em>}</p>
+<p><img data-src="img/package_distribution.png"> <em>Source: <a href="https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf" class="uri">https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf</a></em>}</p>
 </section>
-<section id="level-1-publishing-on-github" class="slide level2">
+
+<section id="level-1-publishing-on-github" class="title-slide slide level2 center">
 <h2>Level 1: Publishing on GitHub</h2>
 <ul>
 <li><p>GitHub is where almost all R packages start out publishing, and continue publishing development versions between releases.</p></li>
@@ -383,7 +693,8 @@
 <pre><code># install.packages("devtools")
 devtools::install_github("username/package")</code></pre>
 </section>
-<section id="level-2-publishing-on-cran" class="slide level2">
+
+<section id="level-2-publishing-on-cran" class="title-slide slide level2 center">
 <h2>Level 2: Publishing on CRAN</h2>
 <ul>
 <li>CRAN (founded in 1997) stands for the “Comprehensive R Archive Network”.</li>
@@ -397,7 +708,8 @@ devtools::install_github("username/package")</code></pre>
 </ul>
 <p><em>Source: Hornik, K (2012). The Comprehensive R Archive Network. Wiley interdisciplinary reviews. Computational statistics. 4(4): 394-398. doi:10.1002/wics.1212</em></p>
 </section>
-<section id="what-does-it-mean-to-be-a-cran-package" class="slide level2">
+
+<section id="what-does-it-mean-to-be-a-cran-package" class="title-slide slide level2 center">
 <h2>What does it mean to be a CRAN package?</h2>
 <div>
 <ul>
@@ -408,7 +720,8 @@ devtools::install_github("username/package")</code></pre>
 </ul>
 </div>
 </section>
-<section id="how-to-submit-a-package-to-cran" class="slide level2">
+
+<section id="how-to-submit-a-package-to-cran" class="title-slide slide level2 center">
 <h2>How to submit a package to CRAN</h2>
 <div>
 <ol type="1">
@@ -423,7 +736,8 @@ devtools::install_github("username/package")</code></pre>
 </div>
 <p><em>Source: <a href="https://r-pkgs.org/release.html">Chapter 22: Releasing to Cran</a> - R packages book by Hadley Wickham &amp; Jenny Bryan</em></p>
 </section>
-<section id="notes-on-submitting-to-cran" class="slide level2">
+
+<section id="notes-on-submitting-to-cran" class="title-slide slide level2 center">
 <h2>Notes on submitting to CRAN</h2>
 <ul>
 <li><p>Your package must pass <code>R CMD check</code> with the current development version of R.</p></li>
@@ -432,16 +746,19 @@ devtools::install_github("username/package")</code></pre>
 <blockquote>
 <p>If you decide to submit a package to CRAN, follow the detailed instructions in <a href="https://r-pkgs.org/release.html">Chapter 22: Releasing to Cran</a> from the R packages book by Hadley Wickham &amp; Jenny Bryan.</p>
 </blockquote>
-</section></section>
+</section>
+</section>
 <section>
 <section id="copyright-licenses-who-owns-the-code" class="title-slide slide level1 center">
 <h1>Copyright &amp; Licenses (who owns the code?)</h1>
 
 </section>
-<section id="full-disclosure-i-am-not-a-lawyer" class="slide level2 center">
+<section id="full-disclosure-i-am-not-a-lawyer" class="title-slide slide level2 center">
 <h2>Full disclosure… I AM NOT A LAWYER!</h2>
+
 </section>
-<section id="learning-objectives" class="slide level2">
+
+<section id="learning-objectives" class="title-slide slide level2 center">
 <h2>Learning Objectives</h2>
 <div>
 <ul>
@@ -451,14 +768,15 @@ devtools::install_github("username/package")</code></pre>
 </ul>
 </div>
 </section>
-<section id="copyright-law" class="slide level2">
+
+<section id="copyright-law" class="title-slide slide level2 center">
 <h2>Copyright Law</h2>
 <ul>
 <li><p>In both the US and Canada, software code falls under copyright law</p></li>
 <li><p>Copyright protects only the language and words used to express ideas, concepts and themes, not the ideas, concepts or themes themselves.</p></li>
 </ul>
 </section>
-<section class="slide level2">
+<section class="slide level4">
 
 <ul>
 <li>Knowing who owns the copyright of software code is critical because the owner controls if and how the code may be:
@@ -471,7 +789,8 @@ devtools::install_github("username/package")</code></pre>
 </ul></li>
 </ul>
 </section>
-<section id="canadian-copyright-law" class="slide level2">
+
+<section id="canadian-copyright-law" class="title-slide slide level2 center">
 <h2>Canadian Copyright Law</h2>
 <p>In Canada, the copyright owner is afforded the following rights:</p>
 <ul>
@@ -481,7 +800,7 @@ devtools::install_github("username/package")</code></pre>
 </ul></li>
 </ul>
 </section>
-<section class="slide level2">
+<section class="slide level4">
 
 <ul>
 <li><p>Moral rights:</p>
@@ -495,19 +814,22 @@ devtools::install_github("username/package")</code></pre>
 <p><strong>Economic rights</strong> can be transferred to entities that are not the author, whereas <strong>moral rights</strong> cannot (they can however, be waived).</p>
 </blockquote>
 </section>
-<section id="who-has-copyright-ownership" class="slide level2">
+
+<section id="who-has-copyright-ownership" class="title-slide slide level2 center">
 <h2>Who has copyright ownership?</h2>
 <p>This is a complicated question, and the answer starts with it depends on the case…</p>
 
 <img data-src="img/lightbulb.jpg" class="r-stretch"></section>
-<section id="case-i-you-author-the-code-for-yourself" class="slide level2">
+
+<section id="case-i-you-author-the-code-for-yourself" class="title-slide slide level2 center">
 <h2>Case I: You author the code for yourself</h2>
 <ul>
 <li><p>You author the code and you are doing this for <strong>yourself</strong> (i.e., not for your employer, not for a client, etc).</p></li>
 <li><p>In such a case, you (the person who typed the code) automatically become the copyright owner.</p></li>
 </ul>
 </section>
-<section id="section-1" class="slide level2">
+
+<section id="section-1" class="title-slide slide level2 center">
 <h2></h2>
 <ul>
 <li><p>In both Canada and the USA, you do not need to need to affix the copyright symbol © to your work (some other countries do require this however).</p></li>
@@ -517,13 +839,15 @@ devtools::install_github("username/package")</code></pre>
 <p>In both Canada and the US, it is possible (and advisable) to register your copyright as evidence that a copyright exists and who the owner is.</p>
 </blockquote>
 </section>
-<section id="case-ii-you-write-the-code-in-the-course-of-employment" class="slide level2">
+
+<section id="case-ii-you-write-the-code-in-the-course-of-employment" class="title-slide slide level2 center">
 <h2>Case II: You write the code in the course of employment</h2>
 <ul>
 <li>In Canada, if you write code for work as an employee the copyright ownership is typically assigned to <strong>the employer</strong>.</li>
 </ul>
 </section>
-<section id="section-2" class="slide level2">
+
+<section id="section-2" class="title-slide slide level2 center">
 <h2></h2>
 <ul>
 <li>In the Canada, software code is defined as “work made in the course of employment” if:</li>
@@ -532,21 +856,23 @@ devtools::install_github("username/package")</code></pre>
 <p>The author of the code was in the employment <strong>of</strong> some other entity under a contract of service or apprenticeship and the code was written in the course of their employment by that entity. And there exists no agreement (written, or otherwise, and even potentially even presumed) that the employee retains ownership of copyright for the code written during the term of their employment.</p>
 </blockquote>
 </section>
-<section class="slide level2">
+<section class="slide level4">
 
 <ul>
 <li><p>Work made in the course of employment is different than a contract <strong>for</strong> services (in which the author of the code acts more like an independent consultant, and in such a case it does not appear that “work made in the course of employment” would apply).</p></li>
 <li><p>In this case, the default position is usually that the <strong>contractor retains copyright ownership</strong> of the work they create, unless the contract specifically assigns copyright to the client.</p></li>
 </ul>
 </section>
-<section id="implications-when-you-forgo-copyright-ownership" class="slide level2">
+
+<section id="implications-when-you-forgo-copyright-ownership" class="title-slide slide level2 center">
 <h2>Implications when you forgo copyright ownership</h2>
 <ul>
 <li><p>Q: What if you forgo copyright ownership and want to use any of the code that you wrote again?</p></li>
 <li><p>A: You would need to negotiate a licence to use the code you wrote, the same way any other third-party would… 😓</p></li>
 </ul>
 </section>
-<section id="section-3" class="slide level2">
+
+<section id="section-3" class="title-slide slide level2 center">
 <h2></h2>
 <p>To avoid this issue, you could:</p>
 <ul>
@@ -554,14 +880,16 @@ devtools::install_github("username/package")</code></pre>
 <li><p>Negotiate that the client purchase a license to the code you write (as opposed to hiring you to write the code).</p></li>
 </ul>
 </section>
-<section id="licenses" class="slide level2">
+
+<section id="licenses" class="title-slide slide level2 center">
 <h2>Licenses</h2>
 <ul>
 <li><p>If you publicly share your creative work (i.e., software code), you should let others know if and how they can reuse it!</p></li>
 <li><p>This is done via the inclusion of a <code>LICENSE</code> or <code>LICENSE.txt</code> file in the base directory of the repository that clearly states under which license the content is being made available.</p></li>
 </ul>
 </section>
-<section id="licenses-contd" class="slide level2">
+
+<section id="licenses-contd" class="title-slide slide level2 center">
 <h2>Licenses (cont’d)</h2>
 <ul>
 <li><p>Unless you include a license that specifies otherwise, nobody else can copy, distribute, or modify your work without being at risk of take-downs, shake-downs, or litigation.</p></li>
@@ -569,7 +897,8 @@ devtools::install_github("username/package")</code></pre>
 <li><p>A license solves this problem by granting rights to others (the licensees) that they would otherwise not have.</p></li>
 </ul>
 </section>
-<section id="choosing-a-license" class="slide level2">
+
+<section id="choosing-a-license" class="title-slide slide level2 center">
 <h2>Choosing a License</h2>
 <p>Important considerations when choosing a license include:</p>
 <ul>
@@ -577,7 +906,8 @@ devtools::install_github("username/package")</code></pre>
 <li><p>Whether the content you are licensing is source code, and if it is, whether you want to require that derivatives of your work share the source code</p></li>
 </ul>
 </section>
-<section id="choosing-a-license-contd" class="slide level2">
+
+<section id="choosing-a-license-contd" class="title-slide slide level2 center">
 <h2>Choosing a License (cont’d)</h2>
 <ul>
 <li><p>In practice, a few licenses are by far the most popular.</p></li>
@@ -587,27 +917,31 @@ devtools::install_github("username/package")</code></pre>
 <p>💡Tip: Choose a license that is in common use! This makes life easier for contributors and users, because they are more likely to already be familiar with the license and don’t have to wade through a bunch of jargon to decide if they’re ok with it.</p>
 </blockquote>
 </section>
-<section id="creative-commons" class="slide level2">
+
+<section id="creative-commons" class="title-slide slide level2 center">
 <h2>Creative Commons</h2>
 <ul>
 <li><p>But not all my creative Data Science work is code (e.g.&nbsp;visualizations, reports, presentations), so how do I license it?</p></li>
 <li><p>The <strong>Creative Commons</strong> licences were created for such works and they are now widely used in academia and the publishing industry.</p></li>
 </ul>
 <blockquote>
-<p><a href="https://chooser-beta.creativecommons.org/">https://chooser-beta.creativecommons.org/</a></p>
+<p><a href="https://chooser-beta.creativecommons.org/" class="uri">https://chooser-beta.creativecommons.org/</a></p>
 </blockquote>
 </section>
-<section id="creative-commons-contd" class="slide level2">
+
+<section id="creative-commons-contd" class="title-slide slide level2 center">
 <h2>Creative Commons (cont’d)</h2>
 
 <img data-src="img/CC1.jpg" class="r-stretch"><p><em>Source: “How to License Poster” by Creative Commons is licensed under CC BY 4.0</em></p>
 </section>
-<section id="creative-commons-contd-1" class="slide level2">
+
+<section id="creative-commons-contd-1" class="title-slide slide level2 center">
 <h2>Creative Commons (cont’d)</h2>
 
 <img data-src="img/CC2.jpg" class="r-stretch"><p><em>Source: “How to License Poster” by Creative Commons is licensed under CC BY 4.0</em></p>
 </section>
-<section id="review" class="slide level2">
+
+<section id="review" class="title-slide slide level2 center">
 <h2>Review</h2>
 <div>
 <ul>
@@ -621,7 +955,8 @@ devtools::install_github("username/package")</code></pre>
 </ul>
 </div>
 </section>
-<section id="references" class="slide level2">
+
+<section id="references" class="title-slide slide level2 center">
 <h2>References</h2>
 <ul>
 <li><p><a href="https://asp-software.org/www/misv_resources/business-articles/who-owns-the-code/">Who Owns The Code?</a></p></li>
@@ -634,7 +969,8 @@ devtools::install_github("username/package")</code></pre>
 <div class="footer footer-default">
 
 </div>
-</section></section>
+</section>
+</section>
     </div>
   </div>
 
@@ -687,7 +1023,7 @@ devtools::install_github("username/package")</code></pre>
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: false,
+        slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -846,6 +1182,44 @@ devtools::install_github("username/package")</code></pre>
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

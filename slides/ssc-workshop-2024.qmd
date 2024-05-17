@@ -1,16 +1,187 @@
 ---
-title: "How to create and distribute R packages"
-format: revealjs
-editor: visual
+title: "How to create and distribute `R` packages"
+format: 
+  revealjs:
+    slide-number: true
+    slide-level: 4
 ---
 
 # Welcome!
 
-Introduce ourselves...
+Let's introduce ourselves...
 
-# What is an R package and when should I make one?
+::: {.fragment .fade-left}
+::: {#fig-team layout-ncol="4"}
+![Katie Burak](images/photo_katie.jpg){width=200}
 
-# Practice building an R package
+![Daniel Chen](images/photo_daniel.jpg){width=200}
+
+![<a href="https://alexrod.netlify.app">G. Alexi Rodríguez-Arelis</a>](img/photo_alexi.jpg){width=200}
+
+![Tiffany Timbers](images/photo_tiffany.jpg){width=200}
+
+Teaching team
+:::
+:::
+
+# What is an `R` package and when should I make one?
+
+![](img/panda.png){fig-align="center" width=10%}
+
+## This question is key!
+
+::: incremental
+- An `R` package is central to generating <span style="color: purple;">reproducible code</span>
+- It allows us to call functions whenever we need them in our data wrangling and/or analysis
+- Its functions are expected to be reproducible code and <span style="color: purple;">adequately documented</span> (even with some <span style="color: purple;">sample data</span>!)
+:::
+
+## Let's start with our toy example
+
+::: incremental
+- Suppose that, <span style="color: purple;">in your everyday analysis</span>, you are usually coding the distribution of observations over the classes (i.e., categories) of a given variable in your dataset
+- Moreover, you would like to <span style="color: purple;">automate</span> this process and <span style="color: purple;">share</span> your work!
+:::
+
+## This is an specific example of your everyday process
+
+- The code below is counting how many cars in `mtcars` (composed of 32 observations) have `4`, `6`, and `8` cylinders
+
+. . .
+
+```{r}
+#| echo: true
+#| code-line-numbers: "|3|4|5|6"
+library(tidyverse, quietly = TRUE)
+
+mtcars |>
+  group_by(cyl) |>
+  summarize(count = n()) |>
+  rename("class" = cyl)
+```
+
+## Is an `R` package the answer to our previous <span style="color: purple;">automate</span> and <span style="color: purple;">sharing</span> inquiries?
+
+## Yes, it is!
+
+::: incremental
+- A published package is crucial in everyday shareable code
+- It encompasses code, data, documentation, and <span style="color: purple;">test functions</span>
+:::
+
+![](img/software.png){fig-align="center" width=5%}
+
+## How are `R` packages shared and downloaded?
+
+- We have the [**Comprehensive R Archive Network (CRAN)**](https://cran.r-project.org)
+
+. . .
+
+> *CRAN is a network of ftp and web servers around the world that store identical, up-to-date, versions of code and documentation for `R`.*
+
+. . .
+
+- As of today, there are over <span style="color: purple;">20,000 packages available</span> on the CRAN
+
+## What will be our learning goals?
+
+::: incremental
+- Develop `R` packages from scratch via a <span style="color: purple;">toy example</span>
+- Introduce the concept of <span style="color: purple;">testing</span> to ensure our package coding works as expected
+- Include the corresponding <span style="color: purple;">documentation</span>
+- Introduce <span style="color: purple;">continuous integration</span> using <span style="color: purple;">GitHub Actions</span>
+- Share and publish packages on <span style="color: purple;">GitHub</span> and <span style="color: purple;">CRAN</span> 
+- Define <span style="color: purple;">copyright rules</span> when building, sharing, and using packages
+- Choose the most appropriate <span style="color: purple;">license</span>
+:::
+
+# Practice building an `R` package
+
+## Attribution
+
+<br>
+
+> This content has been developed on the basis provided by [**Chapter 1: The Whole Game**](https://r-pkgs.org/release.html) (`R` packages book by Hadley Wickham & Jenny Bryan, 2e) and the UBC course notes [**Reproducible and Trustworthy Workflows for Data Science**](https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/materials/lectures/10-packaging-and-documenting.html#when-to-start-writing-an-r-or-python-package) by Tiffany Timbers, Joel Östblom, Florencia D’Andrea, and Rodolfo Lourenzutti
+
+## Toy package: `eda`
+
+::: incremental
+- Our toy package's name will be `eda`
+- As discussed earlier, suppose the package's purpose is to provide data wrangling and summary functions to conduct a proper <span style="color: purple;">exploratory data analysis</span> (hence the name <span style="color: purple;">EDA</span>)
+- We will be switching back and forth between these slides and hands-on practice in <span style="color: purple;">**RStudio**</span> via an `.R` script
+:::
+
+![](img/r-rstudio.png){fig-align="center" width=10%}
+
+## Installing auxiliary `R` packages
+
+::: incremental
+- Before starting with the actual process, we need to <span style="color: purple;">install</span> and <span style="color: purple;">load</span> the packages <span style="color: darkblue;">{devtools}</span> and <span style="color: darkblue;">{usethis}</span>
+- <span style="color: darkblue;">{devtools}</span> is a meta-package that encompasses more focused development-related `R` packages
+- <span style="color: darkblue;">{usethis}</span> automates tasks related to <span style="color: purple;">project setup</span> and <span style="color: purple;">development</span> to build `R` packages
+:::
+
+![](img/usethis-devtools.png){fig-align="center" width=10%}
+
+### Installation and loading code
+
+- Installing <span style="color: darkblue;">{devtools}</span> automatically installs <span style="color: darkblue;">{usethis}</span>
+- Same situation applies when it come to loading the packages
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "|1|3"
+install.packages("devtools")
+
+library(devtools)
+```
+
+## Function `create_package()`
+
+::: incremental
+- Function `create_package()` will <span style="color: purple;">initialize</span> our new package in a directory of our choice 
+- I will initialize the `eda` package in my `Desktop` folder for easier reference
+:::
+
+. . .
+
+::: callout-warning
+## Don'ts when choosing your home directory
+
+-   Your package shouldn't be hosted in another RStudio Project, `R` package, or GitHub repo
+-   Your package shouldn't be hosted in an `R` package library (i.e., where we usually instal other packages from CRAN)
+:::
+
+### Code
+
+```{r}
+#| echo: true
+#| eval: false
+create_package("~/Desktop/eda")
+```
+
+<br>
+
+![](img/create_package.png){fig-align="center" width=8%}
+
+### Project layout description (`ignore`-type files)
+
+::: incremental
+- `.gitignore` is used by GitHub and lists all <span style="color: purple;">"hidden"</span> files created by `R` and RStudio that aren't necessary for the repo
+-  `.Rbuildignore` contains all files created via `R` and RStudio <span style="color: purple;">that won't be necessary</span> when building our package (e.g., `eda.Rproj`)
+:::
+
+### Project layout description (other components)
+
+::: incremental
+- `DESCRIPTION` contains the metadata and dependency installation instructions for our package
+- `eda.Rproj` is the <span style="color: purple;">RStudio project file</span>
+- `NAMESPACE` contains the package's functions to export along with imports from other packages
+- An `R/` directory which will contain <span style="color: purple;">all package's functions</span> as `.R` scripts
+:::
+
+## Function `use_git()`
 
 # Ensuring your code works as expected
 
@@ -22,117 +193,114 @@ Introduce ourselves...
 
 # Publishing your R package
 
-##
+## 
 
-![](img/package_distribution.png)
-*Source: [https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf](https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf)*}
+![](img/package_distribution.png) *Source: <https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf>*}
 
 ## Level 1: Publishing on GitHub
 
-- GitHub is where almost all R packages start out publishing, and continue publishing development versions between releases.
+-   GitHub is where almost all R packages start out publishing, and continue publishing development versions between releases.
 
-- For this to work, you need to push your package code to GitHub and provide users instructions like this to download, build and install your package:
+-   For this to work, you need to push your package code to GitHub and provide users instructions like this to download, build and install your package:
 
-```
+```         
 # install.packages("devtools")
 devtools::install_github("username/package")
 ```
 
-## Level 2: Publishing on CRAN 
+## Level 2: Publishing on CRAN
 
-- CRAN (founded in 1997) stands for the “Comprehensive R Archive Network”.
-- CRAN is a collection of sites which host identical copies of:
-  - R distribution(s)
-  - the contributed extensions (i.e., packages)
-  - documentation for R
-  - binaries (i.e., packages)
-  
+-   CRAN (founded in 1997) stands for the “Comprehensive R Archive Network”.
+-   CRAN is a collection of sites which host identical copies of:
+    -   R distribution(s)
+    -   the contributed extensions (i.e., packages)
+    -   documentation for R
+    -   binaries (i.e., packages)
+
 *Source: Hornik, K (2012). The Comprehensive R Archive Network. Wiley interdisciplinary reviews. Computational statistics. 4(4): 394-398. doi:10.1002/wics.1212*
-  
+
 ## What does it mean to be a CRAN package?
 
-::: {.incremental}
-- A stamp of authenticity: passed quality control of the check utility
+::: incremental
+-   A stamp of authenticity: passed quality control of the check utility
 
-- Ease of installation: can be installed by users via `install.packages()` and binaries are available for Windows & Mac OS’s.
+-   Ease of installation: can be installed by users via `install.packages()` and binaries are available for Windows & Mac OS’s.
 
-- Discoverability: listed as a package on CRAN
+-   Discoverability: listed as a package on CRAN
 
-- However, CRAN makes no assertions about the package’s usability, or the efficiency and correctness of the computations it performs
+-   However, CRAN makes no assertions about the package’s usability, or the efficiency and correctness of the computations it performs
 :::
 
 ## How to submit a package to CRAN
 
-::: {.incremental}
-1. Pick a version number.
+::: incremental
+1.  Pick a version number.
 
-2. Run and document R CMD check.
+2.  Run and document R CMD check.
 
-3. Check that you’re aligned with CRAN policies.
+3.  Check that you’re aligned with CRAN policies.
 
-4. Update README.md and NEWS.md.
+4.  Update README.md and NEWS.md.
 
-5. Submit the package to CRAN.
+5.  Submit the package to CRAN.
 
-6. Prepare for the next version by updating version numbers.
+6.  Prepare for the next version by updating version numbers.
 
-7. Publicise the new version.
+7.  Publicise the new version.
 :::
 
 *Source: [Chapter 22: Releasing to Cran](https://r-pkgs.org/release.html) - R packages book by Hadley Wickham & Jenny Bryan*
 
 ## Notes on submitting to CRAN
 
-- Your package must pass `R CMD check` with the current development version of R.
+-   Your package must pass `R CMD check` with the current development version of R.
 
-- It must work on at least two platforms (CRAN uses the following 4 platforms: Windows, Mac OS X, Linux and Solaris) - use GitHub Actions to ensure this before submitting to CRAN!
+-   It must work on at least two platforms (CRAN uses the following 4 platforms: Windows, Mac OS X, Linux and Solaris) - use GitHub Actions to ensure this before submitting to CRAN!
 
-> If you decide to submit a package to CRAN, follow the detailed instructions in [Chapter 22: Releasing to Cran](https://r-pkgs.org/release.html) from the R packages book by Hadley Wickham & Jenny Bryan. 
+> If you decide to submit a package to CRAN, follow the detailed instructions in [Chapter 22: Releasing to Cran](https://r-pkgs.org/release.html) from the R packages book by Hadley Wickham & Jenny Bryan.
 
 # Copyright & Licenses (who owns the code?)
 
-## Full disclosure... I AM NOT A LAWYER!{.center} 
+## Full disclosure... I AM NOT A LAWYER! {.center}
 
 ## Learning Objectives
 
-::: {.incremental}
-- Explain who owns the copyright of code they write in a give situation
-- Choose an appropriate license for software (and non-software) materials 
-- *Note: In this workshop, we will be focusing on Canadian copyright laws*
+::: incremental
+-   Explain who owns the copyright of code they write in a give situation
+-   Choose an appropriate license for software (and non-software) materials
+-   *Note: In this workshop, we will be focusing on Canadian copyright laws*
 :::
 
 ## Copyright Law
 
-- In both the US and Canada, software code falls under copyright law
+-   In both the US and Canada, software code falls under copyright law
 
-- Copyright protects only the language and words used to express ideas, concepts and themes, not the ideas, concepts or themes themselves.
+-   Copyright protects only the language and words used to express ideas, concepts and themes, not the ideas, concepts or themes themselves.
 
-___
+------------------------------------------------------------------------
 
-- Knowing who owns the copyright of software code is critical because the owner controls if and how the code may be:
-  + copied
-  + distributed
-  + sold
-  + modified
-  + essentially, made profitable 💲💲
-  
-  
-## Canadian Copyright Law 
+-   Knowing who owns the copyright of software code is critical because the owner controls if and how the code may be:
+    -   copied
+    -   distributed
+    -   sold
+    -   modified
+    -   essentially, made profitable 💲💲
+
+## Canadian Copyright Law
 
 In Canada, the copyright owner is afforded the following rights:
 
-- Economic rights:
-  + the right to produce, reproduce, publish, translate, authorize & convert a work
+-   Economic rights:
+    -   the right to produce, reproduce, publish, translate, authorize & convert a work
 
+------------------------------------------------------------------------
 
----
+-   Moral rights:
 
-- Moral rights:
+    -   the right to claim authorship, the right to remain anonymous, or the right to use a pseudonym or pen name
+    -   the right to integrity
+    -   the right of association
 
-  + the right to claim authorship, the right to remain      anonymous, or the right to use a pseudonym or pen name
-  + the right to integrity
-  + the right of association
-  
 > **Economic rights** can be transferred to entities that are not the author, whereas **moral rights** cannot (they can however, be waived).
 
 ## Who has copyright ownership?
@@ -143,120 +311,119 @@ This is a complicated question, and the answer starts with it depends on the cas
 
 ## Case I: You author the code for yourself
 
-- You author the code and you are doing this for **yourself** (i.e., not for your employer, not for a client, etc).
+-   You author the code and you are doing this for **yourself** (i.e., not for your employer, not for a client, etc).
 
-- In such a case, you (the person who typed the code) automatically become the copyright owner.
-
+-   In such a case, you (the person who typed the code) automatically become the copyright owner.
 
 ## 
-- In both Canada and the USA, you do not need to need to affix the copyright symbol © to your work (some other countries do require this however).
 
-- Although the copyright symbol © is not required, it is often used in copyrighted works to clearly identify that the code is protected by copyright.
+-   In both Canada and the USA, you do not need to need to affix the copyright symbol © to your work (some other countries do require this however).
+
+-   Although the copyright symbol © is not required, it is often used in copyrighted works to clearly identify that the code is protected by copyright.
 
 > In both Canada and the US, it is possible (and advisable) to register your copyright as evidence that a copyright exists and who the owner is.
 
 ## Case II: You write the code in the course of employment
 
-- In Canada, if you write code for work as an employee the copyright ownership is typically assigned to **the employer**.
+-   In Canada, if you write code for work as an employee the copyright ownership is typically assigned to **the employer**.
 
-##
-- In the Canada, software code is defined as “work made in the course of employment” if:
+## 
+
+-   In the Canada, software code is defined as “work made in the course of employment” if:
 
 > The author of the code was in the employment **of** some other entity under a contract of service or apprenticeship and the code was written in the course of their employment by that entity. And there exists no agreement (written, or otherwise, and even potentially even presumed) that the employee retains ownership of copyright for the code written during the term of their employment.
 
---- 
-- Work made in the course of employment is different than a contract **for** services (in which the author of the code acts more like an independent consultant, and in such a case it does not appear that “work made in the course of employment” would apply). 
+------------------------------------------------------------------------
 
-- In this case, the default position is usually that the **contractor retains copyright ownership** of the work they create, unless the contract specifically assigns copyright to the client.
+-   Work made in the course of employment is different than a contract **for** services (in which the author of the code acts more like an independent consultant, and in such a case it does not appear that “work made in the course of employment” would apply).
+
+-   In this case, the default position is usually that the **contractor retains copyright ownership** of the work they create, unless the contract specifically assigns copyright to the client.
 
 ## Implications when you forgo copyright ownership
 
--  Q: What if you forgo copyright ownership and want to use any of the code that you wrote again?
+-   Q: What if you forgo copyright ownership and want to use any of the code that you wrote again?
 
-- A: You would need to negotiate a licence to use the code you wrote, the same way any other third-party would… 😓
+-   A: You would need to negotiate a licence to use the code you wrote, the same way any other third-party would… 😓
 
 ## 
 
 To avoid this issue, you could:
 
-- Negotiate which code is core to the work (“work-made-for-hire”) and what (pre-built) code (e.g., packages, scripts) are outside the core work and should not (*at the beginning of the project!*).
+-   Negotiate which code is core to the work (“work-made-for-hire”) and what (pre-built) code (e.g., packages, scripts) are outside the core work and should not (*at the beginning of the project!*).
 
-- Negotiate that the client purchase a license to the code you write (as opposed to hiring you to write the code).
+-   Negotiate that the client purchase a license to the code you write (as opposed to hiring you to write the code).
 
 ## Licenses
 
--  If you publicly share your creative work (i.e., software code), you should let others know if and how they can reuse it! 
+-   If you publicly share your creative work (i.e., software code), you should let others know if and how they can reuse it!
 
-- This is done via the inclusion of a `LICENSE` or `LICENSE.txt` file in the base directory of the repository that clearly states under which license the content is being made available.
+-   This is done via the inclusion of a `LICENSE` or `LICENSE.txt` file in the base directory of the repository that clearly states under which license the content is being made available.
 
 ## Licenses (cont'd)
 
-- Unless you include a license that specifies otherwise, nobody else can copy, distribute, or modify your work without being at risk of take-downs, shake-downs, or litigation.
+-   Unless you include a license that specifies otherwise, nobody else can copy, distribute, or modify your work without being at risk of take-downs, shake-downs, or litigation.
 
-- Once the work has other contributors (each a copyright holder), “nobody” starts including you!
+-   Once the work has other contributors (each a copyright holder), “nobody” starts including you!
 
-- A license solves this problem by granting rights to others (the licensees) that they would otherwise not have.
+-   A license solves this problem by granting rights to others (the licensees) that they would otherwise not have.
 
 ## Choosing a License
 
 Important considerations when choosing a license include:
 
-- Whether you require people distributing derivative works to also require others to distribute their derivative works in the same way.
+-   Whether you require people distributing derivative works to also require others to distribute their derivative works in the same way.
 
-- Whether the content you are licensing is source code, and if it is, whether you want to require that derivatives of your work share the source code
-
+-   Whether the content you are licensing is source code, and if it is, whether you want to require that derivatives of your work share the source code
 
 ## Choosing a License (cont'd)
 
-- In practice, a few licenses are by far the most popular.
+-   In practice, a few licenses are by far the most popular.
 
-- [choosealicense.com](choosealicense.com) will help you find a common license that suits your needs.
+-   [choosealicense.com](choosealicense.com) will help you find a common license that suits your needs.
 
 > 💡Tip: Choose a license that is in common use! This makes life easier for contributors and users, because they are more likely to already be familiar with the license and don’t have to wade through a bunch of jargon to decide if they’re ok with it.
 
-## Creative Commons 
+## Creative Commons
 
-- But not all my creative Data Science work is code (e.g. visualizations, reports, presentations), so how do I license it?
+-   But not all my creative Data Science work is code (e.g. visualizations, reports, presentations), so how do I license it?
 
-- The **Creative Commons** licences were created for such works and they are now widely used in academia and the publishing industry.
+-   The **Creative Commons** licences were created for such works and they are now widely used in academia and the publishing industry.
 
-> [https://chooser-beta.creativecommons.org/](https://chooser-beta.creativecommons.org/)
+> <https://chooser-beta.creativecommons.org/>
 
 ## Creative Commons (cont'd)
 
- 
 ![](img/CC1.jpg)
 
-*Source: “How to License Poster” by Creative Commons is licensed under CC BY 4.0* 
+*Source: “How to License Poster” by Creative Commons is licensed under CC BY 4.0*
 
 ## Creative Commons (cont'd)
+
 ![](img/CC2.jpg)
 
 *Source: “How to License Poster” by Creative Commons is licensed under CC BY 4.0*
 
 ## Review
 
-::: {.incremental}
-- In Canada, who typically owns the copyright of code written during employment? 
-- A: The employee
-- B: The employer
-- C: The consultant
-- D: All parties involved 
-- <span style="color:blue">Answer - B: The employer</span>  
+::: incremental
+-   In Canada, who typically owns the copyright of code written during employment?
+-   A: The employee
+-   B: The employer
+-   C: The consultant
+-   D: All parties involved
+-   [Answer - B: The employer]{style="color:blue"}\
 :::
 
+## References
 
-## References 
+-   [Who Owns The Code?](https://asp-software.org/www/misv_resources/business-articles/who-owns-the-code/)
 
-- [Who Owns The Code?](https://asp-software.org/www/misv_resources/business-articles/who-owns-the-code/)
+-   [Canadian Copyright Law - University of Alberta](https://www.ualberta.ca/faculty-and-staff/copyright/intro-to-copyright-law/canadian-copyright-law.html)
 
-- [Canadian Copyright Law - University of Alberta](https://www.ualberta.ca/faculty-and-staff/copyright/intro-to-copyright-law/canadian-copyright-law.html)
+-   [Do you actually own the IP generated by your Canadian employees?](https://www.smartbiggar.ca/insights/publication/do-you-actually-own-the-ip-generated-by-your-canadian-employees-)
 
-- [Do you actually own the IP generated by your Canadian employees?](https://www.smartbiggar.ca/insights/publication/do-you-actually-own-the-ip-generated-by-your-canadian-employees-)
+-   [Ownership of Copyright - Canadian Copyright Act](https://laws-lois.justice.gc.ca/eng/acts/C-42/page-4.html#h-102834)
 
-- [Ownership of Copyright - Canadian Copyright Act](https://laws-lois.justice.gc.ca/eng/acts/C-42/page-4.html#h-102834)
+-   [The Unreasonable Fear of Infection](https://www.rosenlaw.com/html/GPL.pdf)
 
-- [The Unreasonable Fear of Infection](https://www.rosenlaw.com/html/GPL.pdf)
-
-- [Frequently Asked Questions about the GNU Licenses](https://www.gnu.org/licenses/gpl-faq.en.html)
-
+-   [Frequently Asked Questions about the GNU Licenses](https://www.gnu.org/licenses/gpl-faq.en.html)
