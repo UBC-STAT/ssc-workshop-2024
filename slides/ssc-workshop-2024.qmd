@@ -545,7 +545,9 @@ Let's go to this version of the `eda` package and explore how to do this:
 
 ## 
 
-![](img/package_distribution.png) *Source: <https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf>*}
+![](img/package_distribution.png){width=600}
+
+*Source: <https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf>*
 
 ## Level 1: Publishing on GitHub
 
@@ -586,17 +588,17 @@ devtools::install_github("username/package")
 ::: incremental
 1.  Pick a version number.
 
-2.  Run and document R CMD check.
+2.  Run and document `R CMD check`.
 
 3.  Check that you’re aligned with CRAN policies.
 
-4.  Update README.md and NEWS.md.
+4.  Update `README.md` and `NEWS.md`.
 
 5.  Submit the package to CRAN.
 
 6.  Prepare for the next version by updating version numbers.
 
-7.  Publicise the new version.
+7.  Publicize the new version.
 :::
 
 *Source: [Chapter 22: Releasing to Cran](https://r-pkgs.org/release.html) - R packages book by Hadley Wickham & Jenny Bryan*
@@ -678,11 +680,13 @@ This is a complicated question, and the answer starts with it depends on the cas
 -   In Canada, if you write code for work as an employee the copyright ownership is typically assigned to **the employer**.
 
 ## 
+:::incremental 
+In the Canada, software code is defined as “work made in the course of employment” if:
 
--   In the Canada, software code is defined as “work made in the course of employment” if:
+- The author of the code was in the employment of some other entity under a contract **of** service or apprenticeship and the code was written in the course of their employment by that entity. 
 
-> The author of the code was in the employment **of** some other entity under a contract of service or apprenticeship and the code was written in the course of their employment by that entity. And there exists no agreement (written, or otherwise, and even potentially even presumed) that the employee retains ownership of copyright for the code written during the term of their employment.
-
+- And there exists no agreement (written, or otherwise, and even potentially even presumed) that the employee retains ownership of copyright for the code written during the term of their employment.
+:::
 ------------------------------------------------------------------------
 
 -   Work made in the course of employment is different than a contract **for** services (in which the author of the code acts more like an independent consultant, and in such a case it does not appear that “work made in the course of employment” would apply).
@@ -691,17 +695,20 @@ This is a complicated question, and the answer starts with it depends on the cas
 
 ## Implications when you forgo copyright ownership
 
+::: incremental
 -   Q: What if you forgo copyright ownership and want to use any of the code that you wrote again?
 
 -   A: You would need to negotiate a licence to use the code you wrote, the same way any other third-party would… 😓
-
+:::
 ## 
 
+::: incremental
 To avoid this issue, you could:
 
 -   Negotiate which code is core to the work (“work-made-for-hire”) and what (pre-built) code (e.g., packages, scripts) are outside the core work and should not (*at the beginning of the project!*).
 
 -   Negotiate that the client purchase a license to the code you write (as opposed to hiring you to write the code).
+:::
 
 ## Licenses
 
@@ -718,12 +725,13 @@ To avoid this issue, you could:
 -   A license solves this problem by granting rights to others (the licensees) that they would otherwise not have.
 
 ## Choosing a License
-
+::: incremental
 Important considerations when choosing a license include:
 
 -   Whether you require people distributing derivative works to also require others to distribute their derivative works in the same way.
 
 -   Whether the content you are licensing is source code, and if it is, whether you want to require that derivatives of your work share the source code
+:::
 
 ## Choosing a License (cont'd)
 
@@ -732,10 +740,6 @@ Important considerations when choosing a license include:
 -   [choosealicense.com](choosealicense.com) will help you find a common license that suits your needs.
 
 > 💡Tip: Choose a license that is in common use! This makes life easier for contributors and users, because they are more likely to already be familiar with the license and don’t have to wade through a bunch of jargon to decide if they’re ok with it.
-
-## Case Study: Which license should I choose?
-
-Imagine you're a data scientist working for an environmental organization and you developed a tool that analyzes satellite imagery to track deforestation patterns. Your primary goal is to make this tool freely available to researchers and other conservationists to help monitor and combat deforestation, but you still want to retain the copyright to your tool. 
 
 ## Creative Commons
 
@@ -756,6 +760,15 @@ Imagine you're a data scientist working for an environmental organization and yo
 ![](img/CC2.jpg)
 
 *Source: “How to License Poster” by Creative Commons is licensed under CC BY 4.0*
+
+
+## Scenario 1 
+
+Imagine you're a data scientist and you developed a tool that analyzes satellite imagery to track deforestation patterns. Your primary goal is to make this tool freely available to researchers and other conservationists to help monitor and combat deforestation, but you still want to retain the copyright to your tool. 
+
+## Scenario 2 
+
+Imagine you're a data scientist and you have compiled a data set of climate change projections from various scientific sources. In order to promote further analyses aimed at understanding and mitigating the effects of climate change, you want to share this data set with the research community. 
 
 
 ## References

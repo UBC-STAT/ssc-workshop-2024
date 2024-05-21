@@ -832,7 +832,8 @@
 </section>
 <section id="section" class="title-slide slide level2 center">
 <h2></h2>
-<p><img data-src="img/package_distribution.png"> <em>Source: <a href="https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf" class="uri">https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf</a></em>}</p>
+
+<img data-src="img/package_distribution.png" width="600" class="r-stretch"><p><em>Source: <a href="https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf" class="uri">https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf</a></em></p>
 </section>
 
 <section id="level-1-publishing-on-github" class="title-slide slide level2 center">
@@ -877,12 +878,12 @@ devtools::install_github("username/package")</code></pre>
 <div>
 <ol type="1">
 <li class="fragment"><p>Pick a version number.</p></li>
-<li class="fragment"><p>Run and document R CMD check.</p></li>
+<li class="fragment"><p>Run and document <code>R CMD check</code>.</p></li>
 <li class="fragment"><p>Check that you’re aligned with CRAN policies.</p></li>
-<li class="fragment"><p>Update README.md and NEWS.md.</p></li>
+<li class="fragment"><p>Update <code>README.md</code> and <code>NEWS.md</code>.</p></li>
 <li class="fragment"><p>Submit the package to CRAN.</p></li>
 <li class="fragment"><p>Prepare for the next version by updating version numbers.</p></li>
-<li class="fragment"><p>Publicise the new version.</p></li>
+<li class="fragment"><p>Publicize the new version.</p></li>
 </ol>
 </div>
 <p><em>Source: <a href="https://r-pkgs.org/release.html">Chapter 22: Releasing to Cran</a> - R packages book by Hadley Wickham &amp; Jenny Bryan</em></p>
@@ -1000,12 +1001,13 @@ devtools::install_github("username/package")</code></pre>
 
 <section id="section-2" class="title-slide slide level2 center">
 <h2></h2>
+<div>
+<p>In the Canada, software code is defined as “work made in the course of employment” if:</p>
 <ul>
-<li>In the Canada, software code is defined as “work made in the course of employment” if:</li>
+<li class="fragment"><p>The author of the code was in the employment of some other entity under a contract <strong>of</strong> service or apprenticeship and the code was written in the course of their employment by that entity.</p></li>
+<li class="fragment"><p>And there exists no agreement (written, or otherwise, and even potentially even presumed) that the employee retains ownership of copyright for the code written during the term of their employment.</p></li>
 </ul>
-<blockquote>
-<p>The author of the code was in the employment <strong>of</strong> some other entity under a contract of service or apprenticeship and the code was written in the course of their employment by that entity. And there exists no agreement (written, or otherwise, and even potentially even presumed) that the employee retains ownership of copyright for the code written during the term of their employment.</p>
-</blockquote>
+</div>
 </section>
 <section class="slide level4">
 
@@ -1017,19 +1019,23 @@ devtools::install_github("username/package")</code></pre>
 
 <section id="implications-when-you-forgo-copyright-ownership" class="title-slide slide level2 center">
 <h2>Implications when you forgo copyright ownership</h2>
+<div>
 <ul>
-<li><p>Q: What if you forgo copyright ownership and want to use any of the code that you wrote again?</p></li>
-<li><p>A: You would need to negotiate a licence to use the code you wrote, the same way any other third-party would… 😓</p></li>
+<li class="fragment"><p>Q: What if you forgo copyright ownership and want to use any of the code that you wrote again?</p></li>
+<li class="fragment"><p>A: You would need to negotiate a licence to use the code you wrote, the same way any other third-party would… 😓</p></li>
 </ul>
+</div>
 </section>
 
 <section id="section-3" class="title-slide slide level2 center">
 <h2></h2>
+<div>
 <p>To avoid this issue, you could:</p>
 <ul>
-<li><p>Negotiate which code is core to the work (“work-made-for-hire”) and what (pre-built) code (e.g., packages, scripts) are outside the core work and should not (<em>at the beginning of the project!</em>).</p></li>
-<li><p>Negotiate that the client purchase a license to the code you write (as opposed to hiring you to write the code).</p></li>
+<li class="fragment"><p>Negotiate which code is core to the work (“work-made-for-hire”) and what (pre-built) code (e.g., packages, scripts) are outside the core work and should not (<em>at the beginning of the project!</em>).</p></li>
+<li class="fragment"><p>Negotiate that the client purchase a license to the code you write (as opposed to hiring you to write the code).</p></li>
 </ul>
+</div>
 </section>
 
 <section id="licenses" class="title-slide slide level2 center">
@@ -1051,11 +1057,13 @@ devtools::install_github("username/package")</code></pre>
 
 <section id="choosing-a-license" class="title-slide slide level2 center">
 <h2>Choosing a License</h2>
+<div>
 <p>Important considerations when choosing a license include:</p>
 <ul>
-<li><p>Whether you require people distributing derivative works to also require others to distribute their derivative works in the same way.</p></li>
-<li><p>Whether the content you are licensing is source code, and if it is, whether you want to require that derivatives of your work share the source code</p></li>
+<li class="fragment"><p>Whether you require people distributing derivative works to also require others to distribute their derivative works in the same way.</p></li>
+<li class="fragment"><p>Whether the content you are licensing is source code, and if it is, whether you want to require that derivatives of your work share the source code</p></li>
 </ul>
+</div>
 </section>
 
 <section id="choosing-a-license-contd" class="title-slide slide level2 center">
@@ -1067,11 +1075,6 @@ devtools::install_github("username/package")</code></pre>
 <blockquote>
 <p>💡Tip: Choose a license that is in common use! This makes life easier for contributors and users, because they are more likely to already be familiar with the license and don’t have to wade through a bunch of jargon to decide if they’re ok with it.</p>
 </blockquote>
-</section>
-
-<section id="case-study-which-license-should-i-choose" class="title-slide slide level2 center">
-<h2>Case Study: Which license should I choose?</h2>
-<p>Imagine you’re a data scientist working for an environmental organization and you developed a tool that analyzes satellite imagery to track deforestation patterns. Your primary goal is to make this tool freely available to researchers and other conservationists to help monitor and combat deforestation, but you still want to retain the copyright to your tool.</p>
 </section>
 
 <section id="creative-commons" class="title-slide slide level2 center">
@@ -1095,6 +1098,16 @@ devtools::install_github("username/package")</code></pre>
 <h2>Creative Commons (cont’d)</h2>
 
 <img data-src="img/CC2.jpg" class="r-stretch"><p><em>Source: “How to License Poster” by Creative Commons is licensed under CC BY 4.0</em></p>
+</section>
+
+<section id="scenario-1" class="title-slide slide level2 center">
+<h2>Scenario 1</h2>
+<p>Imagine you’re a data scientist and you developed a tool that analyzes satellite imagery to track deforestation patterns. Your primary goal is to make this tool freely available to researchers and other conservationists to help monitor and combat deforestation, but you still want to retain the copyright to your tool.</p>
+</section>
+
+<section id="scenario-2" class="title-slide slide level2 center">
+<h2>Scenario 2</h2>
+<p>Imagine you’re a data scientist and you have compiled a data set of climate change projections from various scientific sources. In order to promote further analyses aimed at understanding and mitigating the effects of climate change, you want to share this data set with the research community.</p>
 </section>
 
 <section id="references" class="title-slide slide level2 center">
