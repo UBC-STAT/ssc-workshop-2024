@@ -733,6 +733,10 @@ Important considerations when choosing a license include:
 
 > 💡Tip: Choose a license that is in common use! This makes life easier for contributors and users, because they are more likely to already be familiar with the license and don’t have to wade through a bunch of jargon to decide if they’re ok with it.
 
+## Case Study: Which license should I choose?
+
+Imagine you're a data scientist working for an environmental organization and you developed a tool that analyzes satellite imagery to track deforestation patterns. Your primary goal is to make this tool freely available to researchers and other conservationists to help monitor and combat deforestation, but you still want to retain the copyright to your tool. 
+
 ## Creative Commons
 
 -   But not all my creative Data Science work is code (e.g. visualizations, reports, presentations), so how do I license it?
@@ -753,16 +757,6 @@ Important considerations when choosing a license include:
 
 *Source: “How to License Poster” by Creative Commons is licensed under CC BY 4.0*
 
-## Review
-
-::: incremental
--   In Canada, who typically owns the copyright of code written during employment?
--   A: The employee
--   B: The employer
--   C: The consultant
--   D: All parties involved
--   [Answer - B: The employer]{style="color:blue"}\
-:::
 
 ## References
 
