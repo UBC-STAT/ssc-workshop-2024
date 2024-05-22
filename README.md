@@ -1,4 +1,4 @@
-# ssc-workshop-2024
+# SSC Workshop 2024
 
 ## How to create and distribute R packages
 
