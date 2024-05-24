@@ -1080,7 +1080,7 @@ Let's go to this version of the <span style="color: purple;">{eda}</span> packag
 
 # Publishing your R package
 
-##
+## 
 
 ![](img/package_distribution.png){width=600}
 
