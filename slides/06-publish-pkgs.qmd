@@ -8,6 +8,15 @@ format:
 
 ## 
 
+Congratulations, your package is ready to be published! 🎉
+
+Take a moment to reflect on where you might want to publish your package (GitHub vs. CRAN). Think about which would be easier as the...
+
+- User
+- Maintainer
+
+## 
+
 ![](img/package_distribution.png){width=600}
 
 *Source: <https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf>*
