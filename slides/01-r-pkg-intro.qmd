@@ -1,0 +1,96 @@
+---
+title: "How to create and distribute `R` packages"
+format: 
+  revealjs:
+    slide-number: true
+    slide-level: 4
+---
+
+# Welcome!
+
+Let's introduce ourselves...
+
+::: {.fragment .fade-left}
+::: {#fig-team layout-ncol="4"}
+![Katie Burak](img/photo_katie.jpg){width=200}
+
+![Daniel Chen](img/photo_daniel.jpg){width=200}
+
+![G. Alexi Rodríguez-Arelis](img/photo_alexi.jpg){width=200}
+
+![Tiffany Timbers](img/timbers_2021.jpg){width=200}
+
+Teaching team
+:::
+:::
+
+# What is an `R` package and when should I make one?
+
+![](img/panda.png){fig-align="center" width=10%}
+
+## This question is key!
+
+::: incremental
+- An `R` package is central to generating <span style="color: purple;">reproducible code</span>
+- It allows us to call functions whenever we need them in our data wrangling and/or analysis
+- Its functions are expected to be reproducible code and <span style="color: purple;">adequately documented</span> (even with some <span style="color: purple;">sample data</span>!)
+:::
+
+## Let's start with our toy example
+
+::: incremental
+- Suppose that, <span style="color: purple;">in your everyday analysis</span>, you are usually coding the distribution of observations over the classes (i.e., categories) of a given variable in your dataset
+- Moreover, you would like to <span style="color: purple;">automate</span> this process and <span style="color: purple;">share</span> your work!
+:::
+
+## This is an specific example of your everyday process
+
+- The code below is counting how many cars in `mtcars` (composed of 32 observations) have `4`, `6`, and `8` cylinders
+
+. . .
+
+```{r}
+#| echo: true
+#| code-line-numbers: "|3|4|5|6"
+library(tidyverse, quietly = TRUE)
+
+mtcars |>
+  group_by(cyl) |>
+  summarize(count = n()) |>
+  rename("class" = cyl)
+```
+
+## Is an `R` package the answer to our previous <span style="color: purple;">automation</span> and <span style="color: purple;">sharing</span> inquiries?
+
+## Yes, it is!
+
+::: incremental
+- A published package is crucial in everyday shareable code
+- It encompasses code, data, documentation, and <span style="color: purple;">test functions</span>
+:::
+
+![](img/software.png){fig-align="center" width=5%}
+
+## How are `R` packages shared and downloaded?
+
+- We have the [**Comprehensive R Archive Network (CRAN)**](https://cran.r-project.org)
+
+. . .
+
+> *CRAN is a network of ftp and web servers around the world that store identical, up-to-date, versions of code and documentation for `R`.*
+
+. . .
+
+- As of today, there are over <span style="color: purple;">20,000 packages available</span> on the CRAN
+
+## What will be our learning goals?
+
+::: incremental
+- Develop `R` packages from scratch via a <span style="color: purple;">toy example</span>
+- Introduce the concept of <span style="color: purple;">testing</span> to ensure our package coding works as expected
+- Include the corresponding <span style="color: purple;">documentation</span>
+- Introduce <span style="color: purple;">continuous integration</span> using <span style="color: purple;">GitHub Actions</span>
+- Share and publish packages on <span style="color: purple;">GitHub</span> and <span style="color: purple;">CRAN</span> 
+- Define <span style="color: purple;">copyright rules</span> when building, sharing, and using packages
+- Choose the most appropriate <span style="color: purple;">license</span>
+:::
