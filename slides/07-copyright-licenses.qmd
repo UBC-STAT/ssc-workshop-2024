@@ -163,6 +163,9 @@ Imagine you're a data scientist and you developed a tool that analyzes satellite
 
 Imagine you're a data scientist and you have compiled a data set of climate change projections from various scientific sources. In order to promote further analyses aimed at understanding and mitigating the effects of climate change, you want to share this data set with the research community. 
 
+## Attribution 
+
+This content has been developed based on the UBC course notes for  [**DSCI 524: Collaborative Software Development**](https://ubc-mds.github.io/DSCI_524_collab-sw-dev/README.html) by Tiffany Timbers
 
 ## References
 
