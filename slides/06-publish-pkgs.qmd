@@ -83,3 +83,8 @@ devtools::install_github("username/package")
 
 > If you decide to submit a package to CRAN, follow the detailed instructions in [Chapter 22: Releasing to Cran](https://r-pkgs.org/release.html) from the R packages book by Hadley Wickham & Jenny Bryan.
 
+## Attribution
+
+This content has been developed based on the UBC course notes for [**Reproducible and Trustworthy Workflows for Data Science**](https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/materials/lectures/10-packaging-and-documenting.html#when-to-start-writing-an-r-or-python-package) by Tiffany Timbers, Joel Östblom, Florencia D’Andrea, and Rodolfo Lourenzutti
+
+
