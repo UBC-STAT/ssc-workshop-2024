@@ -17,7 +17,7 @@ Take a moment to reflect on where you might want to publish your package (GitHub
 
 ## 
 
-![](img/package_distribution.png){width=600}
+![](img/package_distribution.png){fig-align="center" width=600}
 
 *Source: <https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf>*
 
