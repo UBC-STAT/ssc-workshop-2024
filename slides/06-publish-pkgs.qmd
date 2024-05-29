@@ -28,8 +28,7 @@ Take a moment to reflect on where you might want to publish your package (GitHub
 -   For this to work, you need to push your package code to GitHub and provide users instructions like this to download, build and install your package:
 
 ```         
-# install.packages("devtools")
-devtools::install_github("username/eda")
+devtools::install_github("katieburak/eda")
 ```
 
 ## Level 2: Publishing on CRAN
@@ -73,10 +72,23 @@ devtools::install_github("username/eda")
 6.  Prepare for the next version by updating version numbers.
 
 7.  Publicize the new version.
+:::
 
 ::: {style="font-size: 50%;"}
 *Source: [Chapter 22: Releasing to Cran](https://r-pkgs.org/release.html) - R packages book by Hadley Wickham & Jenny Bryan*
 :::
+
+## Common problems (from the R packages book):
+
+- The maintainer’s e-mail address must be stable (if they can’t get in touch with you they will remove your package from CRAN).
+
+- You must have clearly identified the copyright holders in DESCRIPTION.
+
+- Do not make external changes without explicit user permission. 
+
+- Do not submit updates too frequently. The policy suggests a new version once every 1-2 months at most.
+
+
 
 
 ## Notes on submitting to CRAN

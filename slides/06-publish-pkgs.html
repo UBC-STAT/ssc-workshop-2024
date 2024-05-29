@@ -352,8 +352,7 @@
 <li><p>GitHub is where almost all R packages start out publishing, and continue publishing development versions between releases.</p></li>
 <li><p>For this to work, you need to push your package code to GitHub and provide users instructions like this to download, build and install your package:</p></li>
 </ul>
-<pre><code># install.packages("devtools")
-devtools::install_github("username/eda")</code></pre>
+<pre><code>devtools::install_github("katieburak/eda")</code></pre>
 </section>
 
 <section id="level-2-publishing-on-cran" class="title-slide slide level2 center">
@@ -387,18 +386,30 @@ devtools::install_github("username/eda")</code></pre>
 
 <section id="how-to-submit-a-package-to-cran" class="title-slide slide level2 center">
 <h2>How to submit a package to CRAN</h2>
-<p>::: incremental 1. Pick a version number.</p>
-<ol start="2" type="1">
-<li><p>Run and document <code>R CMD check</code>.</p></li>
-<li><p>Check that you’re aligned with <a href="https://cran.r-project.org/web/packages/policies.html">CRAN policies</a>.</p></li>
-<li><p>Update <code>README.md</code> and <code>NEWS.md</code>.</p></li>
-<li><p>Submit the package to CRAN.</p></li>
-<li><p>Prepare for the next version by updating version numbers.</p></li>
-<li><p>Publicize the new version.</p></li>
+<div>
+<ol type="1">
+<li class="fragment"><p>Pick a version number.</p></li>
+<li class="fragment"><p>Run and document <code>R CMD check</code>.</p></li>
+<li class="fragment"><p>Check that you’re aligned with <a href="https://cran.r-project.org/web/packages/policies.html">CRAN policies</a>.</p></li>
+<li class="fragment"><p>Update <code>README.md</code> and <code>NEWS.md</code>.</p></li>
+<li class="fragment"><p>Submit the package to CRAN.</p></li>
+<li class="fragment"><p>Prepare for the next version by updating version numbers.</p></li>
+<li class="fragment"><p>Publicize the new version.</p></li>
 </ol>
+</div>
 <div style="font-size: 50%;">
 <p><em>Source: <a href="https://r-pkgs.org/release.html">Chapter 22: Releasing to Cran</a> - R packages book by Hadley Wickham &amp; Jenny Bryan</em></p>
 </div>
+</section>
+
+<section id="common-problems-from-the-r-packages-book" class="title-slide slide level2 center">
+<h2>Common problems (from the R packages book):</h2>
+<ul>
+<li><p>The maintainer’s e-mail address must be stable (if they can’t get in touch with you they will remove your package from CRAN).</p></li>
+<li><p>You must have clearly identified the copyright holders in DESCRIPTION.</p></li>
+<li><p>Do not make external changes without explicit user permission.</p></li>
+<li><p>Do not submit updates too frequently. The policy suggests a new version once every 1-2 months at most.</p></li>
+</ul>
 </section>
 
 <section id="notes-on-submitting-to-cran" class="title-slide slide level2 center">
