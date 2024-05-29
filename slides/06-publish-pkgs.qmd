@@ -29,7 +29,7 @@ Take a moment to reflect on where you might want to publish your package (GitHub
 
 ```         
 # install.packages("devtools")
-devtools::install_github("username/package")
+devtools::install_github("username/eda")
 ```
 
 ## Level 2: Publishing on CRAN
