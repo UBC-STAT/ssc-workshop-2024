@@ -13,7 +13,7 @@ format:
 ::: incremental
 -   Explain who owns the copyright of code they write in a give situation
 -   Choose an appropriate license for software (and non-software) materials
--   *Note: In this workshop, we will be focusing on Canadian copyright laws*
+>  **Note:** In this workshop, we will be focusing on Canadian copyright laws
 :::
 
 ## Copyright Law
