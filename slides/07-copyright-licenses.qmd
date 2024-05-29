@@ -22,7 +22,7 @@ format:
 
 -   Copyright protects only the language and words used to express ideas, concepts and themes, not the ideas, concepts or themes themselves.
 
-------------------------------------------------------------------------
+##
 
 -   Knowing who owns the copyright of software code is critical because the owner controls if and how the code may be:
     -   copied
@@ -38,7 +38,7 @@ In Canada, the copyright owner is afforded the following rights:
 -   Economic rights:
     -   the right to produce, reproduce, publish, translate, authorize & convert a work
 
-------------------------------------------------------------------------
+##
 
 -   Moral rights:
 
@@ -66,7 +66,7 @@ This is a complicated question, and the answer starts with it depends on the cas
 
 -   Although the copyright symbol © is not required, it is often used in copyrighted works to clearly identify that the code is protected by copyright.
 
-> In both Canada and the US, it is possible (and advisable) to register your copyright as evidence that a copyright exists and who the owner is.
+> It is possible (and advisable) to [register your copyright](https://ised-isde.canada.ca/site/canadian-intellectual-property-office/en/copyright/registration-copyright-filing-online) as evidence that a copyright exists and who the owner is.
 
 ## Case II: You write the code in the course of employment
 
@@ -80,9 +80,10 @@ In the Canada, software code is defined as “work made in the course of employm
 
 - And there exists no agreement (written, or otherwise, and even potentially even presumed) that the employee retains ownership of copyright for the code written during the term of their employment.
 :::
-------------------------------------------------------------------------
 
--   Work made in the course of employment is different than a contract **for** services (in which the author of the code acts more like an independent consultant, and in such a case it does not appear that “work made in the course of employment” would apply).
+## 
+
+-   Work made in the course of employment is different than a contract **for** services (e.g., independent consultant where “work made in the course of employment” would not apply).
 
 -   In this case, the default position is usually that the **contractor retains copyright ownership** of the work they create, unless the contract specifically assigns copyright to the client.
 
@@ -107,7 +108,11 @@ To avoid this issue, you could:
 
 -   If you publicly share your creative work (i.e., software code), you should let others know if and how they can reuse it!
 
--   This is done via the inclusion of a `LICENSE` or `LICENSE.txt` file in the base directory of the repository that clearly states under which license the content is being made available.
+-   This is done via the inclusion of a `LICENSE` or `LICENSE.md` file in the base directory of the repository that clearly states under which license the content is being made available.
+
+## {.center}
+
+![](img/license.png)
 
 ## Licenses (cont'd)
 
