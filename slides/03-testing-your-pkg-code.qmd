@@ -1,78 +1,123 @@
 ---
-title: "Ensuring your code works as expected - and introduction to testing"
+title: "Ensuring your code works as expected"
+subtitle: "An Introduction to testing"
 format: 
   revealjs:
     slide-number: true
     slide-level: 4
 editor: source
 bibliography: references.bib
+execute:
+  echo: true
+  eval: false
 ---
 
 ## Testability
 
-Testability is defined as the degree to which a system 
+::: {.fragment}
+- defined as the degree to which a system 
 or component facilitates the establishment of test objectives 
 and the execution of tests to determine 
 whether those objectives have been achieved.
+::: 
 
-In order to be successful, 
+::: {.fragment}
+- to be successful, 
 a test needs to be able to execute the code you wish to test, 
 in a way that can trigger a defect 
 that will propagate an incorrect result to a program point
 where it can be checked against the expected behaviour. 
-
+:::
 ## High-level properties for effective test writing and execution
 
-**controllability**: the code under test needs to be able to be programmatically controlled
+::: {.fragment}
+1. **controllability**: the code under test needs to be able to be programmatically controlled
+:::
 
-**observability**: the outcome of the code under test needs to be able to be verified
+::: {.fragment}
+2. **observability**: the outcome of the code under test needs to be able to be verified
+:::
 
-**isolateablilty**: the code under test needs to be able to be validated on its own
+::: {.fragment}
+3. **isolateablilty**: the code under test needs to be able to be validated on its own
+:::
 
-**automatability**: the tests should be able to be executed automatically
-
-Source: [CPSC 310](https://github.com/ubccpsc/310/blob/master/resources/readings/TestabilityAssertions.md) 
-& [CPSC 410](https://www.cs.ubc.ca/~rtholmes/teaching/2015t1/cpsc410/slides/410_19_testability.pdf) class notes from Reid Holmes, UBC]
+::: {.fragment}
+4. **automatability**: the tests should be able to be executed automatically
+:::
 
 ## What kinds of tests do we write for our functions?
 
-When I am designing tests for my function, 
 I like to think about three broad categories of tests, 
 and then write 2-3 tests for each 
-(or more if the function is complex and takes many arguments):
+(or more if the function is complex):
 
+::: {.fragment}
 1. Simple expected use cases
+:::
 
+::: {.fragment}
 2. Edge cases (unexpected, or rare use cases)
+:::
 
+::: {.fragment}
 3. Errors
+:::
 
-We will come back to these and provide specific examples in a few minutes.
+::: {.fragment}
+*We will come back to these and provide specific examples in a few minutes.*
+:::
 
 ## When do we write tests? 
 
+::: {.fragment}
 - Anytime you think about writing a function!
+:::
 
+::: {.fragment}
 - You can even write your tests before you write your function, 
 you just have to have planned what function inputs and outputs to expect.
+:::
 
+::: {.fragment}
 - Writing your tests before implementing your function 
 can even improve your productivity [@erdogmus2005effectiveness]! 
+:::
+
+::: {.fragment}
+*In software engineering, writting your tests before your functions is called "Test Driven Development" [@becker2002test].*
+:::
 
 ## Workflow for writing functions and tests
 
+::: {style="font-size:30px"}
+
+::: {.fragment}
 1. Write the function specifications and documentation - 
 but do not implement the function.
+:::
 
+::: {.fragment}
 2. Plan the test cases and document them.
+:::
 
+::: {.fragment}
 3. Create test data that is useful for assessing whether your function works as expected.
+:::
 
+::: {.fragment}
 4. Write the tests to evaluate your function based on the planned test cases and test data.
+:::
 
+::: {.fragment}
 5. Implement the function by writing the needed code in the function body to pass the tests.
+:::
 
+::: {.fragment}
 6. Iterate between steps 2-5 to improve the test coverage and function.
+:::
+
+:::
 
 ## Example of workflow for writing functions and tests for data science
 
@@ -82,13 +127,13 @@ and it's test suite.
 
 ### 1. Write the function specifications and documentation - but do not implement the function
 
-The first thing we should do is write the function specifications and documentation. This can effectively represented by an empty function and roxygen2-styled documentation in R as shown below:
+---
+
+::: {style="font-size:34px"}
 
 ```{r}
-#| eval: false
-
-#' Count class observations
-#'
+#' Count class observations                                                    
+#'                                                                             
 #' Creates a new data frame with two columns, 
 #' listing the classes present in the input data frame,
 #' and the number of observations for each class.
@@ -98,113 +143,316 @@ The first thing we should do is write the function specifications and documentat
 #'
 #' @return A data frame with two columns. 
 #'   The first column (named class) lists the classes from the input data frame.
-#'   The second column (named count) lists the number of observations for each class from the input data frame.
+#'   The second column (named count) lists the number of observations 
+#'   for each class from the input data frame.
 #'   It will have one row for each class present in input data frame.
 #'
 #' @export
-#'
 #' @examples
 #' count_classes(mtcars, am)
-count_classes <- function(data_frame, class_col) {
+count_classes <- function(data_frame, class_col) {                           
   # returns a data frame with two columns: class and count
 }
 ```
 
+:::
+
 ### 2. Plan the test cases and document them
 
-Next, we should plan out our test cases and start to document them. 
+- write or draw out tests cases 
+- sketch out a code skeleton for our test cases, but do not implement them 
+(we first will need to reproducibly create test data)  
 
-At this point we can sketch out a skeleton for our test cases with code 
-but we are not yet ready to write them, 
-as we first will need to reproducibly create test data 
-that is useful for assessing whether your function works as expected. 
+### Simple expected use test case #1
 
-### 2. Plan the test cases and document them (cont'd)
+- Dataframe with 2 classes, with 2 observations per class
 
-So considering our function specifications, 
-some kinds of input we might anticipate our function may receive, 
-and correspondingly what it should return is listed in the following tables:
+:::: {.columns}
 
-| Test category | Function input | Expected function output |
-|---------------|----------------|--------------------------|
-| Simple expected use cases | Dataframe with 2 classes, with 2 observations per class, and an unquoted column name containing class labels. Data frame also has another column a numeric values for each observation. | A new data frame with two columns and two rows. One column with the class names, and one with the counts of 2 observations for each class. |
-| Simple expected use cases | Dataframe with 2 classes, with 2 observations for one class, 1 observation for another class, and an unquoted column name containing class labels. Data frame also has another column a numeric values for each observation. | A new data frame with two columns and two rows. One column with the class names, and one with the counts of 2 for one class and 1 for the other class. |
+::: {.column width="40%"}
+Function input:
 
-### 2. Plan the test cases and document them (cont'd)
+::: {style="font-size:32px"}
+1. dataframe
+:::
+```{r}
+  class_labels values
+1       class1    0.2
+2       class2    0.5
+3       class1    0.8
+4       class2    0.5
+```
 
-| Test category | Function input | Expected function output |
-|---------------|----------------|--------------------------|
-| Edge cases | Data frame with one class, with 3 observations per class, and an unquoted column name of column containing class labels. Data frame also has another column a numeric values for each observation.
-| Edge cases | A data frame with three two columns (`class_labels` and `values`) but observation (e.g., it is an empty data frame). Also an unquoted column name of column containing class labels. | A new empty data frame with two columns and 0 rows. One column with the class names, and one with the counts of observations for each class. |
+::: {style="font-size:32px"}
+2. unquoted column name
+:::
+```{r}
+class_labels
+```
+:::
 
-### 2. Plan the test cases and document them (cont'd)
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
 
-| Test category | Function input | Expected function output |
-|---------------|----------------|--------------------------|
-| Errors | Data frame with two classes, with two observations per class and a character vector of class labels as a separate object | An error that reports the value for the class_col argument should be an unquoted column name of column containing class labels from the data frame given in to the first argument. |
-| Errors | A list as the value for the argument to `data_frame`, and the unquoted name of one of the list elements as the value for the argument `class_col` | An error that reports the value for the the `data_frame` object should be a data frame or data frame extension (e.g. a tibble). |
+::: {.column width="40%"}
+Expected function output:
 
-### 2. Plan the test cases and document them (cont'd)
+::: {style="font-size:32px"}
+Dataframe (or tibble)
+:::
+```{r}
+   class count
+1 class1     2
+2 class2     2
+```
 
-Next, I sketch out a skeleton for the unit tests. 
-For R, we will use the well maintained 
-and popular [`testthat`](https://testthat.r-lib.org/) R package 
-for writing our tests. 
+:::
 
-With `testthat` we create a `test_that` statement 
-for each related group of tests for a function. 
-For our example, we will create the four `test_that` statements shown below:
+::::
+
+### Simple expected use test case #2
+
+- Dataframe with 2 classes, with 2 observations for one class, 
+and only one observation in the other
+
+:::: {.columns}
+
+::: {.column width="40%"}
+Function input:
+
+::: {style="font-size:32px"}
+1. dataframe
+:::
+```{r}
+  class_labels values
+1       class1    1.0
+2       class1    0.9
+3       class2    0.9
+```
+
+::: {style="font-size:32px"}
+2. unquoted column name
+:::
+```{r}
+class_labels
+```
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="40%"}
+Expected function output:
+
+::: {style="font-size:32px"}
+Dataframe (or tibble)
+:::
+```{r}
+   class count
+1 class1     2
+2 class2     1
+```
+
+:::
+
+::::
+
+### Edge test case #1
+
+- Dataframe with 1 classes, with 2 observations for that class
+
+:::: {.columns}
+
+::: {.column width="40%"}
+Function input:
+
+::: {style="font-size:32px"}
+1. dataframe
+:::
+```{r}
+  class_labels values
+1       class1    0.7
+2       class1    0.5
+```
+
+::: {style="font-size:32px"}
+2. unquoted column name
+:::
+```{r}
+class_labels
+```
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="40%"}
+Expected function output:
+
+::: {style="font-size:32px"}
+Dataframe (or tibble)
+:::
+```{r}
+   class count
+1 class1     2
+```
+
+:::
+
+::::
+
+### Edge test case #2
+
+- Dataframe with no class observations
+
+:::: {.columns}
+
+::: {.column width="40%"}
+Function input:
+
+::: {style="font-size:32px"}
+1. dataframe
+:::
+```{r}
+  class_labels values
+```
+
+::: {style="font-size:32px"}
+2. unquoted column name
+:::
+```{r}
+class_labels
+```
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="40%"}
+Expected function output:
+
+::: {style="font-size:32px"}
+Dataframe (or tibble)
+:::
+```{r}
+   class count
+```
+
+:::
+
+::::
+
+
+### Error test case #1
+
+- A list with 2 classes, with 2 observations for each class
+
+:::: {.columns}
+
+::: {.column width="40%"}
+Function input:
+
+::: {style="font-size:32px"}
+1. list
+:::
+```{r}
+$class_labels
+[1] "class1" "class2" "class1" "class2"
+
+$values
+[1] 0.4 0.7 0.0 0.6
+```
+
+::: {style="font-size:32px"}
+2. unquoted list element name
+:::
+```{r}
+class_labels
+```
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="40%"}
+Expected function output:
+
+::: {style="font-size:32px"}
+Error
+:::
+```{r}
+Error : 
+  `data_frame` should be a data frame or data frame extension (e.g. a tibble)
+```
+
+:::
+
+::::
+
+### Code skeleton for the unit tests
+
+With the [`testthat`](https://testthat.r-lib.org/index.html) 
+R package we create a `test_that` statement 
+for each related group of tests for a function:
 
 ```{r}
-#| eval: false
-test_that("`count_classes` should return a data frame, or data frame extension, 
-with the number of rows that corresponds to the number of unique classes 
-in the column passed to `class_col`, 
-and whose values in the `count` column correspond to the number of observations 
-for the group in the `class` column from the original data frame", {
+test_that("`count_classes` should return a data frame, or tibble, 
+with the number of rows corresponding to the number of unique classes 
+in the `class_col` from the original dataframe. The new dataframe 
+will have a `class column` whose values are the unique classes, 
+and a `count` column, whose values will be the number of observations 
+for each  class", {
   # "expected use cases" tests to be added here
 })
 
-test_that("`count_classes` should return an empty data frame, or data frame extension, 
+test_that("`count_classes` should return an empty data frame, or tibble, 
 if the input to the function is an empty data frame", {
   # "edge cases" test to be added here
 })
 
 test_that("`count_classes` should throw an error when incorrect types 
-are passed to `data_frame` and `class_col` arguments", {
+are passed to the `data_frame` argument", {
   # "error" tests to be added here
 })
 ```
 
 ### 3. Create test data that is useful for assessing whether your function works as expected
 
-Now that we have a plan, we can create reproducible test data for that plan! When we do this, we want to keep our data as small and tractable as possible. We want to test things we know the answer to, or can at a minimum calculate by hand. We will use R code to reproducibly create the test data. We will need to do this for the data we will feed in as inputs to our function in the tests, as well as the data we expect our function to return.
+- Write code to create reproducible test data for your planned test cases
+
+- This should be done for both function inputs, and expected outputs
+
+- Keep the test data as small and tractable as possible
+
+### Function inputs for test cases
 
 ```{r}
-#| eval: false
-
-# function input for tests
 set.seed(2024)
-two_clases_two_obs <- data.frame(class_labels = rep(c("class1", "class2", 2)),
-                                 values = runif(4))
-two_classes_2_and_1_obs <- data.frame(class_labels = c("class1", "class1", "class2"),
-                                      values = runif(3))
+
+two_classes_two_obs <- data.frame(class_labels = rep(c("class1", 
+                                                     "class2"), 2),
+                                 values = round(runif(4), 1))
+two_classes_2_and_1_obs <- data.frame(class_labels = c(rep("class1", 2), 
+                                                       "class2"),
+                                      values = round(runif(3), 1))
 one_class_2_obs <- data.frame(class_labels = c("class1", "class1"),
-                                      values = runif(2))
+                                      values = round(runif(2), 1))
 empty_df  <- data.frame(class_labels = character(0),
                         values = double(0))
-vector_class_labels <- rep(c("class1", "class2"), 2)
-two_classes_two_obs_as_list <- list(class_labels = rep(c("class1", "class2"), 2),
-                                    values = runif(4))
+two_classes_two_obs_as_list <- list(class_labels = rep(c("class1", 
+                                                         "class2"), 2),
+                                    values = round(runif(4), 1))
 ```
 
-### 3. Create test data that is useful for assessing whether your function works as expected (cont'd)
+### Expected function outputs for test cases
 
 ```{r}
-#| eval: false
-
-# expected function output
-two_clases_two_obs_output <- data.frame(class = c("class1", "class2"),
+two_classes_two_obs_output <- data.frame(class = c("class1", "class2"),
                                         count = c(2,2))
 two_classes_2_and_1_obs_output <- data.frame(class = c("class1", "class2"),
                                       count = c(2, 1))
@@ -216,20 +464,13 @@ empty_df_output <- data.frame(class = character(0),
 
 ### 4. Write the tests to evaluate your function based on the planned test cases and test data
 
-Now we are ready write the internals for our tests! 
-We will do this by using `expect_*` functions from the testthat package. 
-
-**`testthat` pacakge test structure:**
+`testthat` package test syntax:
 
 ```{r}
-#| eval: false
-
 test_that("Message to print if test fails", expect_*(...))
 ```
 
-### 4. Write the tests to evaluate your function based on the planned test cases and test data (cont'd)
-
-#### Common expect_* statements for use with `test_that`:
+### Common expect_* statements for use with `test_that`:
 
 Is the object equal to a value?
 
@@ -237,29 +478,34 @@ Is the object equal to a value?
 - `expect_equal` - compare R objects x and y testing ‘near equality’ (can set a tolerance)
 - `expect_equivalent` - compare R objects x and y testing ‘near equality’ (can set a tolerance) and does not assess attributes
 
+### Common expect_* statements for use with `test_that`:
+
 Does code produce an output/message/warning/error?
 
 - `expect_error` - tests if an expression throws an error
 - `expect_warning` - tests whether an expression outputs a warning
 - `expect_output` - tests that print output matches a specified value
 
-Is the object true/false?
+### Common expect_* statements for use with `test_that`:
 
-These are fall-back expectations that you can use when none of the other more specific expectations apply. The disadvantage is that you may get a less informative error message.
+Is the object true/false?
 
 - `expect_true` - tests if the object returns TRUE
 - `expect_false` - tests if the object returns FALSE
 
 ### 4. Write the tests to evaluate your function based on the planned test cases and test data (cont'd)
 
+### Expected use test cases
+
 ```{r}
-#| eval: false
-test_that("`count_classes` should return a data frame, or data frame extension, 
-with the number of rows that corresponds to the number of unique classes 
-in the column passed to `class_col`, 
-and whose values in the `count` column correspond to the number of observations 
-for the group in the `class` column from the original data frame", {
-    expect_s3_class(count_classes(two_classes_2_obs, class_lables), "tibble")
+test_that("`count_classes` should return a data frame, or tibble, 
+with the number of rows corresponding to the number of unique classes 
+in the `class_col` from the original dataframe. The new dataframe 
+will have a `class column` whose values are the unique classes, 
+and a `count` column, whose values will be the number of observations 
+for each  class", {
+    expect_s3_class(count_classes(two_classes_2_obs, class_lables), 
+                    "tibble")
     expect_equivalent(count_classes(two_classes_2_obs, class_lables), 
                       two_classes_2_obs_output)
     expect_equivalent(count_classes(two_classes_2_and_1_obs, class_lables),
@@ -267,23 +513,23 @@ for the group in the `class` column from the original data frame", {
 })
 ```
 
-### 4. Write the tests to evaluate your function based on the planned test cases and test data (cont'd)
+### Edge test cases
 
 ```{r}
-test_that("`count_classes` should return an empty data frame, 
-or data frame extension, if the input to the function is an empty data frame", {
+test_that("`count_classes` should return an empty data frame, or tibble, 
+if the input to the function is an empty data frame", {
     expect_equivalent(count_classes(one_class_2_obs, class_lables), 
                       one_class_2_obs_output)
-    expect_equivalent(count_classes(empty_df, class_lables), empty_df_output)
+    expect_equivalent(count_classes(empty_df, class_lables), 
+                      empty_df_output)
 })
 ```
 
-### 4. Write the tests to evaluate your function based on the planned test cases and test data (cont'd)
+### Error test case
 
 ```{r}
 test_that("`count_classes` should throw an error when incorrect types 
-are passed to `data_frame` and `class_col` arguments", {
-    expect_error(count_classes(two_classes_2_obs, vector_class_labels))
+are passed to the `data_frame` argument", {
     expect_error(count_classes(two_classes_two_obs_as_list, class_lables))
 })
 ```
@@ -296,9 +542,9 @@ Yes, we expect that, we haven’t written our function body yet!
 
 FINALLY!! We can write the function body for our function! And then call our tests to see if they pass!
 
+---
+::: {style="font-size:26px"}
 ```{r}
-#| eval: false
-
 #' Count class observations
 #'
 #' Creates a new data frame with two columns, 
@@ -327,21 +573,23 @@ count_classes <- function(data_frame, class_col) {
         dplyr::rename("class" = {{ class_col }})
 }
 ```
-
+:::
 ### 6. Iterate between steps 2-5 to improve the test coverage and function
 
-Are we done? For the purposes of this demo, yes! However in practice you would usually cycle through steps 2-5 two-three more times to further improve our tests and and function
+- Are we done? For the purposes of this demo, yes! 
+
+- However in practice you would usually cycle through steps 2-5, 
+two-three more times to further improve our tests and and function.
 
 ## Where do the function and test files go?
+
+::: {style="font-size:32px"}
 
 - The test code goes in a folder called `tests`
 
 - To setup the correct file and directory structure for our tests, we run:
 
 ```{r}
-#| eval: false
-
-# The 
 usethis::use_testthat()
 ```
 
@@ -351,11 +599,17 @@ Which will:
 - Add `testthat` to the `Suggests` field in the `DESCRIPTION` file.
 - Create a file `tests/testthat.R` that runs all your tests when `R CMD` check runs 
 
+:::
+
 ## Where do the function and test files go?
+
+::: {style="font-size:32px"}
 
 - As you define functions in your package, in the files below `R/`, you add the corresponding tests to `.R` files in `tests/testthat/`
 
 -  We strongly recommend that the organisation of test files match the organisation of `R/` files, for example, for the EDA pacakge:
+
+:::
 
 ```
 R                                           tests/testthat
@@ -366,12 +620,17 @@ R                                           tests/testthat
 
 ## How do we run the test suite?
 
-```
+```{r}
+
 devtools::test()
 ```
 
 ## Attributions:
 
 - [*R Packages (2e)*](https://r-pkgs.org/) by Hadley Wickham and Jennifer Bryan
+
+- [CPSC 310](https://github.com/ubccpsc/310/blob/master/resources/readings/TestabilityAssertions.md) class notes from Reid Holmes, UBC
+
+- [CPSC 410](https://www.cs.ubc.ca/~rtholmes/teaching/2015t1/cpsc410/slides/410_19_testability.pdf) class notes from Reid Holmes, UBC
 
 ## References
