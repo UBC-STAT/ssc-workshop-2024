@@ -64,7 +64,7 @@ devtools::install_github("username/package")
 
 2.  Run and document `R CMD check`.
 
-3.  Check that you’re aligned with CRAN policies.
+3.  Check that you’re aligned with [CRAN policies](https://cran.r-project.org/web/packages/policies.html).
 
 4.  Update `README.md` and `NEWS.md`.
 
