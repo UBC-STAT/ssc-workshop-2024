@@ -174,7 +174,7 @@ Imagine you're a data scientist and you have compiled a data set of climate chan
 
 ## Attribution 
 
-This content has been developed based on the UBC course notes for  [**DSCI 524: Collaborative Software Development**](https://ubc-mds.github.io/DSCI_524_collab-sw-dev/README.html) by Tiffany Timbers
+This content has been developed based on the UBC course notes for  [**DSCI 524: Collaborative Software Development**](https://ubc-mds.github.io/DSCI_524_collab-sw-dev/README.html) by Tiffany Timbers, [**Software Carpentry Version Control with Git Licensing Lesson**](https://swcarpentry.github.io/git-novice/11-licensing.html) and [https://choosealicense.com/](https://choosealicense.com/).
 
 ## References
 

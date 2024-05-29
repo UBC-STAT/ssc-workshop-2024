@@ -89,6 +89,6 @@ devtools::install_github("username/eda")
 
 ## Attribution
 
-This content has been developed based on the UBC course notes for [**Reproducible and Trustworthy Workflows for Data Science**](https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/materials/lectures/10-packaging-and-documenting.html#when-to-start-writing-an-r-or-python-package) by Tiffany Timbers, Joel Östblom, Florencia D’Andrea, and Rodolfo Lourenzutti
+This content has been developed based on [**R Packages (2e) by Hadley Wickham and Jennifer Bryan**](https://r-pkgs.org/) and the UBC course notes for [**Reproducible and Trustworthy Workflows for Data Science**](https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/materials/lectures/10-packaging-and-documenting.html#when-to-start-writing-an-r-or-python-package) by Tiffany Timbers, Joel Östblom, Florencia D’Andrea, and Rodolfo Lourenzutti.
 
 
