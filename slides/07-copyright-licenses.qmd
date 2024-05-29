@@ -52,7 +52,7 @@ In Canada, the copyright owner is afforded the following rights:
 
 This is a complicated question, and the answer starts with it depends on the case…
 
-![](img/lightbulb.jpg)
+![](img/lightbulb.jpg){fig-align="center"}
 
 ## Case I: You author the code for yourself
 
