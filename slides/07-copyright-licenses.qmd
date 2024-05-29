@@ -162,11 +162,15 @@ Important considerations when choosing a license include:
 
 ## Scenario 1 
 
-Imagine you're a data scientist and you developed a tool that analyzes satellite imagery to track deforestation patterns. Your primary goal is to make this tool freely available to researchers and other conservationists to help monitor and combat deforestation, but you still want to retain the copyright to your tool. 
+Imagine you're a data scientist and you developed a tool that analyzes satellite imagery to track deforestation patterns. Your goal is to make this tool freely available to researchers to help monitor and combat deforestation, but you still want to retain the copyright to your tool. 
+
+![](img/trees.jpg){fig-align="center"}
 
 ## Scenario 2 
 
 Imagine you're a data scientist and you have compiled a data set of climate change projections from various scientific sources. In order to promote further analyses aimed at understanding and mitigating the effects of climate change, you want to share this data set with the research community. 
+
+![](img/climate.jpg){fig-align="center"}
 
 ## Attribution 
 
