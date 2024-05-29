@@ -40,8 +40,10 @@ devtools::install_github("username/package")
     -   the contributed extensions (i.e., packages)
     -   documentation for R
     -   binaries (i.e., packages)
-
+    
+::: {style="font-size: 50%;"}
 *Source: Hornik, K (2012). The Comprehensive R Archive Network. Wiley interdisciplinary reviews. Computational statistics. 4(4): 394-398. doi:10.1002/wics.1212*
+:::
 
 ## What does it mean to be a CRAN package?
 
@@ -71,9 +73,11 @@ devtools::install_github("username/package")
 6.  Prepare for the next version by updating version numbers.
 
 7.  Publicize the new version.
+
+::: {style="font-size: 50%;"}
+*Source: [Chapter 22: Releasing to Cran](https://r-pkgs.org/release.html) - R packages book by Hadley Wickham & Jenny Bryan*
 :::
 
-*Source: [Chapter 22: Releasing to Cran](https://r-pkgs.org/release.html) - R packages book by Hadley Wickham & Jenny Bryan*
 
 ## Notes on submitting to CRAN
 
