@@ -18,5 +18,11 @@ In this workshop learners will be introduced to what an R package is and when th
 
 - Copyright & Licenses (who owns the code?)
 
+## Pre-workshop setup and installation instructions:
 
-> Presenters/Speakers: Tiffany Timbers, Daniel Chen, G. Alexi Rodríguez-Arelis, Katie Burak (University of British Columbia)
+- Follow the instructions in the [System setup chapter of the R packages (2e) book](https://r-pkgs.org/setup.html). This will guide you to install R, RStudio, important packages for creating packages (e.g., `devtools`, `usethis`, `roxygen2`, `testthat`, `knitr`), as well as configure your personal startup in R.
+- Follow the [Installation instructions in the Happy Git and GitHub for the useR book](https://happygitwithr.com/github-acct) (you can skip section 8, install a Git client) to install and configure Git, as well as to get a [GitHub.com](http://github.com/) account. 
+
+## Presenters/Speakers: 
+
+Tiffany Timbers, Daniel Chen, G. Alexi Rodríguez-Arelis, Katie Burak (University of British Columbia)
