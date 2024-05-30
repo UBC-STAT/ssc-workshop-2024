@@ -20,7 +20,8 @@ format:
 ## Toy package: <span style="color: darkblue;">{eda}</span>
 
 ::: incremental
-- Our toy package's name will be <span style="color: darkblue;">{eda}</span>
+- Suppose our package's purpose is to provide data wrangling and summary functions to conduct a proper <span style="color: purple;">exploratory data analysis</span> (hence the name <span style="color: purple;">EDA</span>)
+- Therefore, our toy package's name will be <span style="color: darkblue;">{eda}</span>
 - Suppose the package's purpose is to provide data wrangling and summary functions to conduct a proper <span style="color: purple;">exploratory data analysis</span> (hence the name <span style="color: purple;">EDA</span>)
 - We will be switching back and forth between these slides and hands-on practice in <span style="color: purple;">**RStudio**</span>
 :::
