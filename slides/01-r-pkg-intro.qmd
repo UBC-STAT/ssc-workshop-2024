@@ -14,7 +14,21 @@ Let's introduce ourselves...
 ::: {#fig-team layout-ncol="4"}
 ![Katie Burak](img/photo_katie.jpg){width=200}
 
-![Daniel Chen](img/photo_daniel.jpg){width=200}
+- We're all affiliated to the Department of Statistics at UBC
+
+::: {.fragment .fade-left}
+::: {#fig-team layout-ncol="4"}
+![Katie Burak, Assistant Professor of Teaching](img/photo_katie.jpg){width=170} 
+
+![Daniel Chen, Postdoctoral Teaching and Learning Fellow](img/photo_daniel.jpg){width=170}
+
+![G. Alexi Rodríguez-Arelis, Assistant Professor of Teaching](img/photo_alexi.jpg){width=170}
+
+![Tiffany Timbers, Associate Professor of Teaching](img/timbers_2021.jpg){width=170}
+
+Teaching Team
+:::
+:::
 
 ![G. Alexi Rodríguez-Arelis](img/photo_alexi.jpg){width=200}
 
