@@ -44,7 +44,7 @@ Teaching team
 - You wonder whether others doing similar analyses face this problem as well, and want to share your (eventual) solution with others.
 :::
 
-## This is an specific example of your everyday process
+## Counting observations across classes code example
 
 - The code below is counting how many cars in `mtcars` (composed of 32 observations) have `4`, `6`, and `8` cylinders
 
