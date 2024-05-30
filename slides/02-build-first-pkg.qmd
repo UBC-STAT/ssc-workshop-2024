@@ -66,7 +66,7 @@ library(devtools)
 ## Don'ts when choosing your home directory
 
 -   Your package shouldn't be hosted in another RStudio Project, `R` package, or Git repository
--   Your package shouldn't be hosted in an `R` package library (i.e., where we usually instal other packages from CRAN)
+-   Your package shouldn't be hosted in an `R` package library (i.e., where we usually install other packages from CRAN)
 :::
 
 ### Code
