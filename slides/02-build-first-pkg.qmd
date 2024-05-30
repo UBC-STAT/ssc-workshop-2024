@@ -47,7 +47,8 @@ format:
 #| echo: true
 #| eval: false
 #| code-line-numbers: "|1|3"
-install.packages("devtools")
+# uncomment and run the line below in the R console if you have not yet installed the `devtools` package.
+# install.packages("devtools") 
 
 library(devtools)
 ```
