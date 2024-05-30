@@ -39,8 +39,9 @@ Teaching team
 ## Let's start with our toy example
 
 ::: incremental
-- Suppose that, <span style="color: purple;">in your everyday analysis</span>, you are usually coding the distribution of observations over the classes (i.e., categories) of a given variable in your dataset
-- Moreover, you would like to <span style="color: purple;">automate</span> this process and <span style="color: purple;">share</span> your work!
+- Suppose that, <span style="color: purple;">in many of your analyses</span>, you find yourself repeatedly coding the distribution of observations over the classes (i.e., categories) of a given variable in your dataset
+- You find yourself rewriting code, copying and pasting code and/or copying and pasting files containing the code to do this. And in doing so, you sometimes (or often!) make trivial mistakes.
+- You wonder whether others doing similar analyses face this problem as well, and want to share your (eventual) solution with others.
 :::
 
 ## This is an specific example of your everyday process
