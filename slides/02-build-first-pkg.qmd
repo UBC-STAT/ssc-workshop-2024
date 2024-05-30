@@ -295,7 +295,8 @@ count_classes(data_frame = mtcars, class_col = cyl)
 
 ## Function `check()`
 
-- To ensure that our package is in full working order, we'd need to execute `R CMD check` in the shell (i.e., terminal)
+- It's a function that ensures the sources of an `R` add-on package work correctly
+- Therefore, `check()` executes `R CMD check` in the shell (i.e., terminal)
 - We use function `check()` from <span style="color: darkblue;">{devtools}</span> via the `R` `Console`
 
 ```{r}
