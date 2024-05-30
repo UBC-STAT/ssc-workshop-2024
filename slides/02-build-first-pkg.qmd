@@ -31,7 +31,7 @@ format:
 ## Installing auxiliary `R` packages
 
 ::: incremental
-- Before starting with the actual process, we need to <span style="color: purple;">install</span> and <span style="color: purple;">load</span> the packages <span style="color: darkblue;">{devtools}</span> and <span style="color: darkblue;">{usethis}</span>
+- Before starting with the actual process, we assumed you have installed the necessary packages <span style="color: darkblue;">{devtools}</span> and <span style="color: darkblue;">{usethis}</span> (also sent in the installation instructions before the workshop. 
 - <span style="color: darkblue;">{devtools}</span> is a meta-package that encompasses more focused development-related `R` packages
 - <span style="color: darkblue;">{usethis}</span> automates tasks related to <span style="color: purple;">project setup</span> and <span style="color: purple;">development</span> to build `R` packages
 :::
