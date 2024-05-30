@@ -31,9 +31,19 @@ Teaching team
 ## This question is key!
 
 ::: incremental
-- An `R` package is central to generating <span style="color: purple;">reproducible code</span>
-- It allows us to call functions whenever we need them in our data wrangling and/or analysis
-- Its functions are expected to be reproducible code and <span style="color: purple;">adequately documented</span> (even with some <span style="color: purple;">sample data</span>!)
+- An `R` package is a <span style="color: purple;">collection</span> of functions, tests, data, compiled code, and standardized documentation
+- The reason to create a package is mostly about <span style="color: purple;">creating code that should be easier to reuse and share</span>
+
+## More specifically...
+
+- `R` packages are created:
+  - When your <span style="color: purple;">DRY</span> ("Do Not Repeat Yourself) radar goes off
+  - When you think your code has general usefulness others could benefit from (this could include future you)
+  - When you want to <span style="color: purple;">share</span> data (R packages in particular are used quite heavily for this)
+
+. . .
+
+> **Source:** Lecture notes from [UBC's **DSCI 310** course (Reproducible and Trustworthy Workflows for Data Science)](https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/materials/lectures/10-packaging-and-documenting.html#when-to-start-writing-an-r-or-python-package)
 :::
 
 ## Let's start with a motivating example
