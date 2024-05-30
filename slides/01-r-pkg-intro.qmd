@@ -61,7 +61,7 @@ mtcars |>
   rename("class" = cyl)
 ```
 
-## Is an `R` package the answer to our previous <span style="color: purple;">automation</span> and <span style="color: purple;">sharing</span> inquiries?
+## Is an `R` package the answer to our pains with how we have been previously trying to reuse our code?
 
 ## Yes, it is!
 
