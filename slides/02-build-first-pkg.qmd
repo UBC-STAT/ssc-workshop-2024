@@ -65,7 +65,7 @@ library(devtools)
 ::: callout-warning
 ## Don'ts when choosing your home directory
 
--   Your package shouldn't be hosted in another RStudio Project, `R` package, or GitHub repo
+-   Your package shouldn't be hosted in another RStudio Project, `R` package, or Git repository
 -   Your package shouldn't be hosted in an `R` package library (i.e., where we usually instal other packages from CRAN)
 :::
 
