@@ -496,6 +496,7 @@ document()
 
 - It's time to install our package <span style="color: darkblue;">{eda}</span>
 - That said, instead of using `install.packages()` as with any package in the CRAN, we will use `install()` from <span style="color: darkblue;">{devtools}</span>
+- Note that `install()` installs a local package in the current working directory, whereas `install.packages()` install from a package repository
 
 ```{r}
 #| echo: true
