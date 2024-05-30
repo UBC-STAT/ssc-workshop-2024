@@ -314,7 +314,7 @@ check()
 - The output of this function is quite long!
 - That said, we essentially need to check the <span style="color: purple;">final summary</span> (i.e., the previous screenshot)
 - It's crucial to address any issue we might encounter (which will be shown in the `check()` output)
-- For our toy package <span style="color: darkblue;">{eda}</span>, we will only encounter two warnings (**to be addressed later on**) 
+- For our toy package <span style="color: darkblue;">{eda}</span>, we will only encounter two warnings (**package dependency and missing license**, to be addressed later on) 
 :::
 
 ## Edit `DESCRIPTION`
