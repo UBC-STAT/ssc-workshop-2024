@@ -10,7 +10,7 @@
 <link href="02-build-first-pkg_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.361">
 
-  <title>How to create and distribute R packages</title>
+  <title>Hands-on building an R package</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -389,15 +389,10 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">How to create and distribute <code>R</code> packages</h1>
+  <h1 class="title">Hands-on building an <code>R</code> package</h1>
 
 <div class="quarto-title-authors">
 </div>
-
-</section>
-<section>
-<section id="hands-on-building-an-r-package" class="title-slide slide level1 center">
-<h1>Hands-on building an <code>R</code> package</h1>
 
 </section>
 <section id="before-proceeding" class="title-slide slide level2 center">
@@ -407,7 +402,7 @@
 <p><strong>Attribution:</strong> This content has been developed on the basis provided by <a href="https://r-pkgs.org/release.html"><strong>Chapter 1: The Whole Game</strong></a> (<code>R</code> packages book by Hadley Wickham &amp; Jenny Bryan, 2e) and the UBC course notes <a href="https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/materials/lectures/10-packaging-and-documenting.html#when-to-start-writing-an-r-or-python-package"><strong>Reproducible and Trustworthy Workflows for Data Science</strong></a> by Tiffany Timbers, Joel Östblom, Florencia D’Andrea, and Rodolfo Lourenzutti</p>
 </blockquote>
 <blockquote>
-<p>We need to <span style="color: purple;">register a GitHub account</span> and <span style="color: purple;">install git</span> (<a href="https://github.com/UBC-STAT/ssc-workshop-2024#ssc-workshop-2024"><strong>more information here</strong></a>)</p>
+<p>We assume you have followed the installation instructions we shared before the workshop and have: <span style="color: purple;">registered for a GitHub account</span> and <span style="color: purple;">installed git</span> (<a href="https://github.com/UBC-STAT/ssc-workshop-2024#ssc-workshop-2024"><strong>more information here</strong></a>)</p>
 </blockquote>
 </section>
 
@@ -415,25 +410,26 @@
 <h2>Toy package: <span style="color: darkblue;">{eda}</span></h2>
 <div>
 <ul>
-<li class="fragment">Our toy package’s name will be <span style="color: darkblue;">{eda}</span></li>
-<li class="fragment">Suppose the package’s purpose is to provide data wrangling and summary functions to conduct a proper <span style="color: purple;">exploratory data analysis</span> (hence the name <span style="color: purple;">EDA</span>)</li>
+<li class="fragment">Suppose our package’s purpose is to provide data wrangling and summary functions to conduct a proper <span style="color: purple;">exploratory data analysis</span> (hence the name <span style="color: purple;">EDA</span>)</li>
+<li class="fragment">Therefore, our toy package’s name will be <span style="color: darkblue;">{eda}</span></li>
 <li class="fragment">We will be switching back and forth between these slides and hands-on practice in <span style="color: purple;"><strong>RStudio</strong></span></li>
 </ul>
 </div>
 
 <img data-src="img/r-rstudio.png" style="width:10.0%" class="r-stretch quarto-figure-center"></section>
 
+<section>
 <section id="installing-auxiliary-r-packages" class="title-slide slide level2 center">
 <h2>Installing auxiliary <code>R</code> packages</h2>
 <div>
 <ul>
-<li class="fragment">Before starting with the actual process, we need to <span style="color: purple;">install</span> and <span style="color: purple;">load</span> the packages <span style="color: darkblue;">{devtools}</span> and <span style="color: darkblue;">{usethis}</span></li>
+<li class="fragment">Before starting with the actual process, we assumed you have installed the necessary packages <span style="color: darkblue;">{devtools}</span> and <span style="color: darkblue;">{usethis}</span> (also sent in the installation instructions before the workshop)</li>
 <li class="fragment"><span style="color: darkblue;">{devtools}</span> is a meta-package that encompasses more focused development-related <code>R</code> packages</li>
 <li class="fragment"><span style="color: darkblue;">{usethis}</span> automates tasks related to <span style="color: purple;">project setup</span> and <span style="color: purple;">development</span> to build <code>R</code> packages</li>
 </ul>
 </div>
 
-<img data-src="img/usethis-devtools.png" style="width:10.0%" class="r-stretch quarto-figure-center"></section>
+<img data-src="img/usethis-devtools.png" style="width:20.0%" class="r-stretch quarto-figure-center"></section>
 <section id="installation-and-loading-code" class="title-slide slide level3 center">
 <h3>Installation and loading code</h3>
 <ul>
@@ -441,18 +437,19 @@
 <li>Same situation applies when it come to loading the packages</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-code-line-numbers="|1|3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2"></a></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(devtools)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Uncomment and run the line below in the R console if you have not yet installed the `devtools` package</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co"># install.packages("devtools") </span></span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(devtools)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-
-
-<section id="function-create_package" class="title-slide slide level2 center">
-<h2>Function <code>create_package()</code></h2>
+</section>
+<section>
+<section id="create_package" class="title-slide slide level2 center">
+<h2><code>create_package()</code></h2>
 <div>
 <ul>
-<li class="fragment">Function <code>create_package()</code> will <span style="color: purple;">initialize</span> our new package in a directory of our choice</li>
+<li class="fragment"><code>create_package()</code> will <span style="color: purple;">initialize</span> our new package in a directory of our choice</li>
 <li class="fragment">I will initialize the <span style="color: darkblue;">{eda}</span> package in my <code>Desktop</code> folder for easier reference</li>
 </ul>
 </div>
@@ -467,8 +464,8 @@
 </div>
 <div class="callout-content">
 <ul>
-<li>Your package shouldn’t be hosted in another RStudio Project, <code>R</code> package, or GitHub repo</li>
-<li>Your package shouldn’t be hosted in an <code>R</code> package library (i.e., where we usually instal other packages from CRAN)</li>
+<li>Your package shouldn’t be hosted in another RStudio Project, <code>R</code> package, or Git repository</li>
+<li>Your package shouldn’t be hosted in an <code>R</code> package library (i.e., where we usually install other packages from CRAN)</li>
 </ul>
 </div>
 </div>
@@ -488,7 +485,7 @@
 <h3>Project layout description (<code>ignore</code>-type files)</h3>
 <div>
 <ul>
-<li class="fragment"><code>.gitignore</code> is used by GitHub and lists all <span style="color: purple;">“hidden”</span> files created by <code>R</code> and RStudio that aren’t necessary for the repo</li>
+<li class="fragment"><code>.gitignore</code> is used by GitHub and lists all <span style="color: purple;">“hidden”</span> files created by <code>R</code> and RStudio that aren’t necessary for the repository</li>
 <li class="fragment"><code>.Rbuildignore</code> contains all files created via <code>R</code> and RStudio <span style="color: purple;">that won’t be necessary</span> when building our package (e.g., <code>eda.Rproj</code>)</li>
 </ul>
 </div>
@@ -505,10 +502,10 @@
 </ul>
 </div>
 </section>
-
-
-<section id="function-use_git" class="title-slide slide level2 center">
-<h2>Function <code>use_git()</code></h2>
+</section>
+<section>
+<section id="use_git" class="title-slide slide level2 center">
+<h2><code>use_git()</code></h2>
 <div>
 <ul>
 <li class="fragment">Besides creating the <span style="color: purple;">RStudio project file</span> <code>eda.Rproj</code>, we will initialize a Git repository via <code>use_git()</code></li>
@@ -526,7 +523,7 @@
 <section id="what-does-this-function-specifically-do" class="title-slide slide level3 center">
 <h3>What does this function specifically do?</h3>
 <ul>
-<li>It creates hidden <span style="color: purple;"><code>.git</code> directory</span> in the folder <span style="color: darkblue;">{eda}</span></li>
+<li>It creates a hidden <span style="color: purple;"><code>.git</code> directory</span> in the folder <span style="color: darkblue;">{eda}</span></li>
 <li>Furthermore, it creates your <span style="color: purple;">initial commit</span></li>
 </ul>
 
@@ -540,13 +537,13 @@
 </ul>
 
 <img data-src="img/git-history.png" style="width:8.0%" class="r-stretch quarto-figure-center"></section>
-
-
+</section>
+<section>
 <section id="write-your-first-function" class="title-slide slide level2 center">
 <h2>Write your first function!</h2>
 <div class="fragment">
 <ul>
-<li>Recall we aim to automate the below data wrangling process for any data frame (besides <code>mtcars</code>)</li>
+<li>Recall we aim to package our code (shown below) for counting the number of observations in a class for any data frame (besides <code>mtcars</code>) so we (and others) can reuse this code more easily in other projects</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -565,41 +562,75 @@
 </div>
 </div>
 </div>
-<div class="fragment">
-<ul>
-<li>Therefore, we need to create an <code>R</code> function</li>
-</ul>
-</div>
 </section>
 <section id="this-is-our-function-count_classes" class="title-slide slide level3 center">
 <h3>This is our function <code>count_classes()</code></h3>
 <div class="fragment">
 <ul>
 <li>It receives a <code>data_frame</code> or data frame extension (e.g., a tibble) along with an <span style="color: purple;">unquoted column name</span> containing the class label <code>class_col</code></li>
-<li>If we want to use unquoted column names in a function with <span style="color: darkblue;">{dplyr}</span> functions, then we surround them with <code>{{ }}</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>count_classes <span class="ot">&lt;-</span> <span class="cf">function</span>(data_frame, class_col) {</span>
-<span id="cb6-2"><a href="#cb6-2"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.data.frame</span>(data_frame)) {</span>
-<span id="cb6-3"><a href="#cb6-3"></a>    <span class="fu">stop</span>(<span class="st">"`data_frame` should be a data frame or data frame extension (e.g. a tibble)"</span>)</span>
-<span id="cb6-4"><a href="#cb6-4"></a>  }</span>
-<span id="cb6-5"><a href="#cb6-5"></a></span>
-<span id="cb6-6"><a href="#cb6-6"></a>  data_frame <span class="sc">|&gt;</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>({{ class_col }}) <span class="sc">|&gt;</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a>    dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">count =</span> dplyr<span class="sc">::</span><span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="st">"class"</span> <span class="ot">=</span> {{ class_col }})</span>
-<span id="cb6-10"><a href="#cb6-10"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a>count_classes <span class="ot">&lt;-</span> <span class="cf">function</span>(data_frame, class_col) {</span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.data.frame</span>(data_frame)) {</span>
+<span id="cb6-5"><a href="#cb6-5"></a>    <span class="fu">stop</span>(<span class="st">"`data_frame` should be a data frame or data frame extension (e.g. a tibble)"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6"></a>  }</span>
+<span id="cb6-7"><a href="#cb6-7"></a></span>
+<span id="cb6-8"><a href="#cb6-8"></a>  data_frame <span class="sc">|&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>    <span class="fu">group_by</span>({{ class_col }}) <span class="sc">|&gt;</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>    <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>    <span class="fu">rename</span>(<span class="st">"class"</span> <span class="ot">=</span> {{ class_col }})</span>
+<span id="cb6-12"><a href="#cb6-12"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 
-<section id="function-use_r" class="title-slide slide level3 center">
-<h3>Function <code>use_r()</code></h3>
+<section id="the-use-of" class="title-slide slide level3 center">
+<h3>The use of <code>{{ }}</code></h3>
+<div>
+<ul>
+<li class="fragment">Note we’re using <span style="color: purple;">curly brackets</span> in <code>{{ class_col }}</code></li>
+<li class="fragment">An indirection with unquoted column names (such as <code>class_col</code>) needs <span style="color: purple;">extra support</span> (via the curly brackets) because the global environment is not aware of the data frame column names</li>
+</ul>
+</div>
+</section>
+
+<section id="syntax-packagefunction" class="title-slide slide level3 center">
+<h3>Syntax <code>package::function()</code></h3>
+<ul>
+<li><code>count_classes()</code> includes three <span style="color: darkblue;">{dplyr}</span> functions:
+<ul>
+<li><code>group_by()</code>, <code>summarize()</code>, and <code>rename()</code></li>
+</ul></li>
+<li>Alternatively, we can use the syntax <code>dplyr::group_by()</code>, <code>dplyr::summarize()</code>, and <code>dplyr::rename()</code></li>
+<li>This syntax is recommended since it makes explicit which package each dependency is coming from within our package functions</li>
+</ul>
+</section>
+
+<section id="re-writing-our-function" class="title-slide slide level3 center">
+<h3>Re-writing our function</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>count_classes <span class="ot">&lt;-</span> <span class="cf">function</span>(data_frame, class_col) {</span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.data.frame</span>(data_frame)) {</span>
+<span id="cb7-3"><a href="#cb7-3"></a>    <span class="fu">stop</span>(<span class="st">"`data_frame` should be a data frame or data frame extension (e.g. a tibble)"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>  }</span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a>  data_frame <span class="sc">|&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>({{ class_col }}) <span class="sc">|&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>    dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="st">"class"</span> <span class="ot">=</span> {{ class_col }})</span>
+<span id="cb7-10"><a href="#cb7-10"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+<section id="use_r" class="title-slide slide level3 center">
+<h3><code>use_r()</code></h3>
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">library</span>(devtools)</span>
-<span id="cb7-2"><a href="#cb7-2"></a></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="fu">use_r</span>(<span class="st">"count_classes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">library</span>(devtools)</span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="fu">use_r</span>(<span class="st">"count_classes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br></p>
 <div class="fragment">
@@ -619,7 +650,7 @@
 <div class="fragment">
 <ul>
 <li><code>use_r()</code> creates the <code>.R</code> script <code>count_classes.R</code></li>
-<li>The <code>Git</code> tab keeps track of all our changes in the repo <span style="color: purple;">after our initial commit</span></li>
+<li>The <code>Git</code> tab keeps track of all our changes in the repository <span style="color: purple;">after our initial commit</span></li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -676,16 +707,16 @@
 </ul>
 </div>
 </section>
-
-
-<section id="function-load_all" class="title-slide slide level2 center">
-<h2>Function <code>load_all()</code></h2>
+</section>
+<section>
+<section id="load_all" class="title-slide slide level2 center">
+<h2><code>load_all()</code></h2>
 <ul>
 <li>The next step in our package building process is <span style="color: purple;">to test <strong>informally</strong></span> our function <code>count_classes()</code></li>
 <li>Function <code>load_all()</code> from <span style="color: darkblue;">{devtools}</span> makes function <code>count_classes()</code> available for experimentation</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">load_all</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">load_all</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br></p>
 
@@ -697,54 +728,55 @@
 <li>The above variables correspond to function arguments <code>data_frame</code> and <code>class_col</code>, respectively</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">count_classes</span>(<span class="at">data_frame =</span> mtcars, <span class="at">class_col =</span> cyl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">count_classes</span>(<span class="at">data_frame =</span> mtcars, <span class="at">class_col =</span> cyl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 <img data-src="img/using-count-classes.png" class="r-stretch quarto-figure-center"></section>
-
-
-<section id="setting-up-our-remote-github-repo" class="title-slide slide level2 center">
-<h2>Setting up our remote GitHub repo</h2>
+</section>
+<section>
+<section id="setting-up-our-remote-github-repository" class="title-slide slide level2 center">
+<h2>Setting up our remote GitHub repository</h2>
 <ul>
-<li>Via our <span style="color: purple;">GitHub account</span>, we will create a remote <span style="color: darkblue;">{eda}</span> <strong>public</strong> repo (<strong>we will add the <code>README.md</code> file later</strong>)</li>
+<li>Via our <span style="color: purple;">GitHub account</span>, we will create a remote <span style="color: darkblue;">{eda}</span> <strong>public</strong> repository (<strong>we will add the <code>README.md</code> file later</strong>)</li>
 </ul>
 
 <img data-src="img/create-new-repo-GH.png" style="width:60.0%" class="r-stretch quarto-figure-center"></section>
-<section id="pushing-our-local-commits-to-the-remote-repo" class="title-slide slide level3 center">
-<h3>Pushing our local commits to the remote repo</h3>
+<section id="pushing-our-local-commits-to-the-remote-repository" class="title-slide slide level3 center">
+<h3>Pushing our local commits to the remote repository</h3>
 <div class="fragment">
 <ul>
 <li><span style="color: purple;">In the <code>Terminal</code> tab of our RStudio session</span>, we will paste the Git commands shown by <span style="color: purple;">GitHub.com</span> from section <code>...or push an existing repository from the command line</code></li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/push-existing-repo.png" style="width:55.0%"></p>
+<p><img data-src="img/push-existing-repo.png" style="width:50.0%"></p>
 </figure>
 </div>
 </div>
 </section>
 
-<section id="this-is-how-our-remote-repo-should-look-like" class="title-slide slide level3 center">
-<h3>This is how our remote repo should look like:</h3>
+<section id="this-is-how-our-remote-repository-should-look-like" class="title-slide slide level3 center">
+<h3>This is how our remote repository should look like:</h3>
 <p><br></p>
 
 <img data-src="img/initial-eda-repo.png" style="width:60.0%" class="r-stretch quarto-figure-center"></section>
 
-<section id="and-these-are-our-two-initial-commits-in-the-remote-repo" class="title-slide slide level3 center">
-<h3>And these are our two initial commits in the remote repo:</h3>
+<section id="and-these-are-our-two-initial-commits-in-the-remote-repository" class="title-slide slide level3 center">
+<h3>And these are our two initial commits in the remote repository:</h3>
 <p><br></p>
 
 <img data-src="img/initial-commits-eda-repo.png" style="width:60.0%" class="r-stretch quarto-figure-center"></section>
-
-
-<section id="function-check" class="title-slide slide level2 center">
-<h2>Function <code>check()</code></h2>
+</section>
+<section>
+<section id="check" class="title-slide slide level2 center">
+<h2><code>check()</code></h2>
 <ul>
-<li>To ensure that our package is in full working order, we’d need to execute <code>R CMD check</code> in the shell (i.e., terminal)</li>
-<li>We use function <code>check()</code> from <span style="color: darkblue;">{devtools}</span> via the <code>R</code> <code>Console</code></li>
+<li>It’s a function that ensures the sources of an <code>R</code> add-on package work correctly</li>
+<li>Therefore, <code>check()</code> executes <code>R CMD check</code> in the shell (i.e., terminal)</li>
+<li>We use <code>check()</code> from <span style="color: darkblue;">{devtools}</span> via the <code>R</code> <code>Console</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">check</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">check</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 <img data-src="img/using-check.png" class="r-stretch quarto-figure-center"></section>
@@ -755,12 +787,12 @@
 <li class="fragment">The output of this function is quite long!</li>
 <li class="fragment">That said, we essentially need to check the <span style="color: purple;">final summary</span> (i.e., the previous screenshot)</li>
 <li class="fragment">It’s crucial to address any issue we might encounter (which will be shown in the <code>check()</code> output)</li>
-<li class="fragment">For our toy package <span style="color: darkblue;">{eda}</span>, we will only encounter two warnings (<strong>to be addressed later on</strong>)</li>
+<li class="fragment">For our toy package <span style="color: darkblue;">{eda}</span>, we will only encounter two warnings (<strong>package dependency</strong> and <strong>missing license</strong>, to be addressed later on)</li>
 </ul>
 </div>
 </section>
-
-
+</section>
+<section>
 <section id="edit-description" class="title-slide slide level2 center">
 <h2>Edit <code>DESCRIPTION</code></h2>
 <div class="fragment">
@@ -782,6 +814,13 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1</code></pre>
 </div>
 </section>
+<section id="heads-up-1" class="title-slide slide level3 center">
+<h3>Heads-up!</h3>
+<ul>
+<li>The previous <code>DESCRIPTION</code> template might look different if you followed the instructions in system setup from here: <a href="https://r-pkgs.org/setup.html#personal-startup-configuration" class="uri">https://r-pkgs.org/setup.html#personal-startup-configuration</a></li>
+</ul>
+</section>
+
 <section id="lets-proceed-with-the-edits" class="title-slide slide level3 center">
 <h3>Let’s proceed with the edits!</h3>
 <ul>
@@ -807,7 +846,7 @@ RoxygenNote: 7.3.1</code></pre>
 <ul>
 <li>Once we have edited the <code>DESCRIPTION</code> file, we need to save our changes</li>
 <li>Then, as we did with the <code>count_classes()</code> function, <span style="color: purple;">let’s locally commit these changes</span> (use the commit message <code>Edit DESCRIPTION</code>)</li>
-<li>Moving forward, within the <code>Git</code> tab in RStudio, we will remotely push our edits to our public repo on GitHub by clicking on the <code>Push</code> button</li>
+<li>Moving forward, within the <code>Git</code> tab in RStudio, we will remotely push our edits to our public repository on GitHub by clicking on the <code>Push</code> button</li>
 </ul>
 
 <img data-src="img/push-button.png" class="r-stretch quarto-figure-center"></section>
@@ -823,7 +862,7 @@ RoxygenNote: 7.3.1</code></pre>
 </figure>
 </div>
 <ul>
-<li>Then, we will be able to see our third commit in our remote repo</li>
+<li>Then, we will be able to see our third commit in our remote repository</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -831,16 +870,16 @@ RoxygenNote: 7.3.1</code></pre>
 </figure>
 </div>
 </section>
-
-
-<section id="function-use_mit_license" class="title-slide slide level2 center">
-<h2>Function <code>use_mit_license()</code></h2>
+</section>
+<section>
+<section id="use_mit_license" class="title-slide slide level2 center">
+<h2><code>use_mit_license()</code></h2>
 <ul>
 <li>To address one of the warnings obtained in the output of <code>check()</code>, we need to include a <code>LICENSE.md</code></li>
 <li>Hence, we can use function <code>use_mit_license()</code> from <span style="color: darkblue;">{usethis}</span> via the <code>R</code> <code>Console</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">use_mit_license</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">use_mit_license</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 <img data-src="img/using-use_mit_license.png" class="r-stretch quarto-figure-center"></section>
@@ -870,14 +909,14 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1</code></pre>
 <div class="fragment">
 <ul>
-<li><span style="color: purple;">Let’s commit and push these changes to the remote repo</span> (use the commit message <code>Use MIT license</code>)</li>
+<li><span style="color: purple;">Let’s commit and push these changes to the remote repository</span> (use the commit message <code>Use MIT license</code>)</li>
 </ul>
 </div>
 </section>
-
-
-<section id="function-document" class="title-slide slide level2 center">
-<h2>Function <code>document()</code></h2>
+</section>
+<section>
+<section id="document" class="title-slide slide level2 center">
+<h2><code>document()</code></h2>
 <ul>
 <li>Let’s document our <code>count_classes()</code> function via package <span style="color: darkblue;">{roxygen2}</span></li>
 </ul>
@@ -922,7 +961,7 @@ RoxygenNote: 7.3.1</code></pre>
 <h3>Then…</h3>
 <ul>
 <li>Save your changes in <code>R/count_classes.R</code></li>
-<li>Commit and push these changes to the remote repo (use the commit message <code>Add roxygen header to document count_classes()</code>)</li>
+<li>Commit and push these changes to the remote repository (use the commit message <code>Add roxygen header to document count_classes()</code>)</li>
 </ul>
 </section>
 
@@ -932,7 +971,7 @@ RoxygenNote: 7.3.1</code></pre>
 <li>Let’s run the <code>document()</code> function in the <code>R</code> <code>Console</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">document</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">document</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br></p>
 <ul>
@@ -945,12 +984,11 @@ RoxygenNote: 7.3.1</code></pre>
 
 <img data-src="img/doc-count_classes.png" style="width:80.0%" class="r-stretch quarto-figure-center"><div class="fragment">
 <ul>
-<li>Commit and push these changes to the remote repo (use the commit message <code>Run document()</code>)</li>
+<li>Commit and push these changes to the remote repository (use the commit message <code>Run document()</code>)</li>
 </ul>
 </div>
 </section>
-
-
+</section>
 <section id="using-check-again" class="title-slide slide level2 center">
 <h2>Using <code>check()</code> again</h2>
 <ul>
@@ -959,95 +997,28 @@ RoxygenNote: 7.3.1</code></pre>
 
 <img data-src="img/using-check-2.png" class="r-stretch quarto-figure-center"></section>
 
-<section id="function-install" class="title-slide slide level2 center">
-<h2>Function <code>install()</code></h2>
+<section>
+<section id="install" class="title-slide slide level2 center">
+<h2><code>install()</code></h2>
 <ul>
 <li>It’s time to install our package <span style="color: darkblue;">{eda}</span></li>
 <li>That said, instead of using <code>install.packages()</code> as with any package in the CRAN, we will use <code>install()</code> from <span style="color: darkblue;">{devtools}</span></li>
+<li>Note that <code>install()</code> installs a local package in the current working directory, whereas <code>install.packages()</code> installs from a package repository</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">install</span>()</span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">library</span>(eda)</span>
-<span id="cb17-3"><a href="#cb17-3"></a><span class="fu">count_classes</span>(mtcars, cyl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">install</span>()</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">library</span>(eda)</span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="fu">count_classes</span>(mtcars, cyl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="lets-do-it-in-the-r-console" class="title-slide slide level3 center">
 <h3>Let’s do it in the <code>R</code> console</h3>
 
 <img data-src="img/using-install.png" class="r-stretch quarto-figure-center"></section>
-
-
-<section id="function-use_testthat" class="title-slide slide level2 center">
-<h2>Function <code>use_testthat()</code></h2>
-<div>
-<ul>
-<li class="fragment">We can implement <span style="color: purple;">formal unit tests</span>: <em>a concrete output expectation from our package functions for a given input</em></li>
-<li class="fragment">To build the <span style="color: darkblue;">{eda}</span> testing infrastructure, we use function <code>use_testthat()</code> from <span style="color: darkblue;">{usethis}</span>:
-<ol type="1">
-<li class="fragment">Suggests package <span style="color: darkblue;">{testhat}</span> in <code>DESCRIPTION</code></li>
-<li class="fragment">Creates directory <code>tests/testthat/</code> in <span style="color: darkblue;">{eda}</span></li>
-<li class="fragment">Adds the script <code>tests/testthat.R</code></li>
-</ol></li>
-</ul>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">use_testthat</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
 </section>
-<section id="lets-do-it-in-the-r-console-1" class="title-slide slide level3 center">
-<h3>Let’s do it in the <code>R</code> console</h3>
-
-<img data-src="img/using-use_testthat.png" class="r-stretch quarto-figure-center"><ul>
-<li>Commit and push these changes to the remote repo (use the commit message <code>Add testing infrastructure</code>)</li>
-</ul>
-</section>
-
-
-<section id="function-use_test" class="title-slide slide level2 center">
-<h2>Function <code>use_test()</code></h2>
-<ul>
-<li>This helper function from <span style="color: darkblue;">{usethis}</span> creates a test file in <code>tests/testthat/</code> per function</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">use_test</span>(<span class="st">"count_classes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><br></p>
-<ul>
-<li>In <code>test-count-classes.R</code>, you will see an example test which should be changed to an applicable one for <code>count_classes()</code> (<strong>more on testing later on in this workshop</strong>)</li>
-</ul>
-</section>
-<section id="lets-do-it-in-the-r-console-2" class="title-slide slide level3 center">
-<h3>Let’s do it in the <code>R</code> console</h3>
-
-<img data-src="img/use-use_test.png" class="r-stretch quarto-figure-center"><ul>
-<li>Commit and push these changes to the remote repo (use the commit message <code>Test count_classes()</code>)</li>
-</ul>
-</section>
-
-
-<section id="function-test" class="title-slide slide level2 center">
-<h2>Function <code>test()</code></h2>
-<ul>
-<li>Suppose you have already built suitable test functions for your package</li>
-<li>The next step is running <code>test()</code> from <span style="color: darkblue;">{devtools}</span></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">test</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="lets-do-it-in-the-r-console-3" class="title-slide slide level3 center">
-<h3>Let’s do it in the <code>R</code> console</h3>
-<ul>
-<li><span style="color: purple;"><code>test()</code> runs all our test functions</span> and provides the corresponding testing results</li>
-</ul>
-
-<img data-src="img/use-test.png" class="r-stretch quarto-figure-center"></section>
-
-
-<section id="function-use_package" class="title-slide slide level2 center">
-<h2>Function <code>use_package()</code></h2>
+<section>
+<section id="use_package" class="title-slide slide level2 center">
+<h2><code>use_package()</code></h2>
 <ul>
 <li>Note that <code>count_classes()</code> uses functions from package <span style="color: darkblue;">{dplyr}</span></li>
 </ul>
@@ -1062,7 +1033,7 @@ RoxygenNote: 7.3.1</code></pre>
 <li>We can use function <code>use_package()</code> from <span style="color: darkblue;">{usethis}</span></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">use_package</span>(<span class="st">"dplyr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">use_package</span>(<span class="st">"dplyr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br></p>
 <ul>
@@ -1070,23 +1041,23 @@ RoxygenNote: 7.3.1</code></pre>
 </ul>
 </section>
 
-<section id="lets-do-it-in-the-r-console-4" class="title-slide slide level3 center">
+<section id="lets-do-it-in-the-r-console-1" class="title-slide slide level3 center">
 <h3>Let’s do it in the <code>R</code> console</h3>
 
 <img data-src="img/use-use_package.png" class="r-stretch quarto-figure-center"><ul>
-<li>Commit and push these changes to the remote repo (use the commit message <code>Import dplyr</code>)</li>
+<li>Commit and push these changes to the remote repository (use the commit message <code>Import dplyr</code>)</li>
 </ul>
 </section>
-
-
-<section id="function-use_readme_rmd" class="title-slide slide level2 center">
-<h2>Function <code>use_readme_rmd()</code></h2>
+</section>
+<section>
+<section id="use_readme_rmd" class="title-slide slide level2 center">
+<h2><code>use_readme_rmd()</code></h2>
 <ul>
-<li>Our remote repo still doesn’t have a <code>README.md</code> file <span style="color: purple;">describing the package, installation, and usage</span></li>
+<li>Our remote repository still doesn’t have a <code>README.md</code> file <span style="color: purple;">describing the package, installation, and usage</span></li>
 <li>We can automatically generate one via <code>use_readme_rmd()</code> from <span style="color: darkblue;">{usethis}</span></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">use_readme_rmd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">use_readme_rmd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br></p>
 <div class="fragment">
@@ -1099,15 +1070,14 @@ RoxygenNote: 7.3.1</code></pre>
 <h3>The <code>.Rmd</code> file</h3>
 
 <img data-src="img/use-use_readme_rmd.png" class="r-stretch quarto-figure-center"><ul>
-<li>Fill out the template, knit to <code>.md</code>, use <code>build_readme()</code>,commit, and push these changes to the remote repo (use the commit message <code>Write README.Rmd and render</code>)</li>
+<li>Fill out the template, knit to <code>.md</code>, use <code>build_readme()</code>,commit, and push these changes to the remote repository (use the commit message <code>Write README.Rmd and render</code>)</li>
 </ul>
 </section>
-
-
+</section>
 <section id="using-check-and-install" class="title-slide slide level2 center">
 <h2>Using <code>check()</code> and <code>install()</code></h2>
 <ul>
-<li>We’re done with the basic steps to build our <code>R</code> package</li>
+<li>We’re done with the basic steps to build our <code>R</code> package!</li>
 <li>Again, we use <code>check()</code> (to ensure all warnings are gone!), and then re-build via <code>install()</code></li>
 </ul>
 </section>
@@ -1115,13 +1085,12 @@ RoxygenNote: 7.3.1</code></pre>
 <section id="review" class="title-slide slide level2 center">
 <h2>Review</h2>
 <ul>
-<li>We can review the previous process via the below diagram from <a href="https://r-pkgs.org/release.html"><strong>Chapter 1: The Whole Game</strong></a> (<code>R</code> packages book by Hadley Wickham &amp; Jenny Bryan, 2e)</li>
+<li>We can partially review the previous process (<code>test()</code> will be covered later on) via the below diagram from <a href="https://r-pkgs.org/release.html"><strong>Chapter 1: The Whole Game</strong></a> (<code>R</code> packages book by Hadley Wickham &amp; Jenny Bryan, 2e)</li>
 </ul>
 
 <img data-src="https://r-pkgs.org/diagrams/workflow.png" class="r-stretch quarto-figure-center"><div class="footer footer-default">
 
 </div>
-</section>
 </section>
     </div>
   </div>

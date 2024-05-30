@@ -1,12 +1,10 @@
 ---
-title: "How to create and distribute `R` packages"
+title: "Hands-on building an `R` package"
 format: 
   revealjs:
     slide-number: true
     slide-level: 4
 ---
-
-# Hands-on building an `R` package
 
 ## Before proceeding...
 
@@ -22,7 +20,6 @@ format:
 ::: incremental
 - Suppose our package's purpose is to provide data wrangling and summary functions to conduct a proper <span style="color: purple;">exploratory data analysis</span> (hence the name <span style="color: purple;">EDA</span>)
 - Therefore, our toy package's name will be <span style="color: darkblue;">{eda}</span>
-- Suppose the package's purpose is to provide data wrangling and summary functions to conduct a proper <span style="color: purple;">exploratory data analysis</span> (hence the name <span style="color: purple;">EDA</span>)
 - We will be switching back and forth between these slides and hands-on practice in <span style="color: purple;">**RStudio**</span>
 :::
 
@@ -31,12 +28,12 @@ format:
 ## Installing auxiliary `R` packages
 
 ::: incremental
-- Before starting with the actual process, we assumed you have installed the necessary packages <span style="color: darkblue;">{devtools}</span> and <span style="color: darkblue;">{usethis}</span> (also sent in the installation instructions before the workshop. 
+- Before starting with the actual process, we assumed you have installed the necessary packages <span style="color: darkblue;">{devtools}</span> and <span style="color: darkblue;">{usethis}</span> (also sent in the installation instructions before the workshop) 
 - <span style="color: darkblue;">{devtools}</span> is a meta-package that encompasses more focused development-related `R` packages
 - <span style="color: darkblue;">{usethis}</span> automates tasks related to <span style="color: purple;">project setup</span> and <span style="color: purple;">development</span> to build `R` packages
 :::
 
-![](img/usethis-devtools.png){fig-align="center" width=10%}
+![](img/usethis-devtools.png){fig-align="center" width=20%}
 
 ### Installation and loading code
 
@@ -46,17 +43,16 @@ format:
 ```{r}
 #| echo: true
 #| eval: false
-#| code-line-numbers: "|1|3"
-# uncomment and run the line below in the R console if you have not yet installed the `devtools` package.
+# Uncomment and run the line below in the R console if you have not yet installed the `devtools` package
 # install.packages("devtools") 
 
 library(devtools)
 ```
 
-## Function `create_package()`
+## `create_package()`
 
 ::: incremental
-- Function `create_package()` will <span style="color: purple;">initialize</span> our new package in a directory of our choice 
+- `create_package()` will <span style="color: purple;">initialize</span> our new package in a directory of our choice 
 - I will initialize the <span style="color: darkblue;">{eda}</span> package in my `Desktop` folder for easier reference
 :::
 
@@ -97,7 +93,7 @@ create_package("~/Desktop/eda")
 - An `R/` directory which will contain <span style="color: purple;">all package's functions</span> as `.R` scripts
 :::
 
-## Function `use_git()`
+## `use_git()`
 
 ::: incremental
 - Besides creating the <span style="color: purple;">RStudio project file</span> `eda.Rproj`, we will initialize a Git repository via `use_git()`
@@ -117,7 +113,7 @@ use_git()
 
 ### What does this function specifically do?
 
-- It creates hidden <span style="color: purple;">`.git` directory</span> in the folder <span style="color: darkblue;">{eda}</span>
+- It creates a hidden <span style="color: purple;">`.git` directory</span> in the folder <span style="color: darkblue;">{eda}</span>
 - Furthermore, it creates your <span style="color: purple;">initial commit</span>
 
 ![](img/use_git.png){fig-align="center" width=8%}
@@ -133,7 +129,7 @@ use_git()
 
 . . .
 
-- Recall we aim to package our code (shown below) for counting the number of observations in a class for any data frame (besides `mtcars`) so we (and others) can reuse this code more easily in other projects.
+- Recall we aim to package our code (shown below) for counting the number of observations in a class for any data frame (besides `mtcars`) so we (and others) can reuse this code more easily in other projects
 
 ```{r}
 #| echo: true
@@ -147,16 +143,11 @@ mtcars |>
   rename("class" = cyl)
 ```
 
-. . .
-
-- Therefore, we need to create an `R` function
-
 ### This is our function `count_classes()`
 
 . . .
 
 - It receives a `data_frame` or data frame extension (e.g., a tibble) along with an <span style="color: purple;">unquoted column name</span> containing the class label `class_col`
-- If we want to use unquoted column names in a function with <span style="color: darkblue;">{dplyr}</span> functions, then we surround them with `{{ }}`
 
 ```{r}
 #| echo: true
@@ -176,7 +167,39 @@ count_classes <- function(data_frame, class_col) {
 }
 ```
 
-###  Function `use_r()`
+### The use of ``{{ }}``
+
+::: incremental
+- Note we're using <span style="color: purple;">curly brackets</span> in `{{ class_col }}`
+- An indirection with unquoted column names (such as `class_col`) needs <span style="color: purple;">extra support</span> (via the curly brackets) because the global environment is not aware of the data frame column names
+:::
+
+### Syntax `package::function()`
+
+- `count_classes()` includes three <span style="color: darkblue;">{dplyr}</span> functions: 
+    - `group_by()`, `summarize()`, and `rename()`
+- Alternatively, we can use the syntax `dplyr::group_by()`, `dplyr::summarize()`, and `dplyr::rename()`
+- This syntax is recommended since it makes explicit which package each dependency is coming from within our package functions
+
+### Re-writing our function
+
+```{r}
+#| echo: true
+#| eval: false
+
+count_classes <- function(data_frame, class_col) {
+  if (!is.data.frame(data_frame)) {
+    stop("`data_frame` should be a data frame or data frame extension (e.g. a tibble)")
+  }
+
+  data_frame |>
+    dplyr::group_by({{ class_col }}) |>
+    dplyr::summarize(count = n()) |>
+    dplyr::rename("class" = {{ class_col }})
+}
+```
+
+### `use_r()`
 
 <br>
 
@@ -202,7 +225,7 @@ use_r("count_classes")
 . . .
 
 - `use_r()` creates the `.R` script `count_classes.R`
-- The `Git` tab keeps track of all our changes in the repo <span style="color: purple;">after our initial commit</span>
+- The `Git` tab keeps track of all our changes in the repository <span style="color: purple;">after our initial commit</span>
 
 ![](img/count_classes.png){fig-align="center"}
 
@@ -237,7 +260,7 @@ use_r("count_classes")
 
 - This local committing process will be <span style="color: purple;">repeated every time</span> we make significant changes to our package
 
-## Function `load_all()`
+## `load_all()`
 
 - The next step in our package building process is <span style="color: purple;">to test **informally**</span> our function `count_classes()`
 - Function `load_all()` from <span style="color: darkblue;">{devtools}</span> makes function `count_classes()` available for experimentation
@@ -267,37 +290,37 @@ count_classes(data_frame = mtcars, class_col = cyl)
 
 ![](img/using-count-classes.png){fig-align="center"}
 
-## Setting up our remote GitHub repo
+## Setting up our remote GitHub repository
 
-- Via our <span style="color: purple;">GitHub account</span>, we will create a remote <span style="color: darkblue;">{eda}</span> **public** repo (**we will add the `README.md` file later**)
+- Via our <span style="color: purple;">GitHub account</span>, we will create a remote <span style="color: darkblue;">{eda}</span> **public** repository (**we will add the `README.md` file later**)
 
 ![](img/create-new-repo-GH.png){fig-align="center" width=60%}
 
-### Pushing our local commits to the remote repo
+### Pushing our local commits to the remote repository
 
 . . .
 
 - <span style="color: purple;">In the `Terminal` tab of our RStudio session</span>, we will paste the Git commands shown by <span style="color: purple;">GitHub.com</span> from section `...or push an existing repository from the command line`
 
-![](img/push-existing-repo.png){fig-align="center" width=55%}
+![](img/push-existing-repo.png){fig-align="center" width=50%}
 
-### This is how our remote repo should look like:
+### This is how our remote repository should look like:
 
 <br>
 
 ![](img/initial-eda-repo.png){fig-align="center" width=60%}
 
-### And these are our two initial commits in the remote repo:
+### And these are our two initial commits in the remote repository:
 
 <br>
 
 ![](img/initial-commits-eda-repo.png){fig-align="center" width=60%}
 
-## Function `check()`
+## `check()`
 
 - It's a function that ensures the sources of an `R` add-on package work correctly
 - Therefore, `check()` executes `R CMD check` in the shell (i.e., terminal)
-- We use function `check()` from <span style="color: darkblue;">{devtools}</span> via the `R` `Console`
+- We use `check()` from <span style="color: darkblue;">{devtools}</span> via the `R` `Console`
 
 ```{r}
 #| echo: true
@@ -314,7 +337,7 @@ check()
 - The output of this function is quite long!
 - That said, we essentially need to check the <span style="color: purple;">final summary</span> (i.e., the previous screenshot)
 - It's crucial to address any issue we might encounter (which will be shown in the `check()` output)
-- For our toy package <span style="color: darkblue;">{eda}</span>, we will only encounter two warnings (**package dependency and missing license**, to be addressed later on) 
+- For our toy package <span style="color: darkblue;">{eda}</span>, we will only encounter two warnings (**package dependency** and **missing license**, to be addressed later on) 
 :::
 
 ## Edit `DESCRIPTION`
@@ -339,6 +362,9 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
 ```
 
+### Heads-up!
+
+- The previous `DESCRIPTION` template might look different if you followed the instructions in system setup from here: <https://r-pkgs.org/setup.html#personal-startup-configuration>
 
 ### Let's proceed with the edits!
 
@@ -364,7 +390,7 @@ RoxygenNote: 7.3.1
 
 - Once we have edited the `DESCRIPTION` file, we need to save our changes
 - Then, as we did with the `count_classes()` function, <span style="color: purple;">let's locally commit these changes</span> (use the commit message `Edit DESCRIPTION`)
-- Moving forward, within the `Git` tab in RStudio, we will remotely push our edits to our public repo on GitHub by clicking on the `Push` button
+- Moving forward, within the `Git` tab in RStudio, we will remotely push our edits to our public repository on GitHub by clicking on the `Push` button
 
 ![](img/push-button.png){fig-align="center"}
 
@@ -374,11 +400,11 @@ RoxygenNote: 7.3.1
 
 ![](img/push-confirmation.png){fig-align="center" width=50%}
 
-- Then, we will be able to see our third commit in our remote repo
+- Then, we will be able to see our third commit in our remote repository
 
 ![](img/third-commit-eda-repo.png){fig-align="center" width=70%}
 
-## Function `use_mit_license()`
+## `use_mit_license()`
 
 - To address one of the warnings obtained in the output of `check()`, we need to include a `LICENSE.md`
 - Hence, we can use function `use_mit_license()` from <span style="color: darkblue;">{usethis}</span> via the `R` `Console`
@@ -418,9 +444,9 @@ RoxygenNote: 7.3.1
 
 . . .
 
-- <span style="color: purple;">Let's commit and push these changes to the remote repo</span> (use the commit message `Use MIT license`)
+- <span style="color: purple;">Let's commit and push these changes to the remote repository</span> (use the commit message `Use MIT license`)
 
-## Function `document()`
+## `document()`
 
 - Let's document our `count_classes()` function via package <span style="color: darkblue;">{roxygen2}</span>
 
@@ -462,7 +488,7 @@ RoxygenNote: 7.3.1
 ### Then...
 
 - Save your changes in `R/count_classes.R`
-- Commit and push these changes to the remote repo</span> (use the commit message `Add roxygen header to document count_classes()`)
+- Commit and push these changes to the remote repository</span> (use the commit message `Add roxygen header to document count_classes()`)
 
 ### Using `document()` from <span style="color: darkblue;">{devtools}</span>
 
@@ -485,7 +511,7 @@ document()
 
 . . .
 
-- Commit and push these changes to the remote repo</span> (use the commit message `Run document()`)
+- Commit and push these changes to the remote repository</span> (use the commit message `Run document()`)
 
 ## Using `check()` again
 
@@ -493,11 +519,11 @@ document()
 
 ![](img/using-check-2.png){fig-align="center"}
 
-## Function `install()`
+## `install()`
 
 - It's time to install our package <span style="color: darkblue;">{eda}</span>
 - That said, instead of using `install.packages()` as with any package in the CRAN, we will use `install()` from <span style="color: darkblue;">{devtools}</span>
-- Note that `install()` installs a local package in the current working directory, whereas `install.packages()` install from a package repository
+- Note that `install()` installs a local package in the current working directory, whereas `install.packages()` installs from a package repository
 
 ```{r}
 #| echo: true
@@ -512,71 +538,7 @@ count_classes(mtcars, cyl)
 
 ![](img/using-install.png){fig-align="center"}
 
-## Function `use_testthat()`
-
-::: incremental
-- We can implement <span style="color: purple;">formal unit tests</span>: *a concrete output expectation from our package functions for a given input*
-- To build the <span style="color: darkblue;">{eda}</span> testing infrastructure, we use function `use_testthat()` from <span style="color: darkblue;">{usethis}</span>:
-  1. Suggests package <span style="color: darkblue;">{testhat}</span> in `DESCRIPTION`
-  2. Creates directory `tests/testthat/` in <span style="color: darkblue;">{eda}</span>
-  3. Adds the script `tests/testthat.R`
-:::
-
-. . .
-
-```{r}
-#| echo: true
-#| eval: false
-
-use_testthat()
-```
-
-### Let's do it in the `R` console
-
-![](img/using-use_testthat.png){fig-align="center"}
-
-- Commit and push these changes to the remote repo</span> (use the commit message `Add testing infrastructure`)
-
-## Function `use_test()`
-
-- This helper function from <span style="color: darkblue;">{usethis}</span> creates a test file in `tests/testthat/` per function
-
-```{r}
-#| echo: true
-#| eval: false
-
-use_test("count_classes")
-```
-
-<br>
-
-- In `test-count-classes.R`, you will see an example test which should be changed to an applicable one for `count_classes()` (**more on testing later on in this workshop**)
-
-### Let's do it in the `R` console
-
-![](img/use-use_test.png){fig-align="center"}
-
-- Commit and push these changes to the remote repo</span> (use the commit message `Test count_classes()`)
-
-## Function `test()`
-
-- Suppose you have already built suitable test functions for your package
-- The next step is running `test()` from <span style="color: darkblue;">{devtools}</span>
-
-```{r}
-#| echo: true
-#| eval: false
-
-test()
-```
-
-### Let's do it in the `R` console
-
-- <span style="color: purple;">`test()` runs all our test functions</span> and provides the corresponding testing results
-
-![](img/use-test.png){fig-align="center"}
-
-## Function `use_package()`
+## `use_package()`
 
 - Note that `count_classes()` uses functions from package <span style="color: darkblue;">{dplyr}</span>
 
@@ -603,11 +565,11 @@ use_package("dplyr")
 
 ![](img/use-use_package.png){fig-align="center"}
 
-- Commit and push these changes to the remote repo</span> (use the commit message `Import dplyr`)
+- Commit and push these changes to the remote repository</span> (use the commit message `Import dplyr`)
 
-## Function `use_readme_rmd()`
+## `use_readme_rmd()`
 
-- Our remote repo still doesn't have a `README.md` file <span style="color: purple;">describing the package, installation, and usage</span>
+- Our remote repository still doesn't have a `README.md` file <span style="color: purple;">describing the package, installation, and usage</span>
 - We can automatically generate one via `use_readme_rmd()` from <span style="color: darkblue;">{usethis}</span>
 
 ```{r}
@@ -627,15 +589,15 @@ use_readme_rmd()
 
 ![](img/use-use_readme_rmd.png){fig-align="center"}
 
-- Fill out the template, knit to `.md`, use `build_readme()`,commit, and push these changes to the remote repo</span> (use the commit message `Write README.Rmd and render`)
+- Fill out the template, knit to `.md`, use `build_readme()`,commit, and push these changes to the remote repository</span> (use the commit message `Write README.Rmd and render`)
 
 ## Using `check()` and `install()`
 
-- We're done with the basic steps to build our `R` package
+- We're done with the basic steps to build our `R` package!
 - Again, we use `check()` (to ensure all warnings are gone!), and then re-build via `install()`
 
 ## Review
 
-- We can review the previous process via the below diagram from [**Chapter 1: The Whole Game**](https://r-pkgs.org/release.html) (`R` packages book by Hadley Wickham & Jenny Bryan, 2e)
+- We can partially review the previous process (`test()` will be covered later on) via the below diagram from [**Chapter 1: The Whole Game**](https://r-pkgs.org/release.html) (`R` packages book by Hadley Wickham & Jenny Bryan, 2e)
 
 ![](https://r-pkgs.org/diagrams/workflow.png){fig-align="center"}
