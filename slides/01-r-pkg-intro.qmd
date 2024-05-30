@@ -102,6 +102,9 @@ Packaging our code:
 
 ## How are `R` packages shared and downloaded?
 
+- `R` packages can be shared and downloaded using code repositories, like GitHub 
+- We also have the [**Comprehensive R Archive Network (CRAN)**](https://cran.r-project.org)
+
 - We have the [**Comprehensive R Archive Network (CRAN)**](https://cran.r-project.org)
 
 . . .
