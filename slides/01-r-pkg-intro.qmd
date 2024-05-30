@@ -116,7 +116,9 @@ Packaging our code:
 - As of today, there are over <span style="color: purple;">20,000 packages available</span> on the CRAN
 
 ## What will be our learning goals?
+- As of today, there are over <span style="color: purple;">20,000 packages available</span> on the CRAN
 
+## What will be the workshop topics?
 ::: incremental
 - Develop `R` packages from scratch via a <span style="color: purple;">toy example</span>
 - Introduce the concept of <span style="color: purple;">testing</span> to ensure our package coding works as expected
