@@ -90,8 +90,12 @@ mtcars |>
 ## Yes, it is!
 
 ::: incremental
-- A published package is crucial in everyday shareable code
-- It encompasses code, data, documentation, and <span style="color: purple;">test functions</span>
+Packaging our code:
+- allows us to more easily reuse the in many different projects, in a less error-prone way
+- let's others benefit from the code we have written
+- increases our code quality because when packaging we:
+     - must modularize our code into functions and write function reference documentation
+     - have our code organized in a way that works well with tools for creating tutorials/vignettes, as well as formal code/software testing to ensure our code works as expected)
 :::
 
 ![](img/software.png){fig-align="center" width=5%}
