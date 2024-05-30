@@ -14,7 +14,7 @@ format:
 
 > **Attribution:** This content has been developed on the basis provided by [**Chapter 1: The Whole Game**](https://r-pkgs.org/release.html) (`R` packages book by Hadley Wickham & Jenny Bryan, 2e) and the UBC course notes [**Reproducible and Trustworthy Workflows for Data Science**](https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/materials/lectures/10-packaging-and-documenting.html#when-to-start-writing-an-r-or-python-package) by Tiffany Timbers, Joel Östblom, Florencia D’Andrea, and Rodolfo Lourenzutti
 
-> We need to <span style="color: purple;">register a GitHub account</span>  and <span style="color: purple;">install git</span> ([**more information here**](https://github.com/UBC-STAT/ssc-workshop-2024#ssc-workshop-2024))
+> We assume you have followed the installation instructions we shared before the workshop and have: <span style="color: purple;">registered for a GitHub account</span>  and <span style="color: purple;">installed git</span> ([**more information here**](https://github.com/UBC-STAT/ssc-workshop-2024#ssc-workshop-2024))
 
 
 ## Toy package: <span style="color: darkblue;">{eda}</span>
