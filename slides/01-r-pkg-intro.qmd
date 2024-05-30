@@ -36,7 +36,7 @@ Teaching team
 - Its functions are expected to be reproducible code and <span style="color: purple;">adequately documented</span> (even with some <span style="color: purple;">sample data</span>!)
 :::
 
-## Let's start with our toy example
+## Let's start with a motivating example
 
 ::: incremental
 - Suppose that, <span style="color: purple;">in many of your analyses</span>, you find yourself repeatedly coding the distribution of observations over the classes (i.e., categories) of a given variable in your dataset
