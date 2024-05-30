@@ -133,7 +133,7 @@ use_git()
 
 . . .
 
-- Recall we aim to automate the below data wrangling process for any data frame (besides `mtcars`)
+- Recall we aim to package our code (shown below) for counting the number of observations in a class for any data frame (besides `mtcars`) so we (and others) can reuse this code more easily in other projects.
 
 ```{r}
 #| echo: true
