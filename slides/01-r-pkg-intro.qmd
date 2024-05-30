@@ -120,11 +120,11 @@ Packaging our code:
 
 ## What will be the workshop topics?
 ::: incremental
-- Develop `R` packages from scratch via a <span style="color: purple;">toy example</span>
-- Introduce the concept of <span style="color: purple;">testing</span> to ensure our package coding works as expected
-- Include the corresponding <span style="color: purple;">documentation</span>
-- Introduce <span style="color: purple;">continuous integration</span> using <span style="color: purple;">GitHub Actions</span>
-- Share and publish packages on <span style="color: purple;">GitHub</span> and <span style="color: purple;">CRAN</span> 
-- Define <span style="color: purple;">copyright rules</span> when building, sharing, and using packages
-- Choose the most appropriate <span style="color: purple;">license</span>
+- Development of `R` packages via a <span style="color: purple;">toy example</span>
+- Introduction to <span style="color: purple;">package testing</span>
+- Setting up <span style="color: purple;">documentation</span>
+- Introduction to <span style="color: purple;">continuous integration</span> via <span style="color: purple;">GitHub Actions</span>
+- Sharing and publishing packages on <span style="color: purple;">GitHub</span> and <span style="color: purple;">CRAN</span> 
+- Definition of <span style="color: purple;">copyright rules</span>
+- Choosing the most appropriate <span style="color: purple;">license</span>
 :::
