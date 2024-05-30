@@ -397,7 +397,9 @@
 </section>
 <section id="welcome" class="title-slide slide level1 center">
 <h1>Welcome!</h1>
-<p>Let’s introduce ourselves…</p>
+<ul>
+<li>We’re all affiliated to the Department of Statistics at UBC</li>
+</ul>
 <div class="fragment fade-left">
 <div id="fig-team" class="quarto-layout-panel">
 <figure>
@@ -405,37 +407,37 @@
 <div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/photo_katie.jpg" width="200"></p>
-<figcaption>Katie Burak</figcaption>
+<p><img data-src="img/photo_katie.jpg" width="170"></p>
+<figcaption>Katie Burak, Assistant Professor of Teaching</figcaption>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/photo_daniel.jpg" width="200"></p>
-<figcaption>Daniel Chen</figcaption>
+<p><img data-src="img/photo_daniel.jpg" width="170"></p>
+<figcaption>Daniel Chen, Postdoctoral Teaching and Learning Fellow</figcaption>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/photo_alexi.jpg" width="200"></p>
-<figcaption>G. Alexi Rodríguez-Arelis</figcaption>
+<p><img data-src="img/photo_alexi.jpg" width="170"></p>
+<figcaption>G. Alexi Rodríguez-Arelis, Assistant Professor of Teaching</figcaption>
 </figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="img/timbers_2021.jpg" width="200"></p>
-<figcaption>Tiffany Timbers</figcaption>
+<p><img data-src="img/timbers_2021.jpg" width="170"></p>
+<figcaption>Tiffany Timbers, Associate Professor of Teaching</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p></p><figcaption>Figure&nbsp;1: Teaching team</figcaption><p></p>
+<p></p><figcaption>Figure&nbsp;1: Teaching Team</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -450,25 +452,52 @@
 <h2>This question is key!</h2>
 <div>
 <ul>
-<li class="fragment">An <code>R</code> package is central to generating <span style="color: purple;">reproducible code</span></li>
-<li class="fragment">It allows us to call functions whenever we need them in our data wrangling and/or analysis</li>
-<li class="fragment">Its functions are expected to be reproducible code and <span style="color: purple;">adequately documented</span> (even with some <span style="color: purple;">sample data</span>!)</li>
+<li class="fragment">An <code>R</code> package is a <span style="color: purple;">collection</span> of functions, tests, data, compiled code, and standardized documentation</li>
+<li class="fragment">The reason to create a package is mostly about <span style="color: purple;">creating code that should be easier to reuse and share</span></li>
 </ul>
+</div>
+
+<img data-src="img/software.png" style="width:5.0%" class="r-stretch quarto-figure-center"></section>
+
+<section id="more-specifically" class="title-slide slide level2 center">
+<h2>More specifically…</h2>
+<ul>
+<li><code>R</code> packages are created:
+<ul>
+<li>When your <span style="color: purple;">DRY</span> (“Do Not Repeat Yourself) radar goes off</li>
+<li>When you think your code has general usefulness others could benefit from (this could include future you)</li>
+<li>When you want to <span style="color: purple;">share</span> data (<code>R</code> packages in particular are used quite heavily for this)</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<blockquote>
+<p><strong>Source:</strong> Lecture notes from <a href="https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/materials/lectures/10-packaging-and-documenting.html#when-to-start-writing-an-r-or-python-package">UBC’s <strong>DSCI 310</strong> course (Reproducible and Trustworthy Workflows for Data Science)</a></p>
+</blockquote>
 </div>
 </section>
 
-<section id="lets-start-with-our-toy-example" class="title-slide slide level2 center">
-<h2>Let’s start with our toy example</h2>
+<section id="lets-start-with-a-motivating-example" class="title-slide slide level2 center">
+<h2>Let’s start with a motivating example</h2>
 <div>
 <ul>
-<li class="fragment">Suppose that, <span style="color: purple;">in your everyday analysis</span>, you are usually coding the distribution of observations over the classes (i.e., categories) of a given variable in your dataset</li>
-<li class="fragment">Moreover, you would like to <span style="color: purple;">automate</span> this process and <span style="color: purple;">share</span> your work!</li>
+<li class="fragment">Suppose that, <span style="color: purple;">in many of your analyses</span>, you find yourself repeatedly coding the distribution of observations over the classes (i.e., categories) of a given variable in your dataset</li>
+<li class="fragment">You find yourself <span style="color: purple;">rewriting code, copying and pasting code and/or copying and pasting files containing the code to do this</span></li>
 </ul>
 </div>
 </section>
 
-<section id="this-is-an-specific-example-of-your-everyday-process" class="title-slide slide level2 center">
-<h2>This is an specific example of your everyday process</h2>
+<section id="moreover" class="title-slide slide level2 center">
+<h2>Moreover…</h2>
+<div>
+<ul>
+<li class="fragment">In doing so, you sometimes (or often!) make trivial mistakes</li>
+<li class="fragment">You wonder whether others doing <span style="color: purple;">similar analyses</span> face this problem as well, and want to share your (eventual) solution with others</li>
+</ul>
+</div>
+</section>
+
+<section id="counting-observations-across-classes-code-example" class="title-slide slide level2 center">
+<h2>Counting observations across classes code example</h2>
 <ul>
 <li>The code below is counting how many cars in <code>mtcars</code> (composed of 32 observations) have <code>4</code>, <code>6</code>, and <code>8</code> cylinders</li>
 </ul>
@@ -492,50 +521,53 @@
 </div>
 </section>
 
-<section id="is-an-r-package-the-answer-to-our-previous-automation-and-sharing-inquiries" class="title-slide slide level2 center">
-<h2>Is an <code>R</code> package the answer to our previous <span style="color: purple;">automation</span> and <span style="color: purple;">sharing</span> inquiries?</h2>
-
+<section id="is-an-r-package-the-answer-to-our-pains-with-how-we-have-been-previously-trying-to-reuse-our-code" class="title-slide slide level2 center">
+<h2>Is an <code>R</code> package the answer to our pains with how we have been previously trying to reuse our code?</h2>
+<div class="fragment">
+<p><br></p>
+<p><strong>Yes, it is!</strong></p>
+</div>
 </section>
 
-<section id="yes-it-is" class="title-slide slide level2 center">
-<h2>Yes, it is!</h2>
+<section id="packaging-our-code" class="title-slide slide level2 center">
+<h2>Packaging our code</h2>
 <div>
 <ul>
-<li class="fragment">A published package is crucial in everyday shareable code</li>
-<li class="fragment">It encompasses code, data, documentation, and <span style="color: purple;">test functions</span></li>
+<li class="fragment">Allows us to more easily reuse the in many different projects, in a less error-prone way</li>
+<li class="fragment">Lets others benefit from the code we have written</li>
+<li class="fragment">Increases our code quality because when packaging we:
+<ul>
+<li class="fragment">must <span style="color: purple;">modularize</span> our code into functions and write function reference documentation</li>
+<li class="fragment">have our code <span style="color: purple;">organized</span> in a way that works well with tools for creating tutorials/vignettes, as well as formal <span style="color: purple;">code/software testing</span></li>
+</ul></li>
 </ul>
 </div>
-
-<img data-src="img/software.png" style="width:5.0%" class="r-stretch quarto-figure-center"></section>
+</section>
 
 <section id="how-are-r-packages-shared-and-downloaded" class="title-slide slide level2 center">
 <h2>How are <code>R</code> packages shared and downloaded?</h2>
 <ul>
-<li>We have the <a href="https://cran.r-project.org"><strong>Comprehensive R Archive Network (CRAN)</strong></a></li>
+<li><code>R</code> packages can be shared and downloaded using code repositories, like GitHub</li>
+<li>We also have the <a href="https://cran.r-project.org"><strong>Comprehensive R Archive Network (CRAN)</strong></a> with over <span style="color: purple;">20,000 packages available</span></li>
 </ul>
 <div class="fragment">
 <blockquote>
 <p><em>CRAN is a network of ftp and web servers around the world that store identical, up-to-date, versions of code and documentation for <code>R</code>.</em></p>
 </blockquote>
 </div>
-<div class="fragment">
-<ul>
-<li>As of today, there are over <span style="color: purple;">20,000 packages available</span> on the CRAN</li>
-</ul>
-</div>
 </section>
 
-<section id="what-will-be-our-learning-goals" class="title-slide slide level2 center">
-<h2>What will be our learning goals?</h2>
+<section id="what-will-be-the-workshop-topics" class="title-slide slide level2 center">
+<h2>What will be the workshop topics?</h2>
 <div>
 <ul>
-<li class="fragment">Develop <code>R</code> packages from scratch via a <span style="color: purple;">toy example</span></li>
-<li class="fragment">Introduce the concept of <span style="color: purple;">testing</span> to ensure our package coding works as expected</li>
-<li class="fragment">Include the corresponding <span style="color: purple;">documentation</span></li>
-<li class="fragment">Introduce <span style="color: purple;">continuous integration</span> using <span style="color: purple;">GitHub Actions</span></li>
-<li class="fragment">Share and publish packages on <span style="color: purple;">GitHub</span> and <span style="color: purple;">CRAN</span></li>
-<li class="fragment">Define <span style="color: purple;">copyright rules</span> when building, sharing, and using packages</li>
-<li class="fragment">Choose the most appropriate <span style="color: purple;">license</span></li>
+<li class="fragment">Development of <code>R</code> packages via a <span style="color: purple;">toy example</span></li>
+<li class="fragment">Introduction to <span style="color: purple;">package testing</span></li>
+<li class="fragment">Setting up <span style="color: purple;">documentation</span></li>
+<li class="fragment">Introduction to <span style="color: purple;">continuous integration</span> via <span style="color: purple;">GitHub Actions</span></li>
+<li class="fragment">Sharing and publishing packages on <span style="color: purple;">GitHub</span> and <span style="color: purple;">CRAN</span></li>
+<li class="fragment">Definition of <span style="color: purple;">copyright rules</span></li>
+<li class="fragment">Choosing the most appropriate <span style="color: purple;">license</span></li>
 </ul>
 </div>
 <div class="footer footer-default">
