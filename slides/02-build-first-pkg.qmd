@@ -84,7 +84,7 @@ create_package("~/Desktop/eda")
 ### Project layout description (`ignore`-type files)
 
 ::: incremental
-- `.gitignore` is used by GitHub and lists all <span style="color: purple;">"hidden"</span> files created by `R` and RStudio that aren't necessary for the repo
+- `.gitignore` is used by GitHub and lists all <span style="color: purple;">"hidden"</span> files created by `R` and RStudio that aren't necessary for the repository
 -  `.Rbuildignore` contains all files created via `R` and RStudio <span style="color: purple;">that won't be necessary</span> when building our package (e.g., `eda.Rproj`)
 :::
 
