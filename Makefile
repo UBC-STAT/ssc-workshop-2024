@@ -1,4 +1,4 @@
-@PHONY: all qrslides website preview publish clean
+@PHONY: all qrslides render preview clean
 
 # cannot name this target slides becasue there's a slides folder
 # qrslides for quarto render slides
