@@ -1,4 +1,4 @@
-@PHONY: all qrslides render preview clean
+@PHONY: all qrslides render preview publish clean
 
 # cannot name this target slides becasue there's a slides folder
 # qrslides for quarto render slides
@@ -11,8 +11,12 @@ render:
 preview:
 	quarto preview index.qmd --port 8888
 
+publish:
+	make render
+	quarto publish gh-pages
+
 clean:
 	rm -rf docs/ _site/
 
 	rm -rf slides/*_files
-	rm slides/*.html
+	rm -rf slides/*.html

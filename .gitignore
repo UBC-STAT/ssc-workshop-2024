@@ -10,3 +10,5 @@ slides/*_files
 slides/*.html
 _site/
 docs/
+
+/.quarto/
