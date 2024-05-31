@@ -1,0 +1,1623 @@
+[
+  {
+    "objectID": "slides/ssc-workshop-2024.html#this-question-is-key",
+    "href": "slides/ssc-workshop-2024.html#this-question-is-key",
+    "title": "How to create and distribute R packages",
+    "section": "This question is key!",
+    "text": "This question is key!\n\n\nAn R package is central to generating reproducible code\nIt allows us to call functions whenever we need them in our data wrangling and/or analysis\nIts functions are expected to be reproducible code and adequately documented (even with some sample data!)"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#lets-start-with-our-toy-example",
+    "href": "slides/ssc-workshop-2024.html#lets-start-with-our-toy-example",
+    "title": "How to create and distribute R packages",
+    "section": "Let’s start with our toy example",
+    "text": "Let’s start with our toy example\n\n\nSuppose that, in your everyday analysis, you are usually coding the distribution of observations over the classes (i.e., categories) of a given variable in your dataset\nMoreover, you would like to automate this process and share your work!"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#this-is-an-specific-example-of-your-everyday-process",
+    "href": "slides/ssc-workshop-2024.html#this-is-an-specific-example-of-your-everyday-process",
+    "title": "How to create and distribute R packages",
+    "section": "This is an specific example of your everyday process",
+    "text": "This is an specific example of your everyday process\n\nThe code below is counting how many cars in mtcars (composed of 32 observations) have 4, 6, and 8 cylinders\n\n\n\nlibrary(tidyverse, quietly = TRUE)\n\nmtcars |&gt;\n  group_by(cyl) |&gt;\n  summarize(count = n()) |&gt;\n  rename(\"class\" = cyl)\n\n# A tibble: 3 × 2\n  class count\n  &lt;dbl&gt; &lt;int&gt;\n1     4    11\n2     6     7\n3     8    14"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#is-an-r-package-the-answer-to-our-previous-automation-and-sharing-inquiries",
+    "href": "slides/ssc-workshop-2024.html#is-an-r-package-the-answer-to-our-previous-automation-and-sharing-inquiries",
+    "title": "How to create and distribute R packages",
+    "section": "Is an R package the answer to our previous automation and sharing inquiries?",
+    "text": "Is an R package the answer to our previous automation and sharing inquiries?"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#yes-it-is",
+    "href": "slides/ssc-workshop-2024.html#yes-it-is",
+    "title": "How to create and distribute R packages",
+    "section": "Yes, it is!",
+    "text": "Yes, it is!\n\n\nA published package is crucial in everyday shareable code\nIt encompasses code, data, documentation, and test functions"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#how-are-r-packages-shared-and-downloaded",
+    "href": "slides/ssc-workshop-2024.html#how-are-r-packages-shared-and-downloaded",
+    "title": "How to create and distribute R packages",
+    "section": "How are R packages shared and downloaded?",
+    "text": "How are R packages shared and downloaded?\n\nWe have the Comprehensive R Archive Network (CRAN)\n\n\n\nCRAN is a network of ftp and web servers around the world that store identical, up-to-date, versions of code and documentation for R.\n\n\n\n\nAs of today, there are over 20,000 packages available on the CRAN"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#what-will-be-our-learning-goals",
+    "href": "slides/ssc-workshop-2024.html#what-will-be-our-learning-goals",
+    "title": "How to create and distribute R packages",
+    "section": "What will be our learning goals?",
+    "text": "What will be our learning goals?\n\n\nDevelop R packages from scratch via a toy example\nIntroduce the concept of testing to ensure our package coding works as expected\nInclude the corresponding documentation\nIntroduce continuous integration using GitHub Actions\nShare and publish packages on GitHub and CRAN\nDefine copyright rules when building, sharing, and using packages\nChoose the most appropriate license"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#before-proceeding",
+    "href": "slides/ssc-workshop-2024.html#before-proceeding",
+    "title": "How to create and distribute R packages",
+    "section": "Before proceeding…",
+    "text": "Before proceeding…\n\n\nAttribution: This content has been developed on the basis provided by Chapter 1: The Whole Game (R packages book by Hadley Wickham & Jenny Bryan, 2e) and the UBC course notes Reproducible and Trustworthy Workflows for Data Science by Tiffany Timbers, Joel Östblom, Florencia D’Andrea, and Rodolfo Lourenzutti\n\n\nWe need to register a GitHub account and install git (more information here)"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#toy-package-eda",
+    "href": "slides/ssc-workshop-2024.html#toy-package-eda",
+    "title": "How to create and distribute R packages",
+    "section": "Toy package: {eda}",
+    "text": "Toy package: {eda}\n\n\nOur toy package’s name will be {eda}\nSuppose the package’s purpose is to provide data wrangling and summary functions to conduct a proper exploratory data analysis (hence the name EDA)\nWe will be switching back and forth between these slides and hands-on practice in RStudio"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#installing-auxiliary-r-packages",
+    "href": "slides/ssc-workshop-2024.html#installing-auxiliary-r-packages",
+    "title": "How to create and distribute R packages",
+    "section": "Installing auxiliary R packages",
+    "text": "Installing auxiliary R packages\n\n\nBefore starting with the actual process, we need to install and load the packages {devtools} and {usethis}\n{devtools} is a meta-package that encompasses more focused development-related R packages\n{usethis} automates tasks related to project setup and development to build R packages"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#function-create_package",
+    "href": "slides/ssc-workshop-2024.html#function-create_package",
+    "title": "How to create and distribute R packages",
+    "section": "Function create_package()",
+    "text": "Function create_package()\n\n\nFunction create_package() will initialize our new package in a directory of our choice\nI will initialize the {eda} package in my Desktop folder for easier reference\n\n\n\n\n\n\n\n\n\nDon’ts when choosing your home directory\n\n\n\nYour package shouldn’t be hosted in another RStudio Project, R package, or GitHub repo\nYour package shouldn’t be hosted in an R package library (i.e., where we usually instal other packages from CRAN)"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#function-use_git",
+    "href": "slides/ssc-workshop-2024.html#function-use_git",
+    "title": "How to create and distribute R packages",
+    "section": "Function use_git()",
+    "text": "Function use_git()\n\n\nBesides creating the RStudio project file eda.Rproj, we will initialize a Git repository via use_git()\nA Git repository will eventually allow us to publish and share our package in GitHub.com\n\n\n\n\nlibrary(devtools)\n\nuse_git()"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#write-your-first-function",
+    "href": "slides/ssc-workshop-2024.html#write-your-first-function",
+    "title": "How to create and distribute R packages",
+    "section": "Write your first function!",
+    "text": "Write your first function!\n\n\nRecall we aim to automate the below data wrangling process for any data frame (besides mtcars)\n\n\nmtcars |&gt;\n  group_by(cyl) |&gt;\n  summarize(count = n()) |&gt;\n  rename(\"class\" = cyl)\n\n# A tibble: 3 × 2\n  class count\n  &lt;dbl&gt; &lt;int&gt;\n1     4    11\n2     6     7\n3     8    14\n\n\n\n\n\nTherefore, we need to create an R function"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#function-load_all",
+    "href": "slides/ssc-workshop-2024.html#function-load_all",
+    "title": "How to create and distribute R packages",
+    "section": "Function load_all()",
+    "text": "Function load_all()\n\nThe next step in our package building process is to test informally our function count_classes()\nFunction load_all() from {devtools} makes function count_classes() available for experimentation\n\n\nload_all()"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#setting-up-our-remote-github-repo",
+    "href": "slides/ssc-workshop-2024.html#setting-up-our-remote-github-repo",
+    "title": "How to create and distribute R packages",
+    "section": "Setting up our remote GitHub repo",
+    "text": "Setting up our remote GitHub repo\n\nVia our GitHub account, we will create a remote {eda} public repo (we will add the README.md file later)"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#function-check",
+    "href": "slides/ssc-workshop-2024.html#function-check",
+    "title": "How to create and distribute R packages",
+    "section": "Function check()",
+    "text": "Function check()\n\nTo ensure that our package is in full working order, we’d need to execute R CMD check in the shell (i.e., terminal)\nWe use function check() from {devtools} via the R Console\n\n\ncheck()"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#edit-description",
+    "href": "slides/ssc-workshop-2024.html#edit-description",
+    "title": "How to create and distribute R packages",
+    "section": "Edit DESCRIPTION",
+    "text": "Edit DESCRIPTION\n\n\nIt’s time to edit our package’s metadata in the DESCRIPTION file\nIt currently looks like this:\n\nPackage: eda\nTitle: What the Package Does (One Line, Title Case)\nVersion: 0.0.0.9000\nAuthors@R: \n    person(\"First\", \"Last\", , \"first.last@example.com\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"YOUR-ORCID-ID\"))\nDescription: What the package does (one paragraph).\nLicense: `use_mit_license()`, `use_gpl3_license()` or friends to pick a\n    license\nEncoding: UTF-8\nRoxygen: list(markdown = TRUE)\nRoxygenNote: 7.3.1"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#function-use_mit_license",
+    "href": "slides/ssc-workshop-2024.html#function-use_mit_license",
+    "title": "How to create and distribute R packages",
+    "section": "Function use_mit_license()",
+    "text": "Function use_mit_license()\n\nTo address one of the warnings obtained in the output of check(), we need to include a LICENSE.md\nHence, we can use function use_mit_license() from {usethis} via the R Console\n\n\nuse_mit_license()"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#function-document",
+    "href": "slides/ssc-workshop-2024.html#function-document",
+    "title": "How to create and distribute R packages",
+    "section": "Function document()",
+    "text": "Function document()\n\nLet’s document our count_classes() function via package {roxygen2}\n\n\n\nIn RStudio, let’s open R/count_classes.R in the source editor"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#using-check-again",
+    "href": "slides/ssc-workshop-2024.html#using-check-again",
+    "title": "How to create and distribute R packages",
+    "section": "Using check() again",
+    "text": "Using check() again\n\nSince we already included LICENSE.md in {eda}, let’s use check() again in the R Console to ensure the license-related warning is gone"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#function-install",
+    "href": "slides/ssc-workshop-2024.html#function-install",
+    "title": "How to create and distribute R packages",
+    "section": "Function install()",
+    "text": "Function install()\n\nIt’s time to install our package {eda}\nThat said, instead of using install.packages() as with any package in the CRAN, we will use install() from {devtools}\n\n\ninstall()\nlibrary(eda)\ncount_classes(mtcars, cyl)"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#function-use_testthat",
+    "href": "slides/ssc-workshop-2024.html#function-use_testthat",
+    "title": "How to create and distribute R packages",
+    "section": "Function use_testthat()",
+    "text": "Function use_testthat()\n\n\nWe can implement formal unit tests: a concrete output expectation from our package functions for a given input\nTo build the {eda} testing infrastructure, we use function use_testthat() from {usethis}:\n\nSuggests package {testhat} in DESCRIPTION\nCreates directory tests/testthat/ in {eda}\nAdds the script tests/testthat.R\n\n\n\n\n\nuse_testthat()"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#function-use_test",
+    "href": "slides/ssc-workshop-2024.html#function-use_test",
+    "title": "How to create and distribute R packages",
+    "section": "Function use_test()",
+    "text": "Function use_test()\n\nThis helper function from {usethis} creates a test file in tests/testthat/ per function\n\n\nuse_test(\"count_classes\")\n\n\n\nIn test-count-classes.R, you will see an example test which should be changed to an applicable one for count_classes() (more on testing later on in this workshop)"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#function-test",
+    "href": "slides/ssc-workshop-2024.html#function-test",
+    "title": "How to create and distribute R packages",
+    "section": "Function test()",
+    "text": "Function test()\n\nSuppose you have already built suitable test functions for your package\nThe next step is running test() from {devtools}\n\n\ntest()"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#function-use_package",
+    "href": "slides/ssc-workshop-2024.html#function-use_package",
+    "title": "How to create and distribute R packages",
+    "section": "Function use_package()",
+    "text": "Function use_package()\n\nNote that count_classes() uses functions from package {dplyr}\n\n\n\nTherefore, {dplyr} becomes a dependency"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#function-use_readme_rmd",
+    "href": "slides/ssc-workshop-2024.html#function-use_readme_rmd",
+    "title": "How to create and distribute R packages",
+    "section": "Function use_readme_rmd()",
+    "text": "Function use_readme_rmd()\n\nOur remote repo still doesn’t have a README.md file describing the package, installation, and usage\nWe can automatically generate one via use_readme_rmd() from {usethis}\n\n\nuse_readme_rmd()\n\n\n\n\nThis function will generate an .Rmd template, which we have to fill out"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#using-check-and-install",
+    "href": "slides/ssc-workshop-2024.html#using-check-and-install",
+    "title": "How to create and distribute R packages",
+    "section": "Using check() and install()",
+    "text": "Using check() and install()\n\nWe’re done with the basic steps to build our R package\nAgain, we use check() (to ensure all warnings are gone!), and then re-build via install()"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#review",
+    "href": "slides/ssc-workshop-2024.html#review",
+    "title": "How to create and distribute R packages",
+    "section": "Review",
+    "text": "Review\n\nWe can review the previous process via the below diagram from Chapter 1: The Whole Game (R packages book by Hadley Wickham & Jenny Bryan, 2e)"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#formal-software-tests",
+    "href": "slides/ssc-workshop-2024.html#formal-software-tests",
+    "title": "How to create and distribute R packages",
+    "section": "Formal software tests",
+    "text": "Formal software tests\nTo make this more concrete, here is an example of a formal software test for the count_classes function from our package:\nWhat does this code do? It:\n\nloads the package and testing library\nsimulates some simple and tractable test data\ncalls the count_classes function, providing the simple as input\nreports that the count_classes function returns a tibble object as expected (and if it doesn’t work as expected, it prints out a useful message as to what went wrong)"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#testability",
+    "href": "slides/ssc-workshop-2024.html#testability",
+    "title": "How to create and distribute R packages",
+    "section": "Testability",
+    "text": "Testability\nTestability is defined as the degree to which a system or component facilitates the establishment of test objectives and the execution of tests to determine whether those objectives have been achieved.\nIn order to be successful, a test needs to be able to execute the code you wish to test, in a way that can trigger a defect that will propagate an incorrect result to a program point where it can be checked against the expected behaviour. From this we can derive four high-level properties required for effective test writing and execution. These are:\n\ncontrollability\nobservability\nisolateablilty\nautomatability"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#high-level-properties-for-effective-test-writing-and-execution",
+    "href": "slides/ssc-workshop-2024.html#high-level-properties-for-effective-test-writing-and-execution",
+    "title": "How to create and distribute R packages",
+    "section": "High-level properties for effective test writing and execution",
+    "text": "High-level properties for effective test writing and execution\ncontrollability: the code under test needs to be able to be programmatically controlled\nobservability: the outcome of the code under test needs to be able to be verified\nisolateablilty: the code under test needs to be able to be validated on its own\nautomatability: the tests should be able to be executed automatically\nSource: CPSC 310 & CPSC 410 class notes from Reid Holmes, UBC]"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#what-kinds-of-tests-do-we-write-for-our-functions",
+    "href": "slides/ssc-workshop-2024.html#what-kinds-of-tests-do-we-write-for-our-functions",
+    "title": "How to create and distribute R packages",
+    "section": "What kinds of tests do we write for our functions?",
+    "text": "What kinds of tests do we write for our functions?\nWhen I am designing tests for my function, I like to think about three broad categories of tests, and then write 2-3 tests for each (or more if the function is complex and takes many arguments):\n\nSimple expected use cases\nEdge cases (unexpected, or rare use cases)\nErrors\n\nWe will come back to these and provide specific examples in a few minutes."
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#when-do-we-write-tests",
+    "href": "slides/ssc-workshop-2024.html#when-do-we-write-tests",
+    "title": "How to create and distribute R packages",
+    "section": "When do we write tests?",
+    "text": "When do we write tests?\nAnytime you think about writing a function!"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#workflow-for-writing-functions-and-tests",
+    "href": "slides/ssc-workshop-2024.html#workflow-for-writing-functions-and-tests",
+    "title": "How to create and distribute R packages",
+    "section": "Workflow for writing functions and tests",
+    "text": "Workflow for writing functions and tests\n\nWrite the function specifications and documentation - but do not implement the function.\nPlan the test cases and document them.\nCreate test data that is useful for assessing whether your function works as expected.\nWrite the tests to evaluate your function based on the planned test cases and test data.\nImplement the function by writing the needed code in the function body to pass the tests.\nIterate between steps 2-5 to improve the test coverage and function."
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#example-of-workflow-for-writing-functions-and-tests-for-data-science",
+    "href": "slides/ssc-workshop-2024.html#example-of-workflow-for-writing-functions-and-tests-for-data-science",
+    "title": "How to create and distribute R packages",
+    "section": "Example of workflow for writing functions and tests for data science",
+    "text": "Example of workflow for writing functions and tests for data science\nLet’s pretend we haven’t yet written our count_classes function, and follow the workflow I just outlined to develop our function and it’s test suite."
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#where-do-the-function-and-test-files-go",
+    "href": "slides/ssc-workshop-2024.html#where-do-the-function-and-test-files-go",
+    "title": "How to create and distribute R packages",
+    "section": "Where do the function and test files go?",
+    "text": "Where do the function and test files go?\nIn the workflow above, we skipped over where we should put our tests and how to call them in an automated way.\nLet’s go to this version of the {eda} package and explore how to do this:\n\nTBD"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#section",
+    "href": "slides/ssc-workshop-2024.html#section",
+    "title": "How to create and distribute R packages",
+    "section": "",
+    "text": "Source: https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#level-1-publishing-on-github",
+    "href": "slides/ssc-workshop-2024.html#level-1-publishing-on-github",
+    "title": "How to create and distribute R packages",
+    "section": "Level 1: Publishing on GitHub",
+    "text": "Level 1: Publishing on GitHub\n\nGitHub is where almost all R packages start out publishing, and continue publishing development versions between releases.\nFor this to work, you need to push your package code to GitHub and provide users instructions like this to download, build and install your package:\n\n# install.packages(\"devtools\")\ndevtools::install_github(\"username/package\")"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#level-2-publishing-on-cran",
+    "href": "slides/ssc-workshop-2024.html#level-2-publishing-on-cran",
+    "title": "How to create and distribute R packages",
+    "section": "Level 2: Publishing on CRAN",
+    "text": "Level 2: Publishing on CRAN\n\nCRAN (founded in 1997) stands for the “Comprehensive R Archive Network”.\nCRAN is a collection of sites which host identical copies of:\n\nR distribution(s)\nthe contributed extensions (i.e., packages)\ndocumentation for R\nbinaries (i.e., packages)\n\n\nSource: Hornik, K (2012). The Comprehensive R Archive Network. Wiley interdisciplinary reviews. Computational statistics. 4(4): 394-398. doi:10.1002/wics.1212"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#what-does-it-mean-to-be-a-cran-package",
+    "href": "slides/ssc-workshop-2024.html#what-does-it-mean-to-be-a-cran-package",
+    "title": "How to create and distribute R packages",
+    "section": "What does it mean to be a CRAN package?",
+    "text": "What does it mean to be a CRAN package?\n\n\nA stamp of authenticity: passed quality control of the check utility\nEase of installation: can be installed by users via install.packages() and binaries are available for Windows & Mac OS’s.\nDiscoverability: listed as a package on CRAN\nHowever, CRAN makes no assertions about the package’s usability, or the efficiency and correctness of the computations it performs"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#how-to-submit-a-package-to-cran",
+    "href": "slides/ssc-workshop-2024.html#how-to-submit-a-package-to-cran",
+    "title": "How to create and distribute R packages",
+    "section": "How to submit a package to CRAN",
+    "text": "How to submit a package to CRAN\n\n\nPick a version number.\nRun and document R CMD check.\nCheck that you’re aligned with CRAN policies.\nUpdate README.md and NEWS.md.\nSubmit the package to CRAN.\nPrepare for the next version by updating version numbers.\nPublicize the new version.\n\n\nSource: Chapter 22: Releasing to Cran - R packages book by Hadley Wickham & Jenny Bryan"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#notes-on-submitting-to-cran",
+    "href": "slides/ssc-workshop-2024.html#notes-on-submitting-to-cran",
+    "title": "How to create and distribute R packages",
+    "section": "Notes on submitting to CRAN",
+    "text": "Notes on submitting to CRAN\n\nYour package must pass R CMD check with the current development version of R.\nIt must work on at least two platforms (CRAN uses the following 4 platforms: Windows, Mac OS X, Linux and Solaris) - use GitHub Actions to ensure this before submitting to CRAN!\n\n\nIf you decide to submit a package to CRAN, follow the detailed instructions in Chapter 22: Releasing to Cran from the R packages book by Hadley Wickham & Jenny Bryan."
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#full-disclosure-i-am-not-a-lawyer",
+    "href": "slides/ssc-workshop-2024.html#full-disclosure-i-am-not-a-lawyer",
+    "title": "How to create and distribute R packages",
+    "section": "Full disclosure… I AM NOT A LAWYER!",
+    "text": "Full disclosure… I AM NOT A LAWYER!"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#learning-objectives",
+    "href": "slides/ssc-workshop-2024.html#learning-objectives",
+    "title": "How to create and distribute R packages",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\n\n\nExplain who owns the copyright of code they write in a give situation\nChoose an appropriate license for software (and non-software) materials\nNote: In this workshop, we will be focusing on Canadian copyright laws"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#copyright-law",
+    "href": "slides/ssc-workshop-2024.html#copyright-law",
+    "title": "How to create and distribute R packages",
+    "section": "Copyright Law",
+    "text": "Copyright Law\n\nIn both the US and Canada, software code falls under copyright law\nCopyright protects only the language and words used to express ideas, concepts and themes, not the ideas, concepts or themes themselves."
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#canadian-copyright-law",
+    "href": "slides/ssc-workshop-2024.html#canadian-copyright-law",
+    "title": "How to create and distribute R packages",
+    "section": "Canadian Copyright Law",
+    "text": "Canadian Copyright Law\nIn Canada, the copyright owner is afforded the following rights:\n\nEconomic rights:\n\nthe right to produce, reproduce, publish, translate, authorize & convert a work"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#who-has-copyright-ownership",
+    "href": "slides/ssc-workshop-2024.html#who-has-copyright-ownership",
+    "title": "How to create and distribute R packages",
+    "section": "Who has copyright ownership?",
+    "text": "Who has copyright ownership?\nThis is a complicated question, and the answer starts with it depends on the case…"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#case-i-you-author-the-code-for-yourself",
+    "href": "slides/ssc-workshop-2024.html#case-i-you-author-the-code-for-yourself",
+    "title": "How to create and distribute R packages",
+    "section": "Case I: You author the code for yourself",
+    "text": "Case I: You author the code for yourself\n\nYou author the code and you are doing this for yourself (i.e., not for your employer, not for a client, etc).\nIn such a case, you (the person who typed the code) automatically become the copyright owner."
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#section-1",
+    "href": "slides/ssc-workshop-2024.html#section-1",
+    "title": "How to create and distribute R packages",
+    "section": "",
+    "text": "In both Canada and the USA, you do not need to need to affix the copyright symbol © to your work (some other countries do require this however).\nAlthough the copyright symbol © is not required, it is often used in copyrighted works to clearly identify that the code is protected by copyright.\n\n\nIn both Canada and the US, it is possible (and advisable) to register your copyright as evidence that a copyright exists and who the owner is."
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#case-ii-you-write-the-code-in-the-course-of-employment",
+    "href": "slides/ssc-workshop-2024.html#case-ii-you-write-the-code-in-the-course-of-employment",
+    "title": "How to create and distribute R packages",
+    "section": "Case II: You write the code in the course of employment",
+    "text": "Case II: You write the code in the course of employment\n\nIn Canada, if you write code for work as an employee the copyright ownership is typically assigned to the employer."
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#section-2",
+    "href": "slides/ssc-workshop-2024.html#section-2",
+    "title": "How to create and distribute R packages",
+    "section": "",
+    "text": "In the Canada, software code is defined as “work made in the course of employment” if:\n\nThe author of the code was in the employment of some other entity under a contract of service or apprenticeship and the code was written in the course of their employment by that entity.\nAnd there exists no agreement (written, or otherwise, and even potentially even presumed) that the employee retains ownership of copyright for the code written during the term of their employment."
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#implications-when-you-forgo-copyright-ownership",
+    "href": "slides/ssc-workshop-2024.html#implications-when-you-forgo-copyright-ownership",
+    "title": "How to create and distribute R packages",
+    "section": "Implications when you forgo copyright ownership",
+    "text": "Implications when you forgo copyright ownership\n\n\nQ: What if you forgo copyright ownership and want to use any of the code that you wrote again?\nA: You would need to negotiate a licence to use the code you wrote, the same way any other third-party would… 😓"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#section-3",
+    "href": "slides/ssc-workshop-2024.html#section-3",
+    "title": "How to create and distribute R packages",
+    "section": "",
+    "text": "To avoid this issue, you could:\n\nNegotiate which code is core to the work (“work-made-for-hire”) and what (pre-built) code (e.g., packages, scripts) are outside the core work and should not (at the beginning of the project!).\nNegotiate that the client purchase a license to the code you write (as opposed to hiring you to write the code)."
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#licenses",
+    "href": "slides/ssc-workshop-2024.html#licenses",
+    "title": "How to create and distribute R packages",
+    "section": "Licenses",
+    "text": "Licenses\n\nIf you publicly share your creative work (i.e., software code), you should let others know if and how they can reuse it!\nThis is done via the inclusion of a LICENSE or LICENSE.txt file in the base directory of the repository that clearly states under which license the content is being made available."
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#licenses-contd",
+    "href": "slides/ssc-workshop-2024.html#licenses-contd",
+    "title": "How to create and distribute R packages",
+    "section": "Licenses (cont’d)",
+    "text": "Licenses (cont’d)\n\nUnless you include a license that specifies otherwise, nobody else can copy, distribute, or modify your work without being at risk of take-downs, shake-downs, or litigation.\nOnce the work has other contributors (each a copyright holder), “nobody” starts including you!\nA license solves this problem by granting rights to others (the licensees) that they would otherwise not have."
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#choosing-a-license",
+    "href": "slides/ssc-workshop-2024.html#choosing-a-license",
+    "title": "How to create and distribute R packages",
+    "section": "Choosing a License",
+    "text": "Choosing a License\n\nImportant considerations when choosing a license include:\n\nWhether you require people distributing derivative works to also require others to distribute their derivative works in the same way.\nWhether the content you are licensing is source code, and if it is, whether you want to require that derivatives of your work share the source code"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#choosing-a-license-contd",
+    "href": "slides/ssc-workshop-2024.html#choosing-a-license-contd",
+    "title": "How to create and distribute R packages",
+    "section": "Choosing a License (cont’d)",
+    "text": "Choosing a License (cont’d)\n\nIn practice, a few licenses are by far the most popular.\nchoosealicense.com will help you find a common license that suits your needs.\n\n\n💡Tip: Choose a license that is in common use! This makes life easier for contributors and users, because they are more likely to already be familiar with the license and don’t have to wade through a bunch of jargon to decide if they’re ok with it."
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#creative-commons",
+    "href": "slides/ssc-workshop-2024.html#creative-commons",
+    "title": "How to create and distribute R packages",
+    "section": "Creative Commons",
+    "text": "Creative Commons\n\nBut not all my creative Data Science work is code (e.g. visualizations, reports, presentations), so how do I license it?\nThe Creative Commons licences were created for such works and they are now widely used in academia and the publishing industry.\n\n\nhttps://chooser-beta.creativecommons.org/"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#creative-commons-contd",
+    "href": "slides/ssc-workshop-2024.html#creative-commons-contd",
+    "title": "How to create and distribute R packages",
+    "section": "Creative Commons (cont’d)",
+    "text": "Creative Commons (cont’d)\n\nSource: “How to License Poster” by Creative Commons is licensed under CC BY 4.0"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#creative-commons-contd-1",
+    "href": "slides/ssc-workshop-2024.html#creative-commons-contd-1",
+    "title": "How to create and distribute R packages",
+    "section": "Creative Commons (cont’d)",
+    "text": "Creative Commons (cont’d)\n\nSource: “How to License Poster” by Creative Commons is licensed under CC BY 4.0"
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#scenario-1",
+    "href": "slides/ssc-workshop-2024.html#scenario-1",
+    "title": "How to create and distribute R packages",
+    "section": "Scenario 1",
+    "text": "Scenario 1\nImagine you’re a data scientist and you developed a tool that analyzes satellite imagery to track deforestation patterns. Your primary goal is to make this tool freely available to researchers and other conservationists to help monitor and combat deforestation, but you still want to retain the copyright to your tool."
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#scenario-2",
+    "href": "slides/ssc-workshop-2024.html#scenario-2",
+    "title": "How to create and distribute R packages",
+    "section": "Scenario 2",
+    "text": "Scenario 2\nImagine you’re a data scientist and you have compiled a data set of climate change projections from various scientific sources. In order to promote further analyses aimed at understanding and mitigating the effects of climate change, you want to share this data set with the research community."
+  },
+  {
+    "objectID": "slides/ssc-workshop-2024.html#references",
+    "href": "slides/ssc-workshop-2024.html#references",
+    "title": "How to create and distribute R packages",
+    "section": "References",
+    "text": "References\n\nWho Owns The Code?\nCanadian Copyright Law - University of Alberta\nDo you actually own the IP generated by your Canadian employees?\nOwnership of Copyright - Canadian Copyright Act\nThe Unreasonable Fear of Infection\nFrequently Asked Questions about the GNU Licenses"
+  },
+  {
+    "objectID": "slides/06-publish-pkgs.html#section",
+    "href": "slides/06-publish-pkgs.html#section",
+    "title": "Publishing your R package",
+    "section": "",
+    "text": "Congratulations, your package is ready to be published! 🎉\nTake a moment to reflect on where you might want to publish your package (GitHub vs. CRAN). Think about which would be easier as the…\n\nUser\nMaintainer",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Publishing your R package"
+    ]
+  },
+  {
+    "objectID": "slides/06-publish-pkgs.html#section-1",
+    "href": "slides/06-publish-pkgs.html#section-1",
+    "title": "Publishing your R package",
+    "section": "",
+    "text": "Source: https://posit-conf-2023.github.io/pkg-dev/materials/slides.pdf",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Publishing your R package"
+    ]
+  },
+  {
+    "objectID": "slides/06-publish-pkgs.html#level-1-publishing-on-github",
+    "href": "slides/06-publish-pkgs.html#level-1-publishing-on-github",
+    "title": "Publishing your R package",
+    "section": "Level 1: Publishing on GitHub",
+    "text": "Level 1: Publishing on GitHub\n\nGitHub is where almost all R packages start out publishing, and continue publishing development versions between releases.\nFor this to work, you need to push your package code to GitHub and provide users instructions like this to download, build and install your package:\n\ndevtools::install_github(\"katieburak/eda\")",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Publishing your R package"
+    ]
+  },
+  {
+    "objectID": "slides/06-publish-pkgs.html#level-2-publishing-on-cran",
+    "href": "slides/06-publish-pkgs.html#level-2-publishing-on-cran",
+    "title": "Publishing your R package",
+    "section": "Level 2: Publishing on CRAN",
+    "text": "Level 2: Publishing on CRAN\n\nCRAN (founded in 1997) stands for the “Comprehensive R Archive Network”.\nCRAN is a collection of sites which host identical copies of:\n\nR distribution(s)\nthe contributed extensions (i.e., packages)\ndocumentation for R\nbinaries (i.e., packages)\n\n\n\nSource: Hornik, K (2012). The Comprehensive R Archive Network. Wiley interdisciplinary reviews. Computational statistics. 4(4): 394-398. doi:10.1002/wics.1212",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Publishing your R package"
+    ]
+  },
+  {
+    "objectID": "slides/06-publish-pkgs.html#what-does-it-mean-to-be-a-cran-package",
+    "href": "slides/06-publish-pkgs.html#what-does-it-mean-to-be-a-cran-package",
+    "title": "Publishing your R package",
+    "section": "What does it mean to be a CRAN package?",
+    "text": "What does it mean to be a CRAN package?\n\n\nA stamp of authenticity: passed quality control of the check utility\nEase of installation: can be installed by users via install.packages() and binaries are available for Windows & Mac OS’s.\nDiscoverability: listed as a package on CRAN\nHowever, CRAN makes no assertions about the package’s usability, or the efficiency and correctness of the computations it performs",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Publishing your R package"
+    ]
+  },
+  {
+    "objectID": "slides/06-publish-pkgs.html#how-to-submit-a-package-to-cran",
+    "href": "slides/06-publish-pkgs.html#how-to-submit-a-package-to-cran",
+    "title": "Publishing your R package",
+    "section": "How to submit a package to CRAN",
+    "text": "How to submit a package to CRAN\n\n\nPick a version number.\nRun and document R CMD check.\nCheck that you’re aligned with CRAN policies.\nUpdate README.md and NEWS.md.\nSubmit the package to CRAN.\nPrepare for the next version by updating version numbers.\nPublicize the new version.\n\n\n\nSource: Chapter 22: Releasing to Cran - R packages book by Hadley Wickham & Jenny Bryan",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Publishing your R package"
+    ]
+  },
+  {
+    "objectID": "slides/06-publish-pkgs.html#common-problems-from-the-r-packages-book",
+    "href": "slides/06-publish-pkgs.html#common-problems-from-the-r-packages-book",
+    "title": "Publishing your R package",
+    "section": "Common problems (from the R packages book):",
+    "text": "Common problems (from the R packages book):\n\nThe maintainer’s e-mail address must be stable (if they can’t get in touch with you they will remove your package from CRAN).\nYou must have clearly identified the copyright holders in DESCRIPTION.\nDo not make external changes without explicit user permission.\nDo not submit updates too frequently. The policy suggests a new version once every 1-2 months at most.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Publishing your R package"
+    ]
+  },
+  {
+    "objectID": "slides/06-publish-pkgs.html#notes-on-submitting-to-cran",
+    "href": "slides/06-publish-pkgs.html#notes-on-submitting-to-cran",
+    "title": "Publishing your R package",
+    "section": "Notes on submitting to CRAN",
+    "text": "Notes on submitting to CRAN\n\nYour package must pass R CMD check with the current development version of R.\nIt must work on at least two platforms (CRAN uses the following 4 platforms: Windows, Mac OS X, Linux and Solaris) - use GitHub Actions to ensure this before submitting to CRAN!\n\n\nIf you decide to submit a package to CRAN, follow the detailed instructions in Chapter 22: Releasing to Cran from the R packages book by Hadley Wickham & Jenny Bryan.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Publishing your R package"
+    ]
+  },
+  {
+    "objectID": "slides/06-publish-pkgs.html#attribution",
+    "href": "slides/06-publish-pkgs.html#attribution",
+    "title": "Publishing your R package",
+    "section": "Attribution",
+    "text": "Attribution\nThis content has been developed based on R Packages (2e) by Hadley Wickham and Jennifer Bryan and the UBC course notes for Reproducible and Trustworthy Workflows for Data Science by Tiffany Timbers, Joel Östblom, Florencia D’Andrea, and Rodolfo Lourenzutti.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Publishing your R package"
+    ]
+  },
+  {
+    "objectID": "slides/04-pkg-doc.html#what-is-documentation",
+    "href": "slides/04-pkg-doc.html#what-is-documentation",
+    "title": "Package Documentation",
+    "section": "What is documentation?",
+    "text": "What is documentation?\n\npackage: detailed information about the components, functions, usage, and dependencies\nfunction: purpose, parameters, return values, usage, examples\n\nlibrary(tidyverse)\n\n?select\n\nIn RStudio, you can also use the F1 key.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Package Documentation"
+    ]
+  },
+  {
+    "objectID": "slides/04-pkg-doc.html#your-turn",
+    "href": "slides/04-pkg-doc.html#your-turn",
+    "title": "Package Documentation",
+    "section": "Your Turn",
+    "text": "Your Turn\nIn groups: take 3 minutes\n\nOpen a documentation page for any function (you can use dplyr::select)\nWhat do you like about it?\nWhat do you not understand about it?",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Package Documentation"
+    ]
+  },
+  {
+    "objectID": "slides/04-pkg-doc.html#our-current-function",
+    "href": "slides/04-pkg-doc.html#our-current-function",
+    "title": "Package Documentation",
+    "section": "Our current function",
+    "text": "Our current function\n#' Count class observations\n#'\n#' Creates a new data frame with two columns,\n#' listing the classes present in the input data frame,\n#' and the number of observations for each class.\n#'\n#' @param data_frame A data frame or data frame extension (e.g. a tibble).\n#' @param class_col unquoted column name of column containing class labels\n#'\n#' @return A data frame with two columns.\n#'   The first column (named class) lists the classes from the input data frame.\n#'   The second column (named count) lists the number of observations\n#'   for each class from the input data frame.\n#'   It will have one row for each class present in input data frame.\n#'\n#' @export\n#'\n#' @examples\n#' count_classes(mtcars, am)\ncount_classes &lt;- function(data_frame, class_col) {\n  if (!is.data.frame(data_frame)) {\n    stop(\"`data_frame` should be a data frame or data frame extension (e.g. a tibble)\")\n  }\n\n  data_frame |&gt;\n    dplyr::group_by({{ class_col }}) |&gt;\n    dplyr::summarize(count = dplyr::n()) |&gt;\n    dplyr::rename(\"class\" = {{ class_col }})\n}\n}",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Package Documentation"
+    ]
+  },
+  {
+    "objectID": "slides/04-pkg-doc.html#the-roxygen2-comment",
+    "href": "slides/04-pkg-doc.html#the-roxygen2-comment",
+    "title": "Package Documentation",
+    "section": "The Roxygen2 comment",
+    "text": "The Roxygen2 comment\n\n#' Count class observations\n#'\n#' Creates a new data frame with two columns,\n#' listing the classes present in the input data frame,\n#' and the number of observations for each class.\n#'\n#' @param data_frame A data frame or data frame extension (e.g. a tibble).\n#' @param class_col unquoted column name of column containing class labels\n#'\n#' @return A data frame with two columns.\n#'   The first column (named class) lists the classes from the input data frame.\n#'   The second column (named count) lists the number of observations\n#'   for each class from the input data frame.\n#'   It will have one row for each class present in input data frame.\n#'\n#' @export\n#'\n#' @examples\n#' count_classes(mtcars, am)",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Package Documentation"
+    ]
+  },
+  {
+    "objectID": "slides/04-pkg-doc.html#export-is-important",
+    "href": "slides/04-pkg-doc.html#export-is-important",
+    "title": "Package Documentation",
+    "section": "@export is important",
+    "text": "@export is important\n\nIt puts the exported function into the NAMESPACE file when you build the package.\n\nlibrary(eda)\ncount_classes(mtcars, am)\nis equlivilant to\neda::count_classes(mtcars, am)",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Package Documentation"
+    ]
+  },
+  {
+    "objectID": "slides/04-pkg-doc.html#without-export",
+    "href": "slides/04-pkg-doc.html#without-export",
+    "title": "Package Documentation",
+    "section": "Without @export",
+    "text": "Without @export\n# will not work\nlibrary(eda)\ncount_classes(mtcars, am)\nYou will have to use ::: (instead of ::)\neda:::count_classes(mtcars, am)\n\n\n\n\n\n\nNote\n\n\nYou will rarely have to directly call unexported functions. They are mainly used in debugging or if you are writing your own custom functions extending a package.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Package Documentation"
+    ]
+  },
+  {
+    "objectID": "slides/04-pkg-doc.html#vignette",
+    "href": "slides/04-pkg-doc.html#vignette",
+    "title": "Package Documentation",
+    "section": "Vignette",
+    "text": "Vignette\n\nAn article or walkthrough of a set of features of your package or function\nA more detailed example than just the technical information\nShowcase a case study\n\nusethis::use_vignette(\"my-vignette\")",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Package Documentation"
+    ]
+  },
+  {
+    "objectID": "slides/04-pkg-doc.html#build-your-package-and-docs",
+    "href": "slides/04-pkg-doc.html#build-your-package-and-docs",
+    "title": "Package Documentation",
+    "section": "Build your package and docs!",
+    "text": "Build your package and docs!\ndevtools::check() # does everything\ndevtools::document() # just the documentation",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Package Documentation"
+    ]
+  },
+  {
+    "objectID": "slides/04-pkg-doc.html#pkgdown",
+    "href": "slides/04-pkg-doc.html#pkgdown",
+    "title": "Package Documentation",
+    "section": "{pkgdown}",
+    "text": "{pkgdown}\n\nTakes all the exising roxygen2 documentation we have already written to create a website\nProvides another asset for our package to make it easier for people to learn how to use it\n\nhttps://pkgdown.r-lib.org/",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Package Documentation"
+    ]
+  },
+  {
+    "objectID": "slides/04-pkg-doc.html#usethisuse_pkgdown",
+    "href": "slides/04-pkg-doc.html#usethisuse_pkgdown",
+    "title": "Package Documentation",
+    "section": "usethis::use_pkgdown()",
+    "text": "usethis::use_pkgdown()\n\n&gt; usethis::use_pkgdown()\n✔ Setting active project to '/Users/danielchen/git/eda'\n✔ Adding '^_pkgdown\\\\.yml$', '^docs$', '^pkgdown$' to '.Rbuildignore'\n✔ Adding 'docs' to '.gitignore'\n✔ Writing '_pkgdown.yml'\n• Modify '_pkgdown.yml'",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Package Documentation"
+    ]
+  },
+  {
+    "objectID": "slides/04-pkg-doc.html#pkgdownbuild_site",
+    "href": "slides/04-pkg-doc.html#pkgdownbuild_site",
+    "title": "Package Documentation",
+    "section": "pkgdown::build_site()",
+    "text": "pkgdown::build_site()\n&gt; pkgdown::build_site()\n── Installing package eda into temporary library ─────────────────────────────────────────────────────────────────────────\n── Building pkgdown site for package foofactors ────────────────────────────────\nReading from: /Users/danielchen/git/eda\nWriting to: /Users/danielchen/git/eda/docs\n── Initialising site ───────────────────────────────────────────────────────────\nCopying ../../../Library/R/arm64/4.3/library/pkgdown/BS5/assets/link.svg and\n../../../Library/R/arm64/4.3/library/pkgdown/BS5/assets/pkgdown.js\nto link.svg and pkgdown.js\n── Building home ───────────────────────────────────────────────────────────────\nWriting `authors.html`\nReading LICENSE.md\nWriting `LICENSE.html`\nWriting `LICENSE-text.html`\nWriting `404.html`\n── Building function reference ─────────────────────────────────────────────────\nWriting `reference/index.html`\nReading man/count_classes.Rd\nWriting `reference/count_classes.html`\nWriting sitemap.xml\n── Building search index ───────────────────────────────────────────────────────\n── Finished building pkgdown site for package eda ───────────────────────\n── Finished building pkgdown site for package eda ────────────────────────────────────────────────────────────────────────\nℹ Previewing site",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Package Documentation"
+    ]
+  },
+  {
+    "objectID": "slides/04-pkg-doc.html#pkgdown-components",
+    "href": "slides/04-pkg-doc.html#pkgdown-components",
+    "title": "Package Documentation",
+    "section": "{pkgdown} components",
+    "text": "{pkgdown} components\n\ndocs/ directory containing a website\nREADME.md becomes the homepage\nman/ documentation generates a function reference\narticles/ vignettes will be rendered",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Package Documentation"
+    ]
+  },
+  {
+    "objectID": "slides/04-pkg-doc.html#push-your-docs-to-github",
+    "href": "slides/04-pkg-doc.html#push-your-docs-to-github",
+    "title": "Package Documentation",
+    "section": "Push your docs to github",
+    "text": "Push your docs to github\n\nEdit your .gitignore and remove the docs/ entry\ngit add, git commit, and git push your docs directory to the repository",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Package Documentation"
+    ]
+  },
+  {
+    "objectID": "slides/04-pkg-doc.html#github-pages",
+    "href": "slides/04-pkg-doc.html#github-pages",
+    "title": "Package Documentation",
+    "section": "GitHub Pages",
+    "text": "GitHub Pages\n\nCan publish and run any static website (i.e., no database or server)\nLooks for website information in 1 of 3 locations:\n\n*In the docs/ directory of the main branch\nIn the root of the main branch\nIn the root of the gh-pages branch",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Package Documentation"
+    ]
+  },
+  {
+    "objectID": "slides/04-pkg-doc.html#enable-your-ghpages-pkgdown-site",
+    "href": "slides/04-pkg-doc.html#enable-your-ghpages-pkgdown-site",
+    "title": "Package Documentation",
+    "section": "Enable your ghpages pkgdown site",
+    "text": "Enable your ghpages pkgdown site",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Package Documentation"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#before-proceeding",
+    "href": "slides/02-build-first-pkg.html#before-proceeding",
+    "title": "Hands-on building an R package",
+    "section": "Before proceeding…",
+    "text": "Before proceeding…\n\n\nAttribution: This content has been developed on the basis provided by Chapter 1: The Whole Game (R packages book by Hadley Wickham & Jenny Bryan, 2e) and the UBC course notes Reproducible and Trustworthy Workflows for Data Science by Tiffany Timbers, Joel Östblom, Florencia D’Andrea, and Rodolfo Lourenzutti\n\n\nWe assume you have followed the installation instructions we shared before the workshop and have: registered for a GitHub account and installed git (more information here)",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#toy-package-eda",
+    "href": "slides/02-build-first-pkg.html#toy-package-eda",
+    "title": "Hands-on building an R package",
+    "section": "Toy package: {eda}",
+    "text": "Toy package: {eda}\n\n\nSuppose our package’s purpose is to provide data wrangling and summary functions to conduct a proper exploratory data analysis (hence the name EDA)\nTherefore, our toy package’s name will be {eda}\nWe will be switching back and forth between these slides and hands-on practice in RStudio",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#installing-auxiliary-r-packages",
+    "href": "slides/02-build-first-pkg.html#installing-auxiliary-r-packages",
+    "title": "Hands-on building an R package",
+    "section": "Installing auxiliary R packages",
+    "text": "Installing auxiliary R packages\n\n\nBefore starting with the actual process, we assumed you have installed the necessary packages {devtools} and {usethis} (also sent in the installation instructions before the workshop)\n{devtools} is a meta-package that encompasses more focused development-related R packages\n{usethis} automates tasks related to project setup and development to build R packages",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#create_package",
+    "href": "slides/02-build-first-pkg.html#create_package",
+    "title": "Hands-on building an R package",
+    "section": "create_package()",
+    "text": "create_package()\n\n\ncreate_package() will initialize our new package in a directory of our choice\nI will initialize the {eda} package in my Desktop folder for easier reference\n\n\n\n\n\n\n\n\n\nDon’ts when choosing your home directory\n\n\n\nYour package shouldn’t be hosted in another RStudio Project, R package, or Git repository\nYour package shouldn’t be hosted in an R package library (i.e., where we usually install other packages from CRAN)",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#use_git",
+    "href": "slides/02-build-first-pkg.html#use_git",
+    "title": "Hands-on building an R package",
+    "section": "use_git()",
+    "text": "use_git()\n\n\nBesides creating the RStudio project file eda.Rproj, we will initialize a Git repository via use_git()\nA Git repository will eventually allow us to publish and share our package in GitHub.com\n\n\n\n\nlibrary(devtools)\n\nuse_git()",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#write-your-first-function",
+    "href": "slides/02-build-first-pkg.html#write-your-first-function",
+    "title": "Hands-on building an R package",
+    "section": "Write your first function!",
+    "text": "Write your first function!\n\n\nRecall we aim to package our code (shown below) for counting the number of observations in a class for any data frame (besides mtcars) so we (and others) can reuse this code more easily in other projects\n\n\nlibrary(tidyverse)\n\nmtcars |&gt;\n  group_by(cyl) |&gt;\n  summarize(count = n()) |&gt;\n  rename(\"class\" = cyl)\n\n# A tibble: 3 × 2\n  class count\n  &lt;dbl&gt; &lt;int&gt;\n1     4    11\n2     6     7\n3     8    14",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#load_all",
+    "href": "slides/02-build-first-pkg.html#load_all",
+    "title": "Hands-on building an R package",
+    "section": "load_all()",
+    "text": "load_all()\n\nThe next step in our package building process is to test informally our function count_classes()\nFunction load_all() from {devtools} makes function count_classes() available for experimentation\n\n\nload_all()",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#setting-up-our-remote-github-repository",
+    "href": "slides/02-build-first-pkg.html#setting-up-our-remote-github-repository",
+    "title": "Hands-on building an R package",
+    "section": "Setting up our remote GitHub repository",
+    "text": "Setting up our remote GitHub repository\n\nVia our GitHub account, we will create a remote {eda} public repository (we will add the README.md file later)",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#check",
+    "href": "slides/02-build-first-pkg.html#check",
+    "title": "Hands-on building an R package",
+    "section": "check()",
+    "text": "check()\n\nIt’s a function that ensures the sources of an R add-on package work correctly\nTherefore, check() executes R CMD check in the shell (i.e., terminal)\nWe use check() from {devtools} via the R Console\n\n\ncheck()",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#edit-description",
+    "href": "slides/02-build-first-pkg.html#edit-description",
+    "title": "Hands-on building an R package",
+    "section": "Edit DESCRIPTION",
+    "text": "Edit DESCRIPTION\n\n\nIt’s time to edit our package’s metadata in the DESCRIPTION file\nIt currently looks like this:\n\nPackage: eda\nTitle: What the Package Does (One Line, Title Case)\nVersion: 0.0.0.9000\nAuthors@R: \n    person(\"First\", \"Last\", , \"first.last@example.com\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"YOUR-ORCID-ID\"))\nDescription: What the package does (one paragraph).\nLicense: `use_mit_license()`, `use_gpl3_license()` or friends to pick a\n    license\nEncoding: UTF-8\nRoxygen: list(markdown = TRUE)\nRoxygenNote: 7.3.1",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#use_mit_license",
+    "href": "slides/02-build-first-pkg.html#use_mit_license",
+    "title": "Hands-on building an R package",
+    "section": "use_mit_license()",
+    "text": "use_mit_license()\n\nTo address one of the warnings obtained in the output of check(), we need to include a LICENSE.md\nHence, we can use function use_mit_license() from {usethis} via the R Console\n\n\nuse_mit_license()",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#document",
+    "href": "slides/02-build-first-pkg.html#document",
+    "title": "Hands-on building an R package",
+    "section": "document()",
+    "text": "document()\n\nLet’s document our count_classes() function via package {roxygen2}\n\n\n\nIn RStudio, let’s open R/count_classes.R in the source editor",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#using-check-again",
+    "href": "slides/02-build-first-pkg.html#using-check-again",
+    "title": "Hands-on building an R package",
+    "section": "Using check() again",
+    "text": "Using check() again\n\nSince we already included LICENSE.md in {eda}, let’s use check() again in the R Console to ensure the license-related warning is gone",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#install",
+    "href": "slides/02-build-first-pkg.html#install",
+    "title": "Hands-on building an R package",
+    "section": "install()",
+    "text": "install()\n\nIt’s time to install our package {eda}\nThat said, instead of using install.packages() as with any package in the CRAN, we will use install() from {devtools}\nNote that install() installs a local package in the current working directory, whereas install.packages() installs from a package repository\n\n\ninstall()\nlibrary(eda)\ncount_classes(mtcars, cyl)",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#use_package",
+    "href": "slides/02-build-first-pkg.html#use_package",
+    "title": "Hands-on building an R package",
+    "section": "use_package()",
+    "text": "use_package()\n\nNote that count_classes() uses functions from package {dplyr}\n\n\n\nTherefore, {dplyr} becomes a dependency",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#use_readme_rmd",
+    "href": "slides/02-build-first-pkg.html#use_readme_rmd",
+    "title": "Hands-on building an R package",
+    "section": "use_readme_rmd()",
+    "text": "use_readme_rmd()\n\nOur remote repository still doesn’t have a README.md file describing the package, installation, and usage\nWe can automatically generate one via use_readme_rmd() from {usethis}\n\n\nuse_readme_rmd()\n\n\n\n\nThis function will generate an .Rmd template, which we have to fill out",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#using-check-and-install",
+    "href": "slides/02-build-first-pkg.html#using-check-and-install",
+    "title": "Hands-on building an R package",
+    "section": "Using check() and install()",
+    "text": "Using check() and install()\n\nWe’re done with the basic steps to build our R package!\nAgain, we use check() (to ensure all warnings are gone!), and then re-build via install()",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "slides/02-build-first-pkg.html#review",
+    "href": "slides/02-build-first-pkg.html#review",
+    "title": "Hands-on building an R package",
+    "section": "Review",
+    "text": "Review\n\nWe can partially review the previous process (test() will be covered later on) via the below diagram from Chapter 1: The Whole Game (R packages book by Hadley Wickham & Jenny Bryan, 2e)",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Hands-on building an `R` package"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "SSC Workshop 2024",
+    "section": "",
+    "text": "In this workshop learners will be introduced to what an R package is and when they should invest the time to make one. By the end of the workshop, learners should be able to build their own package that can be easily shared and installed by others. Additional important topics such as code testing, documentation and licenses will also be attended to. The workshop outline is shown below below:\n\nWhat is an R package and when should I make one?\nHands-on building practice building an R package\nEnsuring your code works as expected - and introduction to testing\nPackage documentation\nIntroduction to continuous integration using GitHub Actions\nSharing and publishing packages on GitHub and CRAN\nCopyright & Licenses (who owns the code?)\n\n\n\n\n\nFollow the instructions in the System setup chapter of the R packages (2e) book. This will guide you to install R, RStudio, important packages for creating packages (e.g., devtools, usethis, roxygen2, testthat, knitr), as well as configure your personal startup in R.\nFollow the Installation instructions in the Happy Git and GitHub for the useR book (you can skip section 8, install a Git client) to install and configure Git, as well as to get a GitHub.com account.\n\n\n\n\nTiffany Timbers, Daniel Chen, G. Alexi Rodríguez-Arelis, Katie Burak (University of British Columbia)"
+  },
+  {
+    "objectID": "index.html#how-to-create-and-distribute-r-packages",
+    "href": "index.html#how-to-create-and-distribute-r-packages",
+    "title": "SSC Workshop 2024",
+    "section": "",
+    "text": "In this workshop learners will be introduced to what an R package is and when they should invest the time to make one. By the end of the workshop, learners should be able to build their own package that can be easily shared and installed by others. Additional important topics such as code testing, documentation and licenses will also be attended to. The workshop outline is shown below below:\n\nWhat is an R package and when should I make one?\nHands-on building practice building an R package\nEnsuring your code works as expected - and introduction to testing\nPackage documentation\nIntroduction to continuous integration using GitHub Actions\nSharing and publishing packages on GitHub and CRAN\nCopyright & Licenses (who owns the code?)"
+  },
+  {
+    "objectID": "index.html#pre-workshop-setup-and-installation-instructions",
+    "href": "index.html#pre-workshop-setup-and-installation-instructions",
+    "title": "SSC Workshop 2024",
+    "section": "",
+    "text": "Follow the instructions in the System setup chapter of the R packages (2e) book. This will guide you to install R, RStudio, important packages for creating packages (e.g., devtools, usethis, roxygen2, testthat, knitr), as well as configure your personal startup in R.\nFollow the Installation instructions in the Happy Git and GitHub for the useR book (you can skip section 8, install a Git client) to install and configure Git, as well as to get a GitHub.com account."
+  },
+  {
+    "objectID": "index.html#presentersspeakers",
+    "href": "index.html#presentersspeakers",
+    "title": "SSC Workshop 2024",
+    "section": "",
+    "text": "Tiffany Timbers, Daniel Chen, G. Alexi Rodríguez-Arelis, Katie Burak (University of British Columbia)"
+  },
+  {
+    "objectID": "slides/01-r-pkg-intro.html#this-question-is-key",
+    "href": "slides/01-r-pkg-intro.html#this-question-is-key",
+    "title": "How to create and distribute R packages",
+    "section": "This question is key!",
+    "text": "This question is key!\n\n\nAn R package is a collection of functions, tests, data, compiled code, and standardized documentation\nThe reason to create a package is mostly about creating code that should be easier to reuse and share",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "How to create and distribute `R` packages"
+    ]
+  },
+  {
+    "objectID": "slides/01-r-pkg-intro.html#more-specifically",
+    "href": "slides/01-r-pkg-intro.html#more-specifically",
+    "title": "How to create and distribute R packages",
+    "section": "More specifically…",
+    "text": "More specifically…\n\nR packages are created:\n\nWhen your DRY (“Do Not Repeat Yourself) radar goes off\nWhen you think your code has general usefulness others could benefit from (this could include future you)\nWhen you want to share data (R packages in particular are used quite heavily for this)\n\n\n\n\nSource: Lecture notes from UBC’s DSCI 310 course (Reproducible and Trustworthy Workflows for Data Science)",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "How to create and distribute `R` packages"
+    ]
+  },
+  {
+    "objectID": "slides/01-r-pkg-intro.html#lets-start-with-a-motivating-example",
+    "href": "slides/01-r-pkg-intro.html#lets-start-with-a-motivating-example",
+    "title": "How to create and distribute R packages",
+    "section": "Let’s start with a motivating example",
+    "text": "Let’s start with a motivating example\n\n\nSuppose that, in many of your analyses, you find yourself repeatedly coding the distribution of observations over the classes (i.e., categories) of a given variable in your dataset\nYou find yourself rewriting code, copying and pasting code and/or copying and pasting files containing the code to do this",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "How to create and distribute `R` packages"
+    ]
+  },
+  {
+    "objectID": "slides/01-r-pkg-intro.html#moreover",
+    "href": "slides/01-r-pkg-intro.html#moreover",
+    "title": "How to create and distribute R packages",
+    "section": "Moreover…",
+    "text": "Moreover…\n\n\nIn doing so, you sometimes (or often!) make trivial mistakes\nYou wonder whether others doing similar analyses face this problem as well, and want to share your (eventual) solution with others",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "How to create and distribute `R` packages"
+    ]
+  },
+  {
+    "objectID": "slides/01-r-pkg-intro.html#counting-observations-across-classes-code-example",
+    "href": "slides/01-r-pkg-intro.html#counting-observations-across-classes-code-example",
+    "title": "How to create and distribute R packages",
+    "section": "Counting observations across classes code example",
+    "text": "Counting observations across classes code example\n\nThe code below is counting how many cars in mtcars (composed of 32 observations) have 4, 6, and 8 cylinders\n\n\n\nlibrary(tidyverse, quietly = TRUE)\n\nmtcars |&gt;\n  group_by(cyl) |&gt;\n  summarize(count = n()) |&gt;\n  rename(\"class\" = cyl)\n\n# A tibble: 3 × 2\n  class count\n  &lt;dbl&gt; &lt;int&gt;\n1     4    11\n2     6     7\n3     8    14",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "How to create and distribute `R` packages"
+    ]
+  },
+  {
+    "objectID": "slides/01-r-pkg-intro.html#is-an-r-package-the-answer-to-our-pains-with-how-we-have-been-previously-trying-to-reuse-our-code",
+    "href": "slides/01-r-pkg-intro.html#is-an-r-package-the-answer-to-our-pains-with-how-we-have-been-previously-trying-to-reuse-our-code",
+    "title": "How to create and distribute R packages",
+    "section": "Is an R package the answer to our pains with how we have been previously trying to reuse our code?",
+    "text": "Is an R package the answer to our pains with how we have been previously trying to reuse our code?\n\n\nYes, it is!",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "How to create and distribute `R` packages"
+    ]
+  },
+  {
+    "objectID": "slides/01-r-pkg-intro.html#packaging-our-code",
+    "href": "slides/01-r-pkg-intro.html#packaging-our-code",
+    "title": "How to create and distribute R packages",
+    "section": "Packaging our code",
+    "text": "Packaging our code\n\n\nAllows us to more easily reuse the in many different projects, in a less error-prone way\nLets others benefit from the code we have written\nIncreases our code quality because when packaging we:\n\nmust modularize our code into functions and write function reference documentation\nhave our code organized in a way that works well with tools for creating tutorials/vignettes, as well as formal code/software testing",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "How to create and distribute `R` packages"
+    ]
+  },
+  {
+    "objectID": "slides/01-r-pkg-intro.html#how-are-r-packages-shared-and-downloaded",
+    "href": "slides/01-r-pkg-intro.html#how-are-r-packages-shared-and-downloaded",
+    "title": "How to create and distribute R packages",
+    "section": "How are R packages shared and downloaded?",
+    "text": "How are R packages shared and downloaded?\n\nR packages can be shared and downloaded using code repositories, like GitHub\nWe also have the Comprehensive R Archive Network (CRAN) with over 20,000 packages available\n\n\n\nCRAN is a network of ftp and web servers around the world that store identical, up-to-date, versions of code and documentation for R.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "How to create and distribute `R` packages"
+    ]
+  },
+  {
+    "objectID": "slides/01-r-pkg-intro.html#what-will-be-the-workshop-topics",
+    "href": "slides/01-r-pkg-intro.html#what-will-be-the-workshop-topics",
+    "title": "How to create and distribute R packages",
+    "section": "What will be the workshop topics?",
+    "text": "What will be the workshop topics?\n\n\nDevelopment of R packages via a toy example\nIntroduction to package testing\nSetting up documentation\nIntroduction to continuous integration via GitHub Actions\nSharing and publishing packages on GitHub and CRAN\nDefinition of copyright rules\nChoosing the most appropriate license",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "How to create and distribute `R` packages"
+    ]
+  },
+  {
+    "objectID": "slides/03-testing-your-pkg-code.html#testability",
+    "href": "slides/03-testing-your-pkg-code.html#testability",
+    "title": "Ensuring your code works as expected",
+    "section": "Testability",
+    "text": "Testability\n\n\ndefined as the degree to which a system or component facilitates the establishment of test objectives and the execution of tests to determine whether those objectives have been achieved.\n\n\n\n\nto be successful, a test needs to be able to execute the code you wish to test, in a way that can trigger a defect that will propagate an incorrect result to a program point where it can be checked against the expected behaviour.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Ensuring your code works as expected"
+    ]
+  },
+  {
+    "objectID": "slides/03-testing-your-pkg-code.html#high-level-properties-for-effective-test-writing-and-execution",
+    "href": "slides/03-testing-your-pkg-code.html#high-level-properties-for-effective-test-writing-and-execution",
+    "title": "Ensuring your code works as expected",
+    "section": "High-level properties for effective test writing and execution",
+    "text": "High-level properties for effective test writing and execution\n\n\ncontrollability: the code under test needs to be able to be programmatically controlled\n\n\n\n\nobservability: the outcome of the code under test needs to be able to be verified\n\n\n\n\nisolateablilty: the code under test needs to be able to be validated on its own\n\n\n\n\nautomatability: the tests should be able to be executed automatically",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Ensuring your code works as expected"
+    ]
+  },
+  {
+    "objectID": "slides/03-testing-your-pkg-code.html#what-kinds-of-tests-do-we-write-for-our-functions",
+    "href": "slides/03-testing-your-pkg-code.html#what-kinds-of-tests-do-we-write-for-our-functions",
+    "title": "Ensuring your code works as expected",
+    "section": "What kinds of tests do we write for our functions?",
+    "text": "What kinds of tests do we write for our functions?\nI like to think about three broad categories of tests, and then write 2-3 tests for each (or more if the function is complex):\n\n\nSimple expected use cases\n\n\n\n\nEdge cases (unexpected, or rare use cases)\n\n\n\n\nErrors\n\n\n\nWe will come back to these and provide specific examples in a few minutes.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Ensuring your code works as expected"
+    ]
+  },
+  {
+    "objectID": "slides/03-testing-your-pkg-code.html#when-do-we-write-tests",
+    "href": "slides/03-testing-your-pkg-code.html#when-do-we-write-tests",
+    "title": "Ensuring your code works as expected",
+    "section": "When do we write tests?",
+    "text": "When do we write tests?\n\n\nAnytime you think about writing a function!\n\n\n\n\nYou can even write your tests before you write your function, you just have to have planned what function inputs and outputs to expect.\n\n\n\n\nWriting your tests before implementing your function can even improve your productivity (Erdogmus, Morisio, and Torchiano 2005)!\n\n\n\nIn software engineering, writting your tests before your functions is called “Test Driven Development” (Becker 2002).",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Ensuring your code works as expected"
+    ]
+  },
+  {
+    "objectID": "slides/03-testing-your-pkg-code.html#workflow-for-writing-functions-and-tests",
+    "href": "slides/03-testing-your-pkg-code.html#workflow-for-writing-functions-and-tests",
+    "title": "Ensuring your code works as expected",
+    "section": "Workflow for writing functions and tests",
+    "text": "Workflow for writing functions and tests\n\n\n\nWrite the function specifications and documentation - but do not implement the function.\n\n\n\n\nPlan the test cases and document them.\n\n\n\n\nCreate test data that is useful for assessing whether your function works as expected.\n\n\n\n\nWrite the tests to evaluate your function based on the planned test cases and test data.\n\n\n\n\nImplement the function by writing the needed code in the function body to pass the tests.\n\n\n\n\nIterate between steps 2-5 to improve the test coverage and function.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Ensuring your code works as expected"
+    ]
+  },
+  {
+    "objectID": "slides/03-testing-your-pkg-code.html#example-of-workflow-for-writing-functions-and-tests-for-data-science",
+    "href": "slides/03-testing-your-pkg-code.html#example-of-workflow-for-writing-functions-and-tests-for-data-science",
+    "title": "Ensuring your code works as expected",
+    "section": "Example of workflow for writing functions and tests for data science",
+    "text": "Example of workflow for writing functions and tests for data science\nLet’s pretend we haven’t yet written our count_classes function, and follow the workflow I just outlined to develop our function and it’s test suite.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Ensuring your code works as expected"
+    ]
+  },
+  {
+    "objectID": "slides/03-testing-your-pkg-code.html#where-do-the-function-and-test-files-go",
+    "href": "slides/03-testing-your-pkg-code.html#where-do-the-function-and-test-files-go",
+    "title": "Ensuring your code works as expected",
+    "section": "Where do the function and test files go?",
+    "text": "Where do the function and test files go?\n\n\nThe test code goes in a folder called tests\nTo setup the correct file and directory structure for our tests, we run:\n\n\nusethis::use_testthat()\n\nWhich will:\n\nCreate a tests/testthat/ directory, where we will put our test files\nAdd testthat to the Suggests field in the DESCRIPTION file.\nCreate a file tests/testthat.R that runs all your tests when R CMD check runs",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Ensuring your code works as expected"
+    ]
+  },
+  {
+    "objectID": "slides/03-testing-your-pkg-code.html#where-do-the-function-and-test-files-go-1",
+    "href": "slides/03-testing-your-pkg-code.html#where-do-the-function-and-test-files-go-1",
+    "title": "Ensuring your code works as expected",
+    "section": "Where do the function and test files go?",
+    "text": "Where do the function and test files go?\n\n\nAs you define functions in your package, in the files below R/, you add the corresponding tests to .R files in tests/testthat/\nWe strongly recommend that the organisation of test files match the organisation of R/ files, for example, for the EDA pacakge:\n\n\nR                                           tests/testthat\n└── count_classes.R                         └── test-count_classes.R\n    count_classes &lt;- function(...) {...}          test_that(\"count_classes does this\", {...})\n                                                  test_that(\"count_classes does that\", {...})",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Ensuring your code works as expected"
+    ]
+  },
+  {
+    "objectID": "slides/03-testing-your-pkg-code.html#how-do-we-run-the-test-suite",
+    "href": "slides/03-testing-your-pkg-code.html#how-do-we-run-the-test-suite",
+    "title": "Ensuring your code works as expected",
+    "section": "How do we run the test suite?",
+    "text": "How do we run the test suite?\n\ndevtools::test()",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Ensuring your code works as expected"
+    ]
+  },
+  {
+    "objectID": "slides/03-testing-your-pkg-code.html#attributions",
+    "href": "slides/03-testing-your-pkg-code.html#attributions",
+    "title": "Ensuring your code works as expected",
+    "section": "Attributions:",
+    "text": "Attributions:\n\nR Packages (2e) by Hadley Wickham and Jennifer Bryan\nCPSC 310 class notes from Reid Holmes, UBC\nCPSC 410 class notes from Reid Holmes, UBC",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Ensuring your code works as expected"
+    ]
+  },
+  {
+    "objectID": "slides/03-testing-your-pkg-code.html#references",
+    "href": "slides/03-testing-your-pkg-code.html#references",
+    "title": "Ensuring your code works as expected",
+    "section": "References",
+    "text": "References\n\n\n\n\n\n\n\n\nBecker, K. 2002. “Test-Driven Development: By Example.” The Addison-Wesley signature series. Addison-Wesley,.\n\n\nErdogmus, Hakan, Maurizio Morisio, and Marco Torchiano. 2005. “On the Effectiveness of the Test-First Approach to Programming.” IEEE Transactions on Software Engineering 31 (3): 226–37.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Ensuring your code works as expected"
+    ]
+  },
+  {
+    "objectID": "slides/05-ci-cd.html#continuous-integration-ci-and-continuous-deployment-cd",
+    "href": "slides/05-ci-cd.html#continuous-integration-ci-and-continuous-deployment-cd",
+    "title": "Continuous Integration (and Deployment)",
+    "section": "Continuous Integration (CI) and Continuous Deployment (CD)",
+    "text": "Continuous Integration (CI) and Continuous Deployment (CD)\n\n*CI: runs all tests and checks on changes to the codebase\n\ne.g., run our unit tests on any change to the code base\n\nCD: builds and deploys any artifact (usually after all checks pass)\n\nrebuild the documentation when everything passess",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Continuous Integration (and Deployment)"
+    ]
+  },
+  {
+    "objectID": "slides/05-ci-cd.html#github-actions",
+    "href": "slides/05-ci-cd.html#github-actions",
+    "title": "Continuous Integration (and Deployment)",
+    "section": "Github Actions",
+    "text": "Github Actions\n\nTool and service for automating software development tasks\n\nGitHub Actions makes it easier to work with GitHub repositories\n\nOther related services: Travis, Circle CI, Jenkins, etc.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Continuous Integration (and Deployment)"
+    ]
+  },
+  {
+    "objectID": "slides/05-ci-cd.html#key-terms",
+    "href": "slides/05-ci-cd.html#key-terms",
+    "title": "Continuous Integration (and Deployment)",
+    "section": "Key Terms",
+    "text": "Key Terms\nSpecific wording for GitHub Actions\n\nAction: Individual tasks you want to perform.\nWorkflow: A collection of actions (specified together in one file).\nEvent: Something that triggers the running of a workflow.\nRunner: A machine that can run the Github Action(s).\nJob: A set of steps executed on the same runner.\nStep: A set of commands or actions which a job executes.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Continuous Integration (and Deployment)"
+    ]
+  },
+  {
+    "objectID": "slides/05-ci-cd.html#create-a-workflow",
+    "href": "slides/05-ci-cd.html#create-a-workflow",
+    "title": "Continuous Integration (and Deployment)",
+    "section": "Create a workflow",
+    "text": "Create a workflow\nIn your github repository:\n\nClick on the Actions tab\nClick on New workflow on the left\nClick on Set up a workflow yourself",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Continuous Integration (and Deployment)"
+    ]
+  },
+  {
+    "objectID": "slides/05-ci-cd.html#example-actions-workflow",
+    "href": "slides/05-ci-cd.html#example-actions-workflow",
+    "title": "Continuous Integration (and Deployment)",
+    "section": "Example actions workflow",
+    "text": "Example actions workflow\nname: CI Example\n\non: [push, pull_request, workflow_dispatch]\n\njobs:\n  my_steps:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v2\n\n      - name: Run a one-line script\n        run: echo Hello, world!\n\n      - name: Run a multi-line script\n        run: |\n          echo Add other actions to build,\n          echo test, and deploy your project.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Continuous Integration (and Deployment)"
+    ]
+  },
+  {
+    "objectID": "slides/05-ci-cd.html#your-turn",
+    "href": "slides/05-ci-cd.html#your-turn",
+    "title": "Continuous Integration (and Deployment)",
+    "section": "Your Turn",
+    "text": "Your Turn\nThe next 5 minutes:\n\nCreate and run the simple github action workflow on your repository\nsave the file into .github/workflows/ci_example.yaml\n\nname: CI Example\n\non: [push, pull_request, workflow_dispatch]\n\njobs:\n  my_steps:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v2\n\n      - name: Run a one-line script\n        run: echo Hello, world!\n\n      - name: Run a multi-line script\n        run: |\n          echo Add other actions to build,\n          echo test, and deploy your project.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Continuous Integration (and Deployment)"
+    ]
+  },
+  {
+    "objectID": "slides/05-ci-cd.html#automatically-check-our-package",
+    "href": "slides/05-ci-cd.html#automatically-check-our-package",
+    "title": "Continuous Integration (and Deployment)",
+    "section": "Automatically check our package",
+    "text": "Automatically check our package\n\nLet’s make a new workflow named R-CMD-check\nWe will make sure the check() function passes for our function when we make changes to the repository",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Continuous Integration (and Deployment)"
+    ]
+  },
+  {
+    "objectID": "slides/05-ci-cd.html#check-release.yaml",
+    "href": "slides/05-ci-cd.html#check-release.yaml",
+    "title": "Continuous Integration (and Deployment)",
+    "section": "check-release.yaml",
+    "text": "check-release.yaml\n\nOn your computer run: usethis::use_github_action(\"check-release\")\n\non: [push, pull_request]\n\nname: R-CMD-check\n\njobs:\n  R-CMD-check:\n    runs-on: ubuntu-latest\n\n    steps:\n      - name: Checkout files from GitHub version control repository\n        uses: actions/checkout@v2\n\n      - name: Setup R\n        uses: r-lib/actions/setup-r@v2\n\n      - name: Install R packages\n        uses: r-lib/actions/setup-r-dependencies@v2\n        with:\n          extra-packages: any::rcmdcheck\n          needs: check\n\n      - name: Checks if R package can be installed\n        uses: r-lib/actions/check-r-package@v2",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Continuous Integration (and Deployment)"
+    ]
+  },
+  {
+    "objectID": "slides/05-ci-cd.html#pkgdown-github-actions",
+    "href": "slides/05-ci-cd.html#pkgdown-github-actions",
+    "title": "Continuous Integration (and Deployment)",
+    "section": "Pkgdown + GitHub Actions",
+    "text": "Pkgdown + GitHub Actions\nIf you want more…\n\nLook into the usethis::use_pkgdown_github_pages() function that sets up CD for your documentation site.\nYou may need to change the publishing location of websites to the gh-pages branch\n\n\n\n\n\n\n\nCaution\n\n\n\nMake sure you’re comfortable with how branches work in git.\nYou will want to re-ignore the docs/ directory so you don’t confuse youself and others.\nThe files you view locally will be in a different location on github.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Continuous Integration (and Deployment)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#full-disclosure-i-am-not-a-lawyer",
+    "href": "slides/07-copyright-licenses.html#full-disclosure-i-am-not-a-lawyer",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Full disclosure… I AM NOT A LAWYER!",
+    "text": "Full disclosure… I AM NOT A LAWYER!",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#learning-objectives",
+    "href": "slides/07-copyright-licenses.html#learning-objectives",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\n\n\nExplain who owns the copyright of code they write in a give situation\nChoose an appropriate license for software (and non-software) materials &gt; Note: In this workshop, we will be focusing on Canadian copyright laws",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#copyright-law",
+    "href": "slides/07-copyright-licenses.html#copyright-law",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Copyright Law",
+    "text": "Copyright Law\n\nIn both the US and Canada, software code falls under copyright law\nCopyright protects only the language and words used to express ideas, concepts and themes, not the ideas, concepts or themes themselves.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#section",
+    "href": "slides/07-copyright-licenses.html#section",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "",
+    "text": "Knowing who owns the copyright of software code is critical because the owner controls if and how the code may be:\n\ncopied\ndistributed\nsold\nmodified\nessentially, made profitable 💲💲",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#canadian-copyright-law",
+    "href": "slides/07-copyright-licenses.html#canadian-copyright-law",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Canadian Copyright Law",
+    "text": "Canadian Copyright Law\nIn Canada, the copyright owner is afforded the following rights:\n\nEconomic rights:\n\nthe right to produce, reproduce, publish, translate, authorize & convert a work",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#section-1",
+    "href": "slides/07-copyright-licenses.html#section-1",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "",
+    "text": "Moral rights:\n\nthe right to claim authorship, the right to remain anonymous, or the right to use a pseudonym or pen name\nthe right to integrity\nthe right of association\n\n\n\nEconomic rights can be transferred to entities that are not the author, whereas moral rights cannot (they can however, be waived).",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#who-has-copyright-ownership",
+    "href": "slides/07-copyright-licenses.html#who-has-copyright-ownership",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Who has copyright ownership?",
+    "text": "Who has copyright ownership?\nThis is a complicated question, and the answer starts with it depends on the case…",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#case-i-you-author-the-code-for-yourself",
+    "href": "slides/07-copyright-licenses.html#case-i-you-author-the-code-for-yourself",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Case I: You author the code for yourself",
+    "text": "Case I: You author the code for yourself\n\nYou author the code and you are doing this for yourself (i.e., not for your employer, not for a client, etc).\nIn such a case, you (the person who typed the code) automatically become the copyright owner.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#section-2",
+    "href": "slides/07-copyright-licenses.html#section-2",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "",
+    "text": "In both Canada and the USA, you do not need to need to affix the copyright symbol © to your work (some other countries do require this however).\nAlthough the copyright symbol © is not required, it is often used in copyrighted works to clearly identify that the code is protected by copyright.\n\n\nIt is possible (and advisable) to register your copyright as evidence that a copyright exists and who the owner is.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#case-ii-you-write-the-code-in-the-course-of-employment",
+    "href": "slides/07-copyright-licenses.html#case-ii-you-write-the-code-in-the-course-of-employment",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Case II: You write the code in the course of employment",
+    "text": "Case II: You write the code in the course of employment\n\nIn Canada, if you write code for work as an employee the copyright ownership is typically assigned to the employer.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#section-3",
+    "href": "slides/07-copyright-licenses.html#section-3",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "",
+    "text": "In the Canada, software code is defined as “work made in the course of employment” if:\n\nThe author of the code was in the employment of some other entity under a contract of service or apprenticeship and the code was written in the course of their employment by that entity.\nAnd there exists no agreement (written, or otherwise, and even potentially even presumed) that the employee retains ownership of copyright for the code written during the term of their employment.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#section-4",
+    "href": "slides/07-copyright-licenses.html#section-4",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "",
+    "text": "Work made in the course of employment is different than a contract for services (e.g., independent consultant where “work made in the course of employment” would not apply).\nIn this case, the default position is usually that the contractor retains copyright ownership of the work they create, unless the contract specifically assigns copyright to the client.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#implications-when-you-forgo-copyright-ownership",
+    "href": "slides/07-copyright-licenses.html#implications-when-you-forgo-copyright-ownership",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Implications when you forgo copyright ownership",
+    "text": "Implications when you forgo copyright ownership\n\n\nQ: What if you forgo copyright ownership and want to use any of the code that you wrote again?\nA: You would need to negotiate a licence to use the code you wrote, the same way any other third-party would… 😓",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#section-5",
+    "href": "slides/07-copyright-licenses.html#section-5",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "",
+    "text": "To avoid this issue, you could:\n\nNegotiate which code is core to the work (“work-made-for-hire”) and what (pre-built) code (e.g., packages, scripts) are outside the core work and should not (at the beginning of the project!).\nNegotiate that the client purchase a license to the code you write (as opposed to hiring you to write the code).",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#licenses",
+    "href": "slides/07-copyright-licenses.html#licenses",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Licenses",
+    "text": "Licenses\n\nIf you publicly share your creative work (i.e., software code), you should let others know if and how they can reuse it!\nThis is done via the inclusion of a LICENSE or LICENSE.md file in the base directory of the repository that clearly states under which license the content is being made available.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#licenses-contd",
+    "href": "slides/07-copyright-licenses.html#licenses-contd",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Licenses (cont’d)",
+    "text": "Licenses (cont’d)\n\nUnless you include a license that specifies otherwise, nobody else can copy, distribute, or modify your work without being at risk of take-downs, shake-downs, or litigation.\nOnce the work has other contributors (each a copyright holder), “nobody” starts including you!\nA license solves this problem by granting rights to others (the licensees) that they would otherwise not have.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#choosing-a-license",
+    "href": "slides/07-copyright-licenses.html#choosing-a-license",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Choosing a License",
+    "text": "Choosing a License\n\nImportant considerations when choosing a license include:\n\nWhether you require people distributing derivative works to also require others to distribute their derivative works in the same way.\nWhether the content you are licensing is source code, and if it is, whether you want to require that derivatives of your work share the source code",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#choosing-a-license-contd",
+    "href": "slides/07-copyright-licenses.html#choosing-a-license-contd",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Choosing a License (cont’d)",
+    "text": "Choosing a License (cont’d)\n\nIn practice, a few licenses are by far the most popular.\nchoosealicense.com will help you find a common license that suits your needs.\n\n\n💡Tip: Choose a license that is in common use! This makes life easier for contributors and users, because they are more likely to already be familiar with the license and don’t have to wade through a bunch of jargon to decide if they’re ok with it.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#creative-commons",
+    "href": "slides/07-copyright-licenses.html#creative-commons",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Creative Commons",
+    "text": "Creative Commons\n\nBut not all my creative Data Science work is code (e.g. visualizations, reports, presentations), so how do I license it?\nThe Creative Commons licences were created for such works and they are now widely used in academia and the publishing industry.\n\n\nhttps://chooser-beta.creativecommons.org/",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#creative-commons-contd",
+    "href": "slides/07-copyright-licenses.html#creative-commons-contd",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Creative Commons (cont’d)",
+    "text": "Creative Commons (cont’d)\n\nSource: “How to License Poster” by Creative Commons is licensed under CC BY 4.0",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#creative-commons-contd-1",
+    "href": "slides/07-copyright-licenses.html#creative-commons-contd-1",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Creative Commons (cont’d)",
+    "text": "Creative Commons (cont’d)\n\nSource: “How to License Poster” by Creative Commons is licensed under CC BY 4.0",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#scenario-1",
+    "href": "slides/07-copyright-licenses.html#scenario-1",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Scenario 1",
+    "text": "Scenario 1\nImagine you’re a data scientist and you developed a tool that analyzes satellite imagery to track deforestation patterns. Your goal is to make this tool freely available to researchers to help monitor and combat deforestation, but you still want to retain the copyright to your tool.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#scenario-2",
+    "href": "slides/07-copyright-licenses.html#scenario-2",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Scenario 2",
+    "text": "Scenario 2\nImagine you’re a data scientist and you have compiled a data set of climate change projections from various scientific sources. In order to promote further analyses aimed at understanding and mitigating the effects of climate change, you want to share this data set with the research community.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#attribution",
+    "href": "slides/07-copyright-licenses.html#attribution",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "Attribution",
+    "text": "Attribution\nThis content has been developed based on the UBC course notes for DSCI 524: Collaborative Software Development by Tiffany Timbers, Software Carpentry Version Control with Git Licensing Lesson and https://choosealicense.com/.",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  },
+  {
+    "objectID": "slides/07-copyright-licenses.html#references",
+    "href": "slides/07-copyright-licenses.html#references",
+    "title": "Copyright & Licenses (who owns the code?)",
+    "section": "References",
+    "text": "References\n\nWho Owns The Code?\nCanadian Copyright Law - University of Alberta\nDo you actually own the IP generated by your Canadian employees?\nOwnership of Copyright - Canadian Copyright Act\nThe Unreasonable Fear of Infection\nFrequently Asked Questions about the GNU Licenses",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Copyright & Licenses (who owns the code?)"
+    ]
+  }
+]
