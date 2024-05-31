@@ -1,12 +1,10 @@
 ---
-title: "05: Continuous Integration (and Deployment)"
+title: "Continuous Integration (and Deployment)"
 format:
   revealjs:
     slide-number: true
     slide-level: 4
 ---
-
-# Introduction to continuous integration using GitHub Actions
 
 ## Continuous Integration (CI) and Continuous Deployment (CD)
 
@@ -19,7 +17,8 @@ format:
 
 - Tool and service for automating software development tasks
   - GitHub Actions makes it easier to work with GitHub repositories
-- Other related services: Travis, Circle CI, Jenkins, etc
+- Other related services: Travis, Circle CI, Jenkins, etc.
+
 
 ## Key Terms
 
