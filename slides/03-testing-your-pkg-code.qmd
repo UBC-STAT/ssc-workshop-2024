@@ -5,6 +5,7 @@ format:
   revealjs:
     slide-number: true
     slide-level: 4
+    embed-resources: true
 editor: source
 bibliography: references.bib
 execute:
