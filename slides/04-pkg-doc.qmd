@@ -1,13 +1,11 @@
 ---
-title: "04: Package Documentation"
+title: "Package Documentation"
 format:
   revealjs:
     slide-number: true
     slide-level: 4
 ---
 
-
-# Package documentation
 
 ## What is documentation?
 
@@ -24,7 +22,7 @@ library(tidyverse)
 
 ## Your Turn
 
-Take 3 minutes
+In groups: take 3 minutes
 
 - Open a documentation page for any function (you can use `dplyr::select`)
 - What do you like about it?
