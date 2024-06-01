@@ -177,9 +177,9 @@ count_classes <- function(data_frame, class_col) {
 
 ### Syntax `package::function()`
 
-- `count_classes()` includes three <span style="color: darkblue;">{dplyr}</span> functions: 
-    - `group_by()`, `summarize()`, and `rename()`
-- Alternatively, we can use the syntax `dplyr::group_by()`, `dplyr::summarize()`, and `dplyr::rename()`
+- `count_classes()` includes four <span style="color: darkblue;">{dplyr}</span> functions: 
+    - `group_by()`, `summarize()`, `n()`, and `rename()`
+- Alternatively, we can use the syntax `dplyr::group_by()`, `dplyr::summarize()`, `dplyr::n()`, and `dplyr::rename()`
 - This syntax is recommended since it makes explicit which package each dependency is coming from within our package functions
 
 ### Re-writing our function
@@ -195,7 +195,7 @@ count_classes <- function(data_frame, class_col) {
 
   data_frame |>
     dplyr::group_by({{ class_col }}) |>
-    dplyr::summarize(count = n()) |>
+    dplyr::summarize(count = dplyr::n()) |>
     dplyr::rename("class" = {{ class_col }})
 }
 ```

@@ -91,7 +91,7 @@ mtcars |>
 ## Packaging our code
 
 ::: incremental
-- Allows us to more easily reuse the in many different projects, in a less error-prone way
+- Allows us to more easily reuse it in many different projects, in a less error-prone way
 - Lets others benefit from the code we have written
 - Increases our code quality because when packaging we:
      - must <span style="color: purple;">modularize</span> our code into functions and write function reference documentation
