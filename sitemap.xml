@@ -2,38 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://UBC-STAT.github.io/ssc-workshop-2024/slides/02-build-first-pkg.html</loc>
-    <lastmod>2024-06-01T19:54:07.107Z</lastmod>
+    <lastmod>2024-06-01T21:32:15.961Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-STAT.github.io/ssc-workshop-2024/slides/01-r-pkg-intro.html</loc>
-    <lastmod>2024-06-01T19:54:07.107Z</lastmod>
+    <lastmod>2024-06-01T21:32:15.961Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-STAT.github.io/ssc-workshop-2024/slides/06-publish-pkgs.html</loc>
-    <lastmod>2024-06-01T19:54:07.107Z</lastmod>
+    <lastmod>2024-06-01T21:32:15.962Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-STAT.github.io/ssc-workshop-2024/slides/05-ci-cd.html</loc>
-    <lastmod>2024-06-01T19:54:07.107Z</lastmod>
+    <lastmod>2024-06-01T21:32:15.961Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-STAT.github.io/ssc-workshop-2024/index.html</loc>
-    <lastmod>2024-06-01T19:54:07.106Z</lastmod>
+    <lastmod>2024-06-01T21:32:15.960Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-STAT.github.io/ssc-workshop-2024/slides/ssc-workshop-2024.html</loc>
-    <lastmod>2024-06-01T19:54:07.218Z</lastmod>
+    <lastmod>2024-06-01T21:32:16.065Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-STAT.github.io/ssc-workshop-2024/slides/03-testing-your-pkg-code.html</loc>
-    <lastmod>2024-06-01T19:54:07.107Z</lastmod>
+    <lastmod>2024-06-01T21:32:15.961Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-STAT.github.io/ssc-workshop-2024/slides/04-pkg-doc.html</loc>
-    <lastmod>2024-06-01T19:54:07.107Z</lastmod>
+    <lastmod>2024-06-01T21:32:15.961Z</lastmod>
   </url>
   <url>
     <loc>https://UBC-STAT.github.io/ssc-workshop-2024/slides/07-copyright-licenses.html</loc>
-    <lastmod>2024-06-01T19:54:07.107Z</lastmod>
+    <lastmod>2024-06-01T21:32:15.962Z</lastmod>
   </url>
 </urlset>

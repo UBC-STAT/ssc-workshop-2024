@@ -292,7 +292,7 @@
     "href": "slides/01-r-pkg-intro.html#packaging-our-code",
     "title": "How to create and distribute R packages",
     "section": "Packaging our code",
-    "text": "Packaging our code\n\n\nAllows us to more easily reuse the in many different projects, in a less error-prone way\nLets others benefit from the code we have written\nIncreases our code quality because when packaging we:\n\nmust modularize our code into functions and write function reference documentation\nhave our code organized in a way that works well with tools for creating tutorials/vignettes, as well as formal code/software testing",
+    "text": "Packaging our code\n\n\nAllows us to more easily reuse it in many different projects, in a less error-prone way\nLets others benefit from the code we have written\nIncreases our code quality because when packaging we:\n\nmust modularize our code into functions and write function reference documentation\nhave our code organized in a way that works well with tools for creating tutorials/vignettes, as well as formal code/software testing",
     "crumbs": [
       "Home",
       "Slides",
