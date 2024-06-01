@@ -388,7 +388,7 @@ Error
 :::
 ```{r}
 Error : 
-  `data_frame` should be a data frame or data frame extension (e.g. a tibble)
+  `data_frame` should be a dataframe or dataframe extension (e.g. a tibble)
 ```
 
 :::
@@ -435,17 +435,17 @@ are passed to the `data_frame` argument", {
 ```{r}
 set.seed(2024)
 
-two_classes_two_obs <- data.frame(class_labels = rep(c("class1", 
-                                                     "class2"), 2),
-                                 values = round(runif(4), 1))
-two_classes_2_and_1_obs <- data.frame(class_labels = c(rep("class1", 2), 
+two_classes_2_obs <- data.frame(class_labels = rep(c("class1",
+                                                       "class2"), 2),
+                                  values = round(runif(4), 1))
+two_classes_2_and_1_obs <- data.frame(class_labels = c(rep("class1", 2),
                                                        "class2"),
                                       values = round(runif(3), 1))
 one_class_2_obs <- data.frame(class_labels = c("class1", "class1"),
-                                      values = round(runif(2), 1))
+                              values = round(runif(2), 1))
 empty_df  <- data.frame(class_labels = character(0),
                         values = double(0))
-two_classes_two_obs_as_list <- list(class_labels = rep(c("class1", 
+two_classes_two_obs_as_list <- list(class_labels = rep(c("class1",
                                                          "class2"), 2),
                                     values = round(runif(4), 1))
 ```
@@ -453,12 +453,12 @@ two_classes_two_obs_as_list <- list(class_labels = rep(c("class1",
 ### Expected function outputs for test cases
 
 ```{r}
-two_classes_two_obs_output <- data.frame(class = c("class1", "class2"),
-                                        count = c(2,2))
+two_classes_2_obs_output <- data.frame(class = c("class1", "class2"),
+                                         count = c(2,2))
 two_classes_2_and_1_obs_output <- data.frame(class = c("class1", "class2"),
-                                      count = c(2, 1))
+                                             count = c(2, 1))
 one_class_2_obs_output <- data.frame(class = "class1",
-                              count = 2)
+                                     count = 2)
 empty_df_output <- data.frame(class = character(0),
                               count = numeric(0))
 ```
@@ -477,7 +477,7 @@ Is the object equal to a value?
 
 - `expect_identical` - test two objects for being exactly equal
 - `expect_equal` - compare R objects x and y testing ‘near equality’ (can set a tolerance)
-- `expect_equivalent` - compare R objects x and y testing ‘near equality’ (can set a tolerance) and does not assess attributes
+- `expect_equal(ignore_attr = TRUE)` - compare R objects x and y testing ‘near equality’ (can set a tolerance) and does not assess attributes
 
 ### Common expect_* statements for use with `test_that`:
 
@@ -505,12 +505,12 @@ in the `class_col` from the original dataframe. The new dataframe
 will have a `class column` whose values are the unique classes, 
 and a `count` column, whose values will be the number of observations 
 for each  class", {
-    expect_s3_class(count_classes(two_classes_2_obs, class_lables), 
-                    "tibble")
-    expect_equivalent(count_classes(two_classes_2_obs, class_lables), 
-                      two_classes_2_obs_output)
-    expect_equivalent(count_classes(two_classes_2_and_1_obs, class_lables),
-                      two_classes_2_and_1_obs_output)
+  expect_s3_class(count_classes(two_classes_2_obs, class_labels),
+                  "data.frame")
+  expect_equal(count_classes(two_classes_2_obs, class_labels),
+                    two_classes_2_obs_output, ignore_attr = TRUE)
+  expect_equal(count_classes(two_classes_2_and_1_obs, class_labels),
+                    two_classes_2_and_1_obs_output, ignore_attr = TRUE)
 })
 ```
 
@@ -519,10 +519,10 @@ for each  class", {
 ```{r}
 test_that("`count_classes` should return an empty data frame, or tibble, 
 if the input to the function is an empty data frame", {
-    expect_equivalent(count_classes(one_class_2_obs, class_lables), 
-                      one_class_2_obs_output)
-    expect_equivalent(count_classes(empty_df, class_lables), 
-                      empty_df_output)
+  expect_equal(count_classes(one_class_2_obs, class_labels),
+                    one_class_2_obs_output, ignore_attr = TRUE)
+  expect_equal(count_classes(empty_df, class_labels),
+                    empty_df_output, ignore_attr = TRUE)
 })
 ```
 
@@ -531,7 +531,7 @@ if the input to the function is an empty data frame", {
 ```{r}
 test_that("`count_classes` should throw an error when incorrect types 
 are passed to the `data_frame` argument", {
-    expect_error(count_classes(two_classes_two_obs_as_list, class_lables))
+  expect_error(count_classes(two_classes_two_obs_as_list, class_lables))
 })
 ```
 
