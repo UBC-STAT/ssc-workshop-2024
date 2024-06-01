@@ -1602,7 +1602,7 @@ margin-right: 0; }
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>Error <span class="sc">:</span> </span>
-<span id="cb16-2"><a></a>  <span class="st">`</span><span class="at">data_frame</span><span class="st">`</span> should be a data frame or data frame <span class="fu">extension</span> (e.g. a tibble)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-2"><a></a>  <span class="st">`</span><span class="at">data_frame</span><span class="st">`</span> should be a dataframe or dataframe <span class="fu">extension</span> (e.g. a tibble)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1647,17 +1647,17 @@ margin-right: 0; }
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
 <span id="cb18-2"><a></a></span>
-<span id="cb18-3"><a></a>two_classes_two_obs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">class_labels =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;class1&quot;</span>, </span>
-<span id="cb18-4"><a></a>                                                     <span class="st">&quot;class2&quot;</span>), <span class="dv">2</span>),</span>
-<span id="cb18-5"><a></a>                                 <span class="at">values =</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">4</span>), <span class="dv">1</span>))</span>
-<span id="cb18-6"><a></a>two_classes_2_and_1_obs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">class_labels =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;class1&quot;</span>, <span class="dv">2</span>), </span>
+<span id="cb18-3"><a></a>two_classes_2_obs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">class_labels =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;class1&quot;</span>,</span>
+<span id="cb18-4"><a></a>                                                       <span class="st">&quot;class2&quot;</span>), <span class="dv">2</span>),</span>
+<span id="cb18-5"><a></a>                                  <span class="at">values =</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">4</span>), <span class="dv">1</span>))</span>
+<span id="cb18-6"><a></a>two_classes_2_and_1_obs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">class_labels =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;class1&quot;</span>, <span class="dv">2</span>),</span>
 <span id="cb18-7"><a></a>                                                       <span class="st">&quot;class2&quot;</span>),</span>
 <span id="cb18-8"><a></a>                                      <span class="at">values =</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">3</span>), <span class="dv">1</span>))</span>
 <span id="cb18-9"><a></a>one_class_2_obs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">class_labels =</span> <span class="fu">c</span>(<span class="st">&quot;class1&quot;</span>, <span class="st">&quot;class1&quot;</span>),</span>
-<span id="cb18-10"><a></a>                                      <span class="at">values =</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">2</span>), <span class="dv">1</span>))</span>
+<span id="cb18-10"><a></a>                              <span class="at">values =</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">2</span>), <span class="dv">1</span>))</span>
 <span id="cb18-11"><a></a>empty_df  <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">class_labels =</span> <span class="fu">character</span>(<span class="dv">0</span>),</span>
 <span id="cb18-12"><a></a>                        <span class="at">values =</span> <span class="fu">double</span>(<span class="dv">0</span>))</span>
-<span id="cb18-13"><a></a>two_classes_two_obs_as_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">class_labels =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;class1&quot;</span>, </span>
+<span id="cb18-13"><a></a>two_classes_two_obs_as_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">class_labels =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;class1&quot;</span>,</span>
 <span id="cb18-14"><a></a>                                                         <span class="st">&quot;class2&quot;</span>), <span class="dv">2</span>),</span>
 <span id="cb18-15"><a></a>                                    <span class="at">values =</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">4</span>), <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1666,12 +1666,12 @@ margin-right: 0; }
 <section id="expected-function-outputs-for-test-cases" class="title-slide slide level3 center">
 <h3>Expected function outputs for test cases</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>two_classes_two_obs_output <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">class =</span> <span class="fu">c</span>(<span class="st">&quot;class1&quot;</span>, <span class="st">&quot;class2&quot;</span>),</span>
-<span id="cb19-2"><a></a>                                        <span class="at">count =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>two_classes_2_obs_output <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">class =</span> <span class="fu">c</span>(<span class="st">&quot;class1&quot;</span>, <span class="st">&quot;class2&quot;</span>),</span>
+<span id="cb19-2"><a></a>                                         <span class="at">count =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
 <span id="cb19-3"><a></a>two_classes_2_and_1_obs_output <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">class =</span> <span class="fu">c</span>(<span class="st">&quot;class1&quot;</span>, <span class="st">&quot;class2&quot;</span>),</span>
-<span id="cb19-4"><a></a>                                      <span class="at">count =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb19-4"><a></a>                                             <span class="at">count =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
 <span id="cb19-5"><a></a>one_class_2_obs_output <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">class =</span> <span class="st">&quot;class1&quot;</span>,</span>
-<span id="cb19-6"><a></a>                              <span class="at">count =</span> <span class="dv">2</span>)</span>
+<span id="cb19-6"><a></a>                                     <span class="at">count =</span> <span class="dv">2</span>)</span>
 <span id="cb19-7"><a></a>empty_df_output <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">class =</span> <span class="fu">character</span>(<span class="dv">0</span>),</span>
 <span id="cb19-8"><a></a>                              <span class="at">count =</span> <span class="fu">numeric</span>(<span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1691,7 +1691,7 @@ margin-right: 0; }
 <ul>
 <li><code>expect_identical</code> - test two objects for being exactly equal</li>
 <li><code>expect_equal</code> - compare R objects x and y testing ‘near equality’ (can set a tolerance)</li>
-<li><code>expect_equivalent</code> - compare R objects x and y testing ‘near equality’ (can set a tolerance) and does not assess attributes</li>
+<li><code>expect_equal(ignore_attr = TRUE)</code> - compare R objects x and y testing ‘near equality’ (can set a tolerance) and does not assess attributes</li>
 </ul>
 </section>
 
@@ -1728,12 +1728,12 @@ margin-right: 0; }
 <span id="cb21-4"><a></a><span class="st">will have a `class column` whose values are the unique classes, </span></span>
 <span id="cb21-5"><a></a><span class="st">and a `count` column, whose values will be the number of observations </span></span>
 <span id="cb21-6"><a></a><span class="st">for each  class&quot;</span>, {</span>
-<span id="cb21-7"><a></a>    <span class="fu">expect_s3_class</span>(<span class="fu">count_classes</span>(two_classes_2_obs, class_lables), </span>
-<span id="cb21-8"><a></a>                    <span class="st">&quot;tibble&quot;</span>)</span>
-<span id="cb21-9"><a></a>    <span class="fu">expect_equivalent</span>(<span class="fu">count_classes</span>(two_classes_2_obs, class_lables), </span>
-<span id="cb21-10"><a></a>                      two_classes_2_obs_output)</span>
-<span id="cb21-11"><a></a>    <span class="fu">expect_equivalent</span>(<span class="fu">count_classes</span>(two_classes_2_and_1_obs, class_lables),</span>
-<span id="cb21-12"><a></a>                      two_classes_2_and_1_obs_output)</span>
+<span id="cb21-7"><a></a>  <span class="fu">expect_s3_class</span>(<span class="fu">count_classes</span>(two_classes_2_obs, class_labels),</span>
+<span id="cb21-8"><a></a>                  <span class="st">&quot;data.frame&quot;</span>)</span>
+<span id="cb21-9"><a></a>  <span class="fu">expect_equal</span>(<span class="fu">count_classes</span>(two_classes_2_obs, class_labels),</span>
+<span id="cb21-10"><a></a>                    two_classes_2_obs_output, <span class="at">ignore_attr =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-11"><a></a>  <span class="fu">expect_equal</span>(<span class="fu">count_classes</span>(two_classes_2_and_1_obs, class_labels),</span>
+<span id="cb21-12"><a></a>                    two_classes_2_and_1_obs_output, <span class="at">ignore_attr =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb21-13"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -1743,10 +1743,10 @@ margin-right: 0; }
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">test_that</span>(<span class="st">&quot;`count_classes` should return an empty data frame, or tibble, </span></span>
 <span id="cb22-2"><a></a><span class="st">if the input to the function is an empty data frame&quot;</span>, {</span>
-<span id="cb22-3"><a></a>    <span class="fu">expect_equivalent</span>(<span class="fu">count_classes</span>(one_class_2_obs, class_lables), </span>
-<span id="cb22-4"><a></a>                      one_class_2_obs_output)</span>
-<span id="cb22-5"><a></a>    <span class="fu">expect_equivalent</span>(<span class="fu">count_classes</span>(empty_df, class_lables), </span>
-<span id="cb22-6"><a></a>                      empty_df_output)</span>
+<span id="cb22-3"><a></a>  <span class="fu">expect_equal</span>(<span class="fu">count_classes</span>(one_class_2_obs, class_labels),</span>
+<span id="cb22-4"><a></a>                    one_class_2_obs_output, <span class="at">ignore_attr =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-5"><a></a>  <span class="fu">expect_equal</span>(<span class="fu">count_classes</span>(empty_df, class_labels),</span>
+<span id="cb22-6"><a></a>                    empty_df_output, <span class="at">ignore_attr =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb22-7"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -1756,7 +1756,7 @@ margin-right: 0; }
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">test_that</span>(<span class="st">&quot;`count_classes` should throw an error when incorrect types </span></span>
 <span id="cb23-2"><a></a><span class="st">are passed to the `data_frame` argument&quot;</span>, {</span>
-<span id="cb23-3"><a></a>    <span class="fu">expect_error</span>(<span class="fu">count_classes</span>(two_classes_two_obs_as_list, class_lables))</span>
+<span id="cb23-3"><a></a>  <span class="fu">expect_error</span>(<span class="fu">count_classes</span>(two_classes_two_obs_as_list, class_lables))</span>
 <span id="cb23-4"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
