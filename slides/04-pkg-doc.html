@@ -1336,7 +1336,17 @@ margin-right: 0; }
 <li>A more detailed example than just the technical information</li>
 <li>Showcase a case study</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>usethis<span class="sc">::</span><span class="fu">use_vignette</span>(<span class="st">&quot;my-vignette&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="sc">&gt;</span> usethis<span class="sc">::</span><span class="fu">use_vignette</span>(<span class="st">&quot;my-vignette&quot;</span>)</span>
+<span id="cb8-2"><a></a></span>
+<span id="cb8-3"><a></a>✔ Setting active project to <span class="st">&#39;/home/dan/git/ubc/eda&#39;</span></span>
+<span id="cb8-4"><a></a>✔ Adding <span class="st">&#39;knitr&#39;</span> to Suggests field <span class="cf">in</span> DESCRIPTION</span>
+<span id="cb8-5"><a></a>✔ Adding <span class="st">&#39;rmarkdown&#39;</span> to Suggests field <span class="cf">in</span> DESCRIPTION</span>
+<span id="cb8-6"><a></a>✔ Adding <span class="st">&#39;knitr&#39;</span> to VignetteBuilder</span>
+<span id="cb8-7"><a></a>✔ Adding <span class="st">&#39;inst/doc&#39;</span> to <span class="st">&#39;.gitignore&#39;</span></span>
+<span id="cb8-8"><a></a>✔ Creating <span class="st">&#39;vignettes/&#39;</span></span>
+<span id="cb8-9"><a></a>✔ Adding <span class="st">&#39;*.html&#39;</span>, <span class="st">&#39;*.R&#39;</span> to <span class="st">&#39;vignettes/.gitignore&#39;</span></span>
+<span id="cb8-10"><a></a>✔ Writing <span class="st">&#39;vignettes/my-vignette.Rmd&#39;</span></span>
+<span id="cb8-11"><a></a>• Modify <span class="st">&#39;vignettes/my-vignette.Rmd&#39;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 
 <section id="build-your-package-and-docs" class="title-slide slide level2 center">
@@ -1354,15 +1364,16 @@ margin-right: 0; }
 <p><a href="https://pkgdown.r-lib.org/" class="uri">https://pkgdown.r-lib.org/</a></p>
 </section>
 
-<section id="usethisuse_pkgdown" class="title-slide slide level2 smaller center">
+<section id="usethisuse_pkgdown" class="title-slide slide level2 center">
 <h2><code>usethis::use_pkgdown()</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="|4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="sc">&gt;</span> usethis<span class="sc">::</span><span class="fu">use_pkgdown</span>()</span>
-<span id="cb10-2"><a></a>✔ Setting active project to <span class="st">&#39;/Users/danielchen/git/eda&#39;</span></span>
-<span id="cb10-3"><a></a>✔ Adding <span class="st">&#39;^_pkgdown</span><span class="sc">\\</span><span class="st">.yml$&#39;</span>, <span class="st">&#39;^docs$&#39;</span>, <span class="st">&#39;^pkgdown$&#39;</span> to <span class="st">&#39;.Rbuildignore&#39;</span></span>
-<span id="cb10-4"><a></a>✔ Adding <span class="st">&#39;docs&#39;</span> to <span class="st">&#39;.gitignore&#39;</span></span>
-<span id="cb10-5"><a></a>✔ Writing <span class="st">&#39;_pkgdown.yml&#39;</span></span>
-<span id="cb10-6"><a></a>• Modify <span class="st">&#39;_pkgdown.yml&#39;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="|5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="sc">&gt;</span> usethis<span class="sc">::</span><span class="fu">use_pkgdown</span>()</span>
+<span id="cb10-2"><a></a></span>
+<span id="cb10-3"><a></a>✔ Setting active project to <span class="st">&#39;/Users/danielchen/git/eda&#39;</span></span>
+<span id="cb10-4"><a></a>✔ Adding <span class="st">&#39;^_pkgdown</span><span class="sc">\\</span><span class="st">.yml$&#39;</span>, <span class="st">&#39;^docs$&#39;</span>, <span class="st">&#39;^pkgdown$&#39;</span> to <span class="st">&#39;.Rbuildignore&#39;</span></span>
+<span id="cb10-5"><a></a>✔ Adding <span class="st">&#39;docs&#39;</span> to <span class="st">&#39;.gitignore&#39;</span></span>
+<span id="cb10-6"><a></a>✔ Writing <span class="st">&#39;_pkgdown.yml&#39;</span></span>
+<span id="cb10-7"><a></a>• Modify <span class="st">&#39;_pkgdown.yml&#39;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 

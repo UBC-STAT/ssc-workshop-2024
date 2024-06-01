@@ -528,6 +528,18 @@
     ]
   },
   {
+    "objectID": "slides/05-ci-cd.html#make-installations-go-faster",
+    "href": "slides/05-ci-cd.html#make-installations-go-faster",
+    "title": "Continuous Integration (and Deployment)",
+    "section": "Make installations go faster",
+    "text": "Make installations go faster\n\nMany packages install from source on linux\nPre-compiled binaries exist for Windows and Mac\n\nYou can make the R package install setup faster if you replace the runner\nFrom:\njobs:\n  R-CMD-check:\n    runs-on: ubuntu-latest\nuse either windows-latest or macos-latest\nList of runners: https://github.com/actions/runner-images",
+    "crumbs": [
+      "Home",
+      "Slides",
+      "Continuous Integration (and Deployment)"
+    ]
+  },
+  {
     "objectID": "slides/05-ci-cd.html#pkgdown-github-actions",
     "href": "slides/05-ci-cd.html#pkgdown-github-actions",
     "title": "Continuous Integration (and Deployment)",
@@ -1217,7 +1229,7 @@
     "href": "slides/04-pkg-doc.html#vignette",
     "title": "Package Documentation",
     "section": "Vignette",
-    "text": "Vignette\n\nAn article or walkthrough of a set of features of your package or function\nA more detailed example than just the technical information\nShowcase a case study\n\nusethis::use_vignette(\"my-vignette\")",
+    "text": "Vignette\n\nAn article or walkthrough of a set of features of your package or function\nA more detailed example than just the technical information\nShowcase a case study\n\n&gt; usethis::use_vignette(\"my-vignette\")\n\n✔ Setting active project to '/home/dan/git/ubc/eda'\n✔ Adding 'knitr' to Suggests field in DESCRIPTION\n✔ Adding 'rmarkdown' to Suggests field in DESCRIPTION\n✔ Adding 'knitr' to VignetteBuilder\n✔ Adding 'inst/doc' to '.gitignore'\n✔ Creating 'vignettes/'\n✔ Adding '*.html', '*.R' to 'vignettes/.gitignore'\n✔ Writing 'vignettes/my-vignette.Rmd'\n• Modify 'vignettes/my-vignette.Rmd'",
     "crumbs": [
       "Home",
       "Slides",
@@ -1253,7 +1265,7 @@
     "href": "slides/04-pkg-doc.html#usethisuse_pkgdown",
     "title": "Package Documentation",
     "section": "usethis::use_pkgdown()",
-    "text": "usethis::use_pkgdown()\n\n&gt; usethis::use_pkgdown()\n✔ Setting active project to '/Users/danielchen/git/eda'\n✔ Adding '^_pkgdown\\\\.yml$', '^docs$', '^pkgdown$' to '.Rbuildignore'\n✔ Adding 'docs' to '.gitignore'\n✔ Writing '_pkgdown.yml'\n• Modify '_pkgdown.yml'",
+    "text": "usethis::use_pkgdown()\n\n&gt; usethis::use_pkgdown()\n\n✔ Setting active project to '/Users/danielchen/git/eda'\n✔ Adding '^_pkgdown\\\\.yml$', '^docs$', '^pkgdown$' to '.Rbuildignore'\n✔ Adding 'docs' to '.gitignore'\n✔ Writing '_pkgdown.yml'\n• Modify '_pkgdown.yml'",
     "crumbs": [
       "Home",
       "Slides",

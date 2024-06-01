@@ -1346,6 +1346,21 @@ margin-right: 0; }
 <span id="cb3-23"><a></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/check-r-package@v2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 
+<section id="make-installations-go-faster" class="title-slide slide level2 center">
+<h2>Make installations go faster</h2>
+<ul>
+<li>Many packages install from source on linux</li>
+<li>Pre-compiled binaries exist for Windows and Mac</li>
+</ul>
+<p>You can make the R package install setup faster if you replace the runner</p>
+<p>From:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb4-2"><a></a><span class="at">  </span><span class="fu">R-CMD-check</span><span class="kw">:</span></span>
+<span id="cb4-3"><a></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>use either <code>windows-latest</code> or <code>macos-latest</code></p>
+<p>List of runners: <a href="https://github.com/actions/runner-images" class="uri">https://github.com/actions/runner-images</a></p>
+</section>
+
 <section id="pkgdown-github-actions" class="title-slide slide level2 smaller center">
 <h2>Pkgdown + GitHub Actions</h2>
 <p>If you want more…</p>
