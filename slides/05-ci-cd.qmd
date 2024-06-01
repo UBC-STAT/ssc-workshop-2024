@@ -5,6 +5,9 @@ format:
     slide-number: true
     slide-level: 4
     embed-resources: true
+
+editor:
+  render-on-save: true
 ---
 
 ## Continuous Integration (CI) and Continuous Deployment (CD)
@@ -123,6 +126,25 @@ jobs:
       - name: Checks if R package can be installed
         uses: r-lib/actions/check-r-package@v2
 ```
+
+## Make installations go faster
+
+- Many packages install from source on linux
+- Pre-compiled binaries exist for Windows and Mac
+
+You can make the R package install setup faster if you replace the runner
+
+From:
+
+```yaml
+jobs:
+  R-CMD-check:
+    runs-on: ubuntu-latest
+```
+
+use either `windows-latest` or `macos-latest`
+
+List of runners: <https://github.com/actions/runner-images>
 
 ## Pkgdown + GitHub Actions {.smaller}
 
