@@ -5,6 +5,9 @@ format:
     slide-number: true
     slide-level: 4
     embed-resources: true
+
+editor:
+  render-on-save: true
 ---
 
 
@@ -132,7 +135,17 @@ extending a package.
 - Showcase a case study
 
 ```r
-usethis::use_vignette("my-vignette")
+> usethis::use_vignette("my-vignette")
+
+✔ Setting active project to '/home/dan/git/ubc/eda'
+✔ Adding 'knitr' to Suggests field in DESCRIPTION
+✔ Adding 'rmarkdown' to Suggests field in DESCRIPTION
+✔ Adding 'knitr' to VignetteBuilder
+✔ Adding 'inst/doc' to '.gitignore'
+✔ Creating 'vignettes/'
+✔ Adding '*.html', '*.R' to 'vignettes/.gitignore'
+✔ Writing 'vignettes/my-vignette.Rmd'
+• Modify 'vignettes/my-vignette.Rmd'
 ```
 
 ## Build your package and docs!
@@ -149,15 +162,16 @@ devtools::document() # just the documentation
 
 <https://pkgdown.r-lib.org/>
 
-## `usethis::use_pkgdown()` {.smaller}
+## `usethis::use_pkgdown()`
 
 ```{r}
 #| eval: false
 #| error: true
 #| echo: true
-#| code-line-numbers: "|4"
+#| code-line-numbers: "|5"
 
 > usethis::use_pkgdown()
+
 ✔ Setting active project to '/Users/danielchen/git/eda'
 ✔ Adding '^_pkgdown\\.yml$', '^docs$', '^pkgdown$' to '.Rbuildignore'
 ✔ Adding 'docs' to '.gitignore'
