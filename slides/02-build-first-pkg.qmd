@@ -374,7 +374,7 @@ RoxygenNote: 7.3.1
 
 ```
 Package: eda
-Title: What the Package Does (One Line, Title Case)
+Title: A Package for Data Wrangling
 Version: 0.0.0.9000
 Authors@R: 
     person("G. Alexi", "Rodriguez-Arelis", , "alexrod@stat.ubc.ca", role = c("aut", "cre"))
@@ -590,7 +590,7 @@ use_readme_rmd()
 
 ![](img/use-use_readme_rmd.png){fig-align="center"}
 
-- Fill out the template, knit to `.md`, use `build_readme()`,commit, and push these changes to the remote repository</span> (use the commit message `Write README.Rmd and render`)
+- Fill out the template, knit to `.md`, use `build_readme()`, commit, and push these changes to the remote repository</span> (use the commit message `Write README.Rmd and render`)
 
 ## Using `check()` and `install()`
 
