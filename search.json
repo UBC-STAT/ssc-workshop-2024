@@ -1589,7 +1589,7 @@
     "href": "slides/07-copyright-licenses.html#scenario-1",
     "title": "Copyright & Licenses (who owns the code?)",
     "section": "Scenario 1",
-    "text": "Scenario 1\nImagine you’re a data scientist and you developed a tool that analyzes satellite imagery to track deforestation patterns. Your goal is to make this tool freely available to researchers to help monitor and combat deforestation, but you still want to retain the copyright to your tool.",
+    "text": "Scenario 1\nImagine you’re a data scientist and you developed a tool that analyzes satellite imagery to track deforestation patterns. Your goal is to make this tool freely available to researchers to help monitor and combat deforestation, but you still want to get credit for your work.",
     "crumbs": [
       "Home",
       "Slides",
