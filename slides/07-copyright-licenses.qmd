@@ -94,7 +94,7 @@ In the Canada, software code is defined as “work made in the course of employm
 ::: incremental
 -   **Q:** What if you forgo copyright ownership and want to use any of the code that you wrote again?
 
--   **A:** You would need to negotiate a licence to use the code you wrote, the same way any other third-party would… 😓
+-   **A:** You would need to negotiate a license to use the code you wrote, the same way any other third-party would… 😓
 :::
 ## 
 
