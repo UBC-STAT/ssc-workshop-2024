@@ -1493,7 +1493,7 @@
     "href": "slides/07-copyright-licenses.html#section-5",
     "title": "Copyright & Licenses (who owns the code?)",
     "section": "",
-    "text": "To avoid this issue, you could:\n\nNegotiate which code is core to the work (“work-made-for-hire”) and what (pre-built) code (e.g., packages, scripts) are outside the core work and should not (at the beginning of the project!).\nNegotiate that the client purchase a license to the code you write (as opposed to hiring you to write the code).",
+    "text": "To avoid this issue, you could:\n\nNegotiate which code is core to the work (“work-made-for-hire”) and what (pre-built) code (e.g., packages, scripts) are outside the core work (at the beginning of the project!).\nNegotiate that the client purchase a license to the code you write (as opposed to hiring you to write the code).",
     "crumbs": [
       "Home",
       "Slides",
