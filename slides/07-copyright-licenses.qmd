@@ -101,7 +101,7 @@ In the Canada, software code is defined as “work made in the course of employm
 ::: incremental
 To avoid this issue, you could:
 
--   Negotiate which code is core to the work (“work-made-for-hire”) and what (pre-built) code (e.g., packages, scripts) are outside the core work and should not (*at the beginning of the project!*).
+-   Negotiate which code is core to the work (“work-made-for-hire”) and what (pre-built) code (e.g., packages, scripts) are outside the core work (*at the beginning of the project!*).
 
 -   Negotiate that the client purchase a license to the code you write (as opposed to hiring you to write the code).
 :::
